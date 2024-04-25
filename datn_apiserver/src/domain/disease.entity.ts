@@ -42,5 +42,5 @@ export default class Disease extends Model {
     createdDate?: Date;
 
     @UpdatedAt
-    lastModifiedDate?: Date;
+    updatedAt?: Date;
 }

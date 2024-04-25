@@ -30,10 +30,10 @@ export default class Booking extends Model {
     createdBy?: string;
 
     @Column({ type: DataType.DATE })
-    expectedDate: any;
+    expectedDate: Date;
 
     @Column({ type: DataType.STRING })
-    statused: boolean;
+    statused: string;
 
     @Column({ type: DataType.STRING })
     customerName: string;
@@ -52,14 +52,7 @@ export default class Booking extends Model {
 
     @Column({ type: DataType.STRING })
     familyRelationship: string;
-
-    @Column({
-        type: DataType.STRING,
-        validate: {
-            min: 10,
-            max: 10,
-        },
-    })
+    @Column({ type: DataType.STRING })
     contactPhone: string;
 
     @ForeignKey(() => Vaccine)
