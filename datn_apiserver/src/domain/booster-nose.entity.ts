@@ -24,7 +24,7 @@ export default class BoosterNose extends Model {
     id?: number;
 
     @Column({ type: DataType.INTEGER })
-    orderNumber: number;
+    noseNumber: number;
 
     @Column({ type: DataType.DATE })
     noDate: string;
