@@ -4,6 +4,7 @@ import DashboadPage from "../page/dashboad";
 import { LoginPage } from "../page/login";
 import EmployeeManagerPage from "../page/staff";
 import { RouteObject, createBrowserRouter } from "react-router-dom";
+import VaccineManagerPage from "../page/vaccine";
 
 const routers: RouteObject[] = [
      {
@@ -21,6 +22,11 @@ const routers: RouteObject[] = [
                     path: "/admin/nhanvien",
                     id: "staff",
                     Component: EmployeeManagerPage,
+               }, 
+               {
+                    path: "/admin/vaccine",
+                    id: "vaccine",
+                    Component: VaccineManagerPage,
                },
                {
                     path: "/admin/nhanvien/them-moi",
