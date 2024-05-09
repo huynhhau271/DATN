@@ -1,4 +1,5 @@
 export interface UserPayLoad {
+    id?: number;
     email?: string;
 
     activated?: boolean;
@@ -11,11 +12,11 @@ export interface UserPayLoad {
 
     phone?: string;
 
-    doB?: Date;
+    dob?: Date;
 
     avatar?: string;
 
-    wardId?: number;
+    wardId?: string;
 
     roleId?: number;
 }

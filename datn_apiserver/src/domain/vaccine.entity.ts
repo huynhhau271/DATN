@@ -17,6 +17,7 @@ import Booking from "./booking.entity";
 import LotNo from "./lot-no.entity";
 import Disease from "./disease.entity";
 import VaccineDisease from "./vaccine-desean.entity";
+import importDetail from "./importDetails.entity";
 
 /**
  * A Vaccine.
@@ -70,12 +71,11 @@ export default class Vaccine extends Model {
     @HasMany(() => Booking)
     bookings?: Booking[];
 
-    @ForeignKey(() => LotNo)
-    lotNoId?: number;
-
     @BelongsToMany(() => Vaccine, () => VaccineDisease)
     diseases?: Disease[];
 
+    @HasMany(() => importDetail)
+    importDetail: importDetail[];
     @CreatedAt
     @Column
     createdDate?: Date;

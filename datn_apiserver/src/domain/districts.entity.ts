@@ -16,23 +16,27 @@ import Provinces from "./provinces.entity";
 /**
  * A Districts.
  */
-@Table
+@Table({
+    timestamps: false,
+})
 export default class Districts extends Model {
     @PrimaryKey
-    @AutoIncrement
-    @Column({ type: DataType.BIGINT })
-    id?: number;
+    @Column({ type: DataType.CHAR })
+    id?: string;
 
     @Column({ type: DataType.STRING })
     name: string;
 
-    @HasMany(() => Wards, "districtsId")
+    @Column({ type: DataType.STRING })
+    type: string;
+
+    @HasMany(() => Wards)
     wards: Wards[];
 
-    @BelongsTo(() => Provinces, "provinceId")
+    @BelongsTo(() => Provinces)
     province: Provinces;
 
     @ForeignKey(() => Provinces)
-    @Column({ type: DataType.BIGINT })
-    provinceId: number;
+    @Column({ type: DataType.CHAR })
+    provinceId: string;
 }

@@ -8,7 +8,7 @@ import {
     PrimaryKey,
     Table,
 } from "sequelize-typescript";
-import Vaccine from "./vaccine.entity";
+import importDetail from "./importDetails.entity";
 
 /**
  * A LotNo.
@@ -17,7 +17,9 @@ import Vaccine from "./vaccine.entity";
 export default class LotNo extends Model {
     @PrimaryKey
     @AutoIncrement
-    @Column
+    @Column({
+        type: DataType.BIGINT,
+    })
     id: number;
 
     @Column({ type: DataType.STRING })
@@ -32,6 +34,6 @@ export default class LotNo extends Model {
     @Column({ type: DataType.DATE })
     expDate: Date;
 
-    @HasMany(() => Vaccine)
-    vaccines: Vaccine[];
+    @HasMany(() => importDetail)
+    import: importDetail[];
 }

@@ -14,14 +14,13 @@ import {
 import Vaccine from "./vaccine.entity";
 import Wards from "./wards.entity";
 import User from "./user.entity";
-import NurseStaff from "./nurseStaff.entity";
 /**
  * A Booking.
  */
 @Table({
     timestamps: true,
 })
-export default class Booking extends Model {
+export default class Customer extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column({ type: DataType.BIGINT })
@@ -30,35 +29,39 @@ export default class Booking extends Model {
     @Column({ type: DataType.STRING })
     createdBy?: string;
 
-    @Column({ type: DataType.DATE })
-    expectedDate: Date;
+    @Column({ type: DataType.STRING })
+    customerName: string;
 
     @Column({ type: DataType.DATE })
-    bookingDate: Date;
+    customerDoB: Date;
+
+    @Column({ type: DataType.BOOLEAN })
+    gender: boolean;
+
+    @PrimaryKey
+    @Column({ type: DataType.CHAR })
+    trackingNumberId: string;
+
+    @Column({
+        type: DataType.DATE,
+    })
+    dob: Date;
 
     @Column({ type: DataType.STRING })
-    statused: string;
+    parentsName: string;
 
-    @ForeignKey(() => Vaccine)
-    @Column({ type: DataType.BIGINT })
-    vaccineId: number;
+    @Column({ type: DataType.CHAR })
+    phone: string;
 
-    @BelongsTo(() => Vaccine)
-    vaccine: Vaccine;
+    @Column({ type: DataType.CHAR })
+    email: string;
 
-    @BelongsTo(() => User)
-    user: User;
+    @ForeignKey(() => Wards)
+    @Column({ type: DataType.CHAR })
+    wardId?: string;
 
-    @ForeignKey(() => User)
-    @Column({ type: DataType.BIGINT })
-    userId: number;
-
-    @ForeignKey(() => NurseStaff)
-    @Column({ type: DataType.BIGINT })
-    nurseStaffId: number;
-
-    @BelongsTo(() => NurseStaff)
-    nurseStaff: NurseStaff;
+    @BelongsTo(() => Wards)
+    ward: Wards;
 
     @CreatedAt
     @Column
