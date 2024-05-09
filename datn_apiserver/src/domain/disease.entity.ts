@@ -13,7 +13,6 @@ import {
 } from "sequelize-typescript";
 import Vaccine from "./vaccine.entity";
 import VaccineDisease from "./vaccine-desean.entity";
-import User from "./user.entity";
 
 /**
  * A Disease.

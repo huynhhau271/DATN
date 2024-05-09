@@ -10,33 +10,41 @@ import {
     PrimaryKey,
     Table,
 } from "sequelize-typescript";
-import Booking from "./booking.entity";
 import Districts from "./districts.entity";
 import User from "./user.entity";
+import Customer from "./customer.entity";
+import NurseStaff from "./nurseStaff.entity";
 
 /**
  * A Wards.
  */
-@Table
+@Table({
+    timestamps: false,
+})
 export default class Wards extends Model {
     @PrimaryKey
-    @AutoIncrement
-    @Column({ type: DataType.BIGINT })
-    id?: number;
+    @Column({ type: DataType.CHAR })
+    id?: string;
 
     @Column({ type: DataType.STRING })
     name?: string;
 
-    @HasMany(() => Booking)
-    bookings?: Booking[];
+    @Column({ type: DataType.STRING })
+    type?: string;
 
     @HasMany(() => User)
     users?: User[];
+
+    @HasMany(() => Customer)
+    customers?: Customer[];
+
+    @HasMany(() => NurseStaff)
+    nurseStaffs: NurseStaff[];
 
     @BelongsTo(() => Districts)
     district?: Districts;
 
     @ForeignKey(() => Districts)
-    @Column({ type: DataType.BIGINT })
-    districtId?: number;
+    @Column({ type: DataType.CHAR })
+    districtId?: string;
 }

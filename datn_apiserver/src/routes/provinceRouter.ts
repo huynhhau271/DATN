@@ -1,8 +1,11 @@
 import { BaseRouter } from "./BaseRouter";
-import { seederUser } from "../controllers/test.controller";
 import catchAsync from "../utils/catchAsync";
+import { getAllProvince } from "../controllers/province.controller";
 
-class TestRouter extends BaseRouter {
+/**
+ * @description AuthLoginRouter
+ */
+class ProvinceRouter extends BaseRouter {
     constructor() {
         super();
         this.init();
@@ -12,8 +15,8 @@ class TestRouter extends BaseRouter {
      * Connect routes to their matching controller endpoints.
      */
     protected init() {
-        this.router.get("/", catchAsync(seederUser));
+        this.router.get("/", catchAsync(getAllProvince));
     }
 }
 
-export default new TestRouter().router;
+export default new ProvinceRouter().router;

@@ -13,15 +13,22 @@ import Districts from "./districts.entity";
 /**
  * A Provinces.
  */
-@Table
+@Table({
+    timestamps: false,
+})
 export default class Provinces extends Model {
     @PrimaryKey
-    @AutoIncrement
-    @Column({ type: DataType.BIGINT })
-    id?: number;
+    @Column({ type: DataType.CHAR })
+    id?: string;
 
     @Column({ type: DataType.STRING })
     name: string;
+
+    @Column({ type: DataType.STRING })
+    type: string;
+
+    @Column({ type: DataType.STRING })
+    slug: string;
 
     @HasMany(() => Districts, "provinceId")
     districts: Districts[];

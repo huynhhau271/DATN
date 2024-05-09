@@ -12,9 +12,8 @@ const signToken = (payload: Partial<User>, isAccess = true) => {
     );
     const decodePayload = jwt.decode(token);
     if (typeof decodePayload === "string") throw new Error("JWT decode Error");
-    const expiresAt = decodePayload.exp * 1000;
 
-    return { token, expiresAt };
+    return token;
 };
 
 const verifyToken = (token: string) => {

@@ -19,8 +19,11 @@ import Authority from "./authority.entity";
 import Post from "./post.entity";
 import Booking from "./booking.entity";
 import Wards from "./wards.entity";
+import ImAndExWarehouse from "./ImAndExWarehouse.entity";
 
-@Table
+@Table({
+    timestamps: true,
+})
 export default class User extends Model {
     @PrimaryKey
     @AutoIncrement
@@ -36,10 +39,6 @@ export default class User extends Model {
     @Unique
     @Column({
         type: DataType.STRING,
-        validate: {
-            min: 10,
-            max: 10,
-        },
     })
     phone?: string;
 
@@ -56,7 +55,10 @@ export default class User extends Model {
     gender?: boolean;
 
     @Column({ type: DataType.DATE })
-    doB?: Date;
+    dob?: Date;
+
+    @Column({ type: DataType.CHAR })
+    CCCD?: string;
 
     @Column({ type: DataType.STRING })
     avatar?: string;
@@ -68,8 +70,11 @@ export default class User extends Model {
     bookings?: Booking[];
 
     @ForeignKey(() => Wards)
-    @Column({ type: DataType.BIGINT })
-    wardId?: number;
+    @Column({ type: DataType.CHAR })
+    wardId?: string;
+
+    @BelongsTo(() => Wards)
+    ward: Wards;
 
     @ForeignKey(() => Authority)
     @Column({ type: DataType.BIGINT })
@@ -77,9 +82,20 @@ export default class User extends Model {
 
     @BelongsTo(() => Authority)
     role: Authority;
+
+    @HasMany(() => ImAndExWarehouse, "staffId")
+    importExport: ImAndExWarehouse[];
+
+    @HasMany(() => ImAndExWarehouse, "approveId")
+    approveImportExport: ImAndExWarehouse[];
+
     @Column
     @ForeignKey(() => User)
     createdBy?: number;
+
+    @Column
+    @ForeignKey(() => User)
+    updatedBy?: number;
 
     @CreatedAt
     @Column
