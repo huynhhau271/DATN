@@ -78,6 +78,7 @@ export const LoginPage = () => {
                                    </Form.Item>
                                    <Form.Item className="w-full flex justify-center">
                                         <Button
+                                             type="primary"
                                              htmlType="submit"
                                              className="bg-[#0B08AB] text-white w-48 h-10 rounded-lg"
                                         >

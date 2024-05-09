@@ -1,5 +1,4 @@
 import MainLayout from "../layouts/mainLayout";
-import CreateUpdateStaff from "../page/createUpdateStaff";
 import DashboadPage from "../page/dashboad";
 import { LoginPage } from "../page/login";
 import EmployeeManagerPage from "../page/staff";
@@ -22,16 +21,11 @@ const routers: RouteObject[] = [
                     path: "/admin/nhanvien",
                     id: "staff",
                     Component: EmployeeManagerPage,
-               }, 
+               },
                {
                     path: "/admin/vaccine",
                     id: "vaccine",
                     Component: VaccineManagerPage,
-               },
-               {
-                    path: "/admin/nhanvien/them-moi",
-                    id: "createUpdateStaff",
-                    Component: CreateUpdateStaff,
                },
           ],
      },

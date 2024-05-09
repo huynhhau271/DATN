@@ -3,25 +3,23 @@ export interface IUser {
      fullName?: string;
      email: string;
      phone?: string;
-     doB?: string;
+     dob?: string;
      activated?: boolean;
      gender?: boolean;
      imageUrl?: string;
-     wardId?: number;
-     role: {
-          name: string;
-     };
+     wardId?: string;
+     districtId?: string;
+     provinceId?: string;
+     role: string;
 }
 
 export type LoginResponse = {
      token: string;
      refreshToken: string;
      user: IUser;
-     exp: number;
 };
 
 export type LoginPayLoad = {
      password: string;
-     rememberMe: boolean;
      email: string;
 };
