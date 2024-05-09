@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import useGetAllStaff from "../hook/useGetStaff";
 import { Button, Spin } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import { IUser } from "../models/user.model";
@@ -7,11 +6,16 @@ import { Pagination } from "antd";
 import { formatDate } from "../utils/formatDate";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import { useNavigate } from "react-router-dom";
-
-const EmployeeManagerPage = () => {
+import { FaUserLock } from "react-icons/fa6";
+import { FaUserCheck } from "react-icons/fa6";
+import { FaUserEdit } from "react-icons/fa";
+import { IoPersonAddSharp } from "react-icons/io5";
+import UserModal from "../modals/userModal";
+import { staffService } from "../services/staffService";
+import { toast } from "react-toastify";
+import useGetAllStaff from "../hook/useGetStaff";
+const UserManagerPage = () => {
      const { Search } = Input;
-     const navigate = useNavigate();
      const [page, setPage] = useState(1);
      const [limit, setLimit] = useState(10);
      const [search, setSearch] = useState("");
@@ -21,6 +25,27 @@ const EmployeeManagerPage = () => {
      }, [staffs, refetch, page, limit, search]);
      const onSearch = (value: string) => {
           setSearch(value);
+     };
+     const handleBlockOrActiveUser = (idUser: number, active: boolean) => {
+          staffService
+               .blockOrActiveUser(idUser, active)
+               .then(() => {
+                    toast.success(
+                         active
+                              ? "Khóa Người Dùng Thành Công"
+                              : "Mở Khóa Người Dùng Thành Công"
+                    );
+                    refetch();
+               })
+               .catch((error) => {
+                    if (error.response)
+                         toast.error(error.response.data.message);
+                    toast.error(
+                         active
+                              ? "Khóa Người Dùng Thất Bại"
+                              : "Mở Khóa Người Dùng Thất Bại"
+                    );
+               });
      };
      const searchbutton = <SearchOutlined type="default" />;
      const columns: ColumnsType<IUser> = [
@@ -45,7 +70,24 @@ const EmployeeManagerPage = () => {
                dataIndex: "gender",
                key: "gender",
                render: (_, record) => {
-                    return record ? "Nam" : "Nữ";
+                    return record.gender == null
+                         ? "N/A"
+                         : record.gender
+                         ? "Nam"
+                         : "Nữ";
+               },
+               filters: [
+                    {
+                         text: "Nam",
+                         value: true,
+                    },
+                    {
+                         text: "Nữ",
+                         value: false,
+                    },
+               ],
+               onFilter(value, record) {
+                    return record.gender === value;
                },
           },
           {
@@ -53,7 +95,9 @@ const EmployeeManagerPage = () => {
                dataIndex: "dob",
                key: "dob",
                render: (_, record) => {
-                    return record.doB ? formatDate(record.doB) : "N/A";
+                    return record.dob
+                         ? formatDate(record.dob).toString()
+                         : "N/A";
                },
           },
           {
@@ -61,7 +105,20 @@ const EmployeeManagerPage = () => {
                dataIndex: "role",
                key: "role",
                render: (_, data) => {
-                    return data.role.name || "N/A";
+                    return data.role || "N/A";
+               },
+               filters: [
+                    {
+                         text: "Nam",
+                         value: true,
+                    },
+                    {
+                         text: "Nữ",
+                         value: false,
+                    },
+               ],
+               onFilter(value, record) {
+                    return record.role === value;
                },
           },
           {
@@ -69,11 +126,24 @@ const EmployeeManagerPage = () => {
                dataIndex: "activated",
                key: "activated",
                render(_, record) {
-                    return record ? (
-                         <span className="text-green-600">Đang Làm Việc</span>
+                    return record.activated ? (
+                         <span className="text-green-600">Đang Hoạt động</span>
                     ) : (
-                         <span className="text-red-600">Đã Nghỉ việc</span>
+                         <span className="text-red-600">Đã Khóa</span>
                     );
+               },
+               filters: [
+                    {
+                         text: "Đang Hoạt động",
+                         value: true,
+                    },
+                    {
+                         text: "Đã Khóa",
+                         value: false,
+                    },
+               ],
+               onFilter(value, record) {
+                    return record.activated === value;
                },
           },
           {
@@ -82,20 +152,42 @@ const EmployeeManagerPage = () => {
                fixed: "right",
                width: 100,
                render: (_, record) => (
-                    <div className="flex flex-col gap-1">
+                    <div className="flex gap-1">
                          <Button
-                              type="default"
+                              ghost
                               className={`${
                                    record.activated
-                                        ? "bg-red-600"
-                                        : "bg-green-600"
-                              } text-white`}
+                                        ? "!bg-red-600"
+                                        : "!bg-green-600"
+                              } text-white flex items-center gap-2 text-xl justify-center`}
+                              onClick={() => {
+                                   record.activated != undefined &&
+                                        handleBlockOrActiveUser(
+                                             record.id,
+                                             record.activated
+                                        );
+                              }}
                          >
-                              {record.activated ? "Block" : "Active"}
+                              <span>
+                                   {record.activated ? (
+                                        <FaUserLock />
+                                   ) : (
+                                        <FaUserCheck />
+                                   )}
+                              </span>
                          </Button>
-                         <Button className="text-black bg-blue-500">
-                              Delete
-                         </Button>
+                         <div>
+                              <UserModal
+                                   icon={<FaUserEdit />}
+                                   refetch={refetch}
+                                   userData={record}
+                              />
+                         </div>
+                         {/* <div>
+                              <Button danger block type="primary">
+                                   <MdDeleteForever />
+                              </Button>
+                         </div> */}
                     </div>
                ),
           },
@@ -103,45 +195,45 @@ const EmployeeManagerPage = () => {
      if (!staffs || isLoading) return <Spin />;
 
      return (
-          <div className="flex flex-col h-full mt-4 ml-1">
-               <div className="flex items-end justify-between">
-                    <h1 className="text-5xl  ml-4">Nhân viên</h1>
-
-                    <Button
-                         className="mr-5 mt-1 hover:!bg-blue-600 hover:opacity-[0.8] bg-blue-600 text-white h-11"
-                         onClick={() => navigate("/admin/nhanvien/them-moi")}
-                    >
-                         Thêm Nhân viên
-                    </Button>
+          <>
+               <div className="flex flex-col h-full mt-4 ml-1">
+                    <div className="flex items-end justify-between">
+                         <h1 className="text-5xl  ml-4">Nhân viên</h1>
+                         <UserModal
+                              title="Thêm Nhân Viên"
+                              icon={<IoPersonAddSharp />}
+                              refetch={refetch}
+                         />
+                    </div>
+                    <div className="flex flex-col items-end w-full">
+                         <Search
+                              className="w-6/12 mr-5 mt-2"
+                              placeholder="Search"
+                              onSearch={onSearch}
+                              enterButton={searchbutton}
+                              style={{ width: 400 }}
+                              size="large"
+                         />
+                         <Table
+                              className="h-full w-full mt-6"
+                              columns={columns}
+                              dataSource={staffs.staffs}
+                              pagination={false}
+                         />
+                         <Pagination
+                              className="!mr-5 !mt-10"
+                              showSizeChanger
+                              defaultCurrent={page}
+                              pageSize={limit}
+                              total={staffs.totalPage}
+                              onChange={(current, pageSize) => {
+                                   setPage(current);
+                                   setLimit(pageSize);
+                              }}
+                         />
+                    </div>
                </div>
-               <div className="flex flex-col items-end w-full">
-                    <Search
-                         className="w-6/12 mr-5 mt-2"
-                         placeholder="Search"
-                         onSearch={onSearch}
-                         enterButton={searchbutton}
-                         style={{ width: 400 }}
-                         size="large"
-                    />
-                    <Table
-                         className="h-full w-full mt-6"
-                         columns={columns}
-                         dataSource={staffs.staffs}
-                         pagination={false}
-                    />
-                    <Pagination
-                         className="mr-5 mt-6"
-                         showSizeChanger
-                         defaultCurrent={page}
-                         pageSize={limit}
-                         total={staffs.totalPage}
-                         onChange={(current, pageSize) => {
-                              setPage(current);
-                              setLimit(pageSize);
-                         }}
-                    />
-               </div>
-          </div>
+          </>
      );
 };
-export default EmployeeManagerPage;
+export default UserManagerPage;
