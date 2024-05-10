@@ -51,7 +51,7 @@ const VaccineModal = ({ title, icon, refetch, data }: Props) => {
                     confirmLoading={confirmLoading}
                     onCancel={handleCancel}
                     footer={null}
-                    width={700}
+                    width={800}
                >
                     <VaccineForm
                          setOpen={setOpen}

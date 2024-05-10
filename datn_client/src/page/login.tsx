@@ -1,7 +1,6 @@
 // import { useAuthContext } from "../contexts/authContext";
 import { Image } from "antd";
 import { Button, Form, Input } from "antd";
-// import { IUser } from "../models/user.model";
 import { useAuthContext } from "../contexts/authContext";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,7 +15,6 @@ export const LoginPage = () => {
           await authService
                .login(login)
                .then((data: LoginResponse) => {
-                    console.log({ data });
                     cookiesService.setCookie("token", data.token);
                     cookiesService.setCookie("refrestToken", data.refreshToken);
                     cookiesService.setCookie("userAuth", data.user);

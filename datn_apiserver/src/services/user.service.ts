@@ -37,8 +37,6 @@ class userService {
                 name: "STAFF",
             },
         });
-        console.log({ role });
-
         if (checkPhone) throw new BadRequestError("Số Điện Thoại Đã Tồn Tại");
         const newUser = await userRepository.create({
             ...payload,

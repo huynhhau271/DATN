@@ -2,9 +2,10 @@ import { IconType } from "react-icons";
 import { FaHome } from "react-icons/fa";
 import { FaHouseUser } from "react-icons/fa";
 import type { MenuProps } from "antd";
-import { MdDiscount } from "react-icons/md";
-import { FaFileInvoiceDollar } from "react-icons/fa";
-import { MdPriceCheck } from "react-icons/md";
+import { PiListDashesFill } from "react-icons/pi";
+import { TbVaccineBottle } from "react-icons/tb";
+import { FaShieldVirus } from "react-icons/fa6";
+import { LiaUserNurseSolid } from "react-icons/lia";
 export type MenuItems = {
      title: string;
      icon?: IconType;
@@ -29,18 +30,24 @@ export const MenuItems: MenuItems[] = [
           title: "Vaccine",
           link: "/admin/vaccine",
           id: "vaccine",
-          icon: MdPriceCheck,
+          icon: TbVaccineBottle,
      },
      {
           title: "Danh Sách Tiêm Chủng",
           link: "###",
           id: "vaccination",
-          icon: MdDiscount,
+          icon: PiListDashesFill,
      },
      {
           title: "Nhân Viên Y Tế",
           link: "###",
           id: "healthcare_staff",
-          icon: FaFileInvoiceDollar,
+          icon: LiaUserNurseSolid,
+     },
+     {
+          title: "Bệnh",
+          link: "###",
+          id: "diseases",
+          icon: FaShieldVirus,
      },
 ];

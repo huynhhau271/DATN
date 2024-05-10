@@ -14,4 +14,5 @@ export interface IVaccine {
      type?: string;
      createdDate?: Date;
      lastModifiedDate?: Date;
+     status: boolean;
 }

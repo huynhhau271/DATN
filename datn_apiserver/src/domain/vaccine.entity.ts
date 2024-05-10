@@ -14,7 +14,6 @@ import {
 } from "sequelize-typescript";
 import BoosterNose from "./booster-nose.entity";
 import Booking from "./booking.entity";
-import LotNo from "./lot-no.entity";
 import Disease from "./disease.entity";
 import VaccineDisease from "./vaccine-desean.entity";
 import importDetail from "./importDetails.entity";
@@ -55,6 +54,9 @@ export default class Vaccine extends Model {
 
     @Column({ type: DataType.STRING })
     unwantedEffects?: string;
+
+    @Column({ type: DataType.BOOLEAN })
+    status: boolean;
 
     @Column({ type: DataType.INTEGER })
     mothOld?: number;

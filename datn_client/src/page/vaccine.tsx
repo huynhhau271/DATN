@@ -27,7 +27,6 @@ const VaccineManagerPage = () => {
      const onSearch = (value: string) => {
           setSearch(value);
      };
-     // const handleBlockOrActiveUser = (idUser: number, active: boolean) => {};
      const searchbutton = <SearchOutlined type="default" />;
      const columns: ColumnsType<IVaccine> = [
           {
@@ -42,7 +41,12 @@ const VaccineManagerPage = () => {
                key: "quantity",
           },
           {
-               title: "Giá",
+               title: "Độ Tuổi (Tháng)",
+               dataIndex: "mothOld",
+               key: "mothOld",
+          },
+          {
+               title: "Giá (Đồng)  ",
                dataIndex: "price",
                key: "price",
           },
@@ -57,39 +61,43 @@ const VaccineManagerPage = () => {
                key: "source",
           },
           {
-               title: "Đường tiêm",
-               dataIndex: "injectionRoute",
-               key: "injectionRoute",
-          },
-          {
-               title: "Loại",
-               dataIndex: "type",
-               key: "type",
-               render: (_, data) => {
-                    return data.type || "N/A";
+               title: "Trạng Thái",
+               dataIndex: "status",
+               key: "status",
+               render(_, record) {
+                    return record.status !== null ? (
+                         record.status ? (
+                              <span className="text-green-600">
+                                   Đang Sản Xuất
+                              </span>
+                         ) : (
+                              <span className="text-red-600">
+                                   Đã Ngưng Sản Xuất
+                              </span>
+                         )
+                    ) : (
+                         <span className="text-red-600">N/A</span>
+                    );
                },
-          },
-          {
-               title: "",
-               dataIndex: "type",
-               key: "type",
-               render: (_, data) => {
-                    return data.type || "N/A";
-               },
-          },
-          {
-               title: "Loại",
-               dataIndex: "type",
-               key: "type",
-               render: (_, data) => {
-                    return data.type || "N/A";
+               filters: [
+                    {
+                         text: "Đang Hoạt động",
+                         value: true,
+                    },
+                    {
+                         text: "Đã Khóa",
+                         value: false,
+                    },
+               ],
+               onFilter(value, record) {
+                    return record.status === value;
                },
           },
           {
                title: "Action",
                key: "operation",
                fixed: "right",
-               width: 100,
+               width: 10,
                render: (_, record) => {
                     return (
                          <div className=" flex gap-3">
@@ -109,7 +117,7 @@ const VaccineManagerPage = () => {
           <>
                <div className="flex flex-col h-full mt-4 ml-1">
                     <div className="flex items-end justify-between">
-                         <h1 className="text-5xl  ml-4">Nhân viên</h1>
+                         <h1 className="text-5xl  ml-4">Vaccine</h1>
                          <div>
                               <VaccineModal
                                    title="Thêm Vaccine"

@@ -48,6 +48,7 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                return Promise.reject("Nhân Viên Chưa Đủ 18 Tuổi");
           else return Promise.resolve();
      };
+
      const [form] = Form.useForm<IUser>();
      const onFinish = (value: IUser) => {
           if (!isEdit)
@@ -60,7 +61,6 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                          setOpen(false);
                     })
                     .catch((error) => {
-                         console.log({ error });
                          if (error.response)
                               toast.error(error.response.data.message);
                          else toast.error("Thêm mới Nhân Viên Thất Bại");
@@ -77,7 +77,6 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                          setOpen(false);
                     })
                     .catch((error) => {
-                         console.log({ error });
                          if (error.response)
                               toast.error(error.response.data.message);
                          else
@@ -115,8 +114,7 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                (data) => data.id === userData?.districtId
           )?.wards;
           setWards(wards);
-          console.log({ districts });
-     }, [provinceData, userData]);
+     }, [districts]);
 
      return (
           <div className="mt-2">

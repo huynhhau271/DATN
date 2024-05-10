@@ -7,6 +7,7 @@ import authLoginRouter from "./AuthLoginRouter";
 import staffRouter from "./staffRouter";
 import { veryfyToken } from "../middleware/verifyToken";
 import provinceRouter from "./provinceRouter";
+import vaccineRouter from "./vaccineRouter";
 
 class MasterRouter extends BaseRouter {
     constructor() {
@@ -36,6 +37,7 @@ class MasterRouter extends BaseRouter {
         this.router.use("/province", provinceRouter);
         this.router.use(veryfyToken);
         this.router.use("/staff", staffRouter);
+        this.router.use("/vaccine", vaccineRouter);
         this.router.use(errorHandler);
     }
 }
