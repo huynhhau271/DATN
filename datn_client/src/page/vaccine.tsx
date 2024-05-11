@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Button, Spin, Image, Card, Avatar } from "antd";
-import Table, { ColumnsType } from "antd/es/table";
+import { Button, Spin, Card } from "antd";
 import { MdOutlineVaccines } from "react-icons/md";
 import { Pagination } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
@@ -13,7 +12,6 @@ import { vaccineService } from "../services/vaccineService";
 import { toast } from "react-toastify";
 import { TbVaccineBottle } from "react-icons/tb";
 import { TbVaccineBottleOff } from "react-icons/tb";
-import Meta from "antd/es/card/Meta";
 
 const VaccineManagerPage = () => {
      const { Search } = Input;
