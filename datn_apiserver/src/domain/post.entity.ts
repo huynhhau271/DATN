@@ -24,7 +24,7 @@ export default class Post extends Model {
     @Column({ type: DataType.STRING })
     title: string;
 
-    @Column({ type: DataType.STRING })
+    @Column({ type: DataType.TEXT })
     content: string;
 
     @Column({ type: DataType.STRING })

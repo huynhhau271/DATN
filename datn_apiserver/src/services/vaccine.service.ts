@@ -1,9 +1,6 @@
 import { Op } from "sequelize";
-import districtsRepository from "../repositories/districtsRepository";
-import provinceRepository from "../repositories/provinceRepository";
 import vaccineRepository from "../repositories/vaccineRepository";
-import wardRepository from "../repositories/wardRepository";
-import { IVaccine } from "../types/Vaccine";
+import { IVaccine } from "../interface/IVaccine";
 import { BadRequestError } from "../utils/httpErrors";
 import { User } from "../utils/user";
 import { tranformModel } from "./helper/tranformModelToObject";
@@ -65,9 +62,30 @@ class VaccineService {
             const newVaccine = await vaccineRepository.create({
                 ...vaccine,
                 quantity: 0,
+                status: false,
             });
             return newVaccine.toJSON();
         }
+    }
+    async activeAndBlockVaccine(idVaccine: number, status: boolean) {
+        const user = await vaccineRepository.findOne({
+            where: {
+                id: idVaccine,
+                status: status,
+            },
+        });
+        if (!user) throw new BadRequestError("User Không Tồn Tại");
+        await vaccineRepository.update(
+            {
+                status: !status,
+            },
+            {
+                where: {
+                    id: idVaccine,
+                    status: status,
+                },
+            }
+        );
     }
 }
 export default new VaccineService();

@@ -1,6 +1,10 @@
 import { BaseRouter } from "./BaseRouter";
 import catchAsync from "../utils/catchAsync";
-import { getAllVaccine, saveVaccine } from "../controllers/vaccine.controller";
+import {
+    activeVaccine,
+    getAllVaccine,
+    saveVaccine,
+} from "../controllers/vaccine.controller";
 
 class VaccineRouter extends BaseRouter {
     constructor() {
@@ -14,6 +18,7 @@ class VaccineRouter extends BaseRouter {
     protected init() {
         this.router.get("/", catchAsync(getAllVaccine));
         this.router.post("/", catchAsync(saveVaccine));
+        this.router.get("/status", catchAsync(activeVaccine));
     }
 }
 
