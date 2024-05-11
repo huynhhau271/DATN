@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 
-import { Spin } from "antd";
-import Table, { ColumnsType } from "antd/es/table";
+import { Button, Spin, Card } from "antd";
 import { MdOutlineVaccines } from "react-icons/md";
 import { Pagination } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import { IVaccine } from "../models/vaccine.model";
 import useGetAllVaccine from "../hook/useGetVaccine";
 import VaccineModal from "../modals/vaccineModal";
 import { RxUpdate } from "react-icons/rx";
+import { vaccineService } from "../services/vaccineService";
+import { toast } from "react-toastify";
+import { TbVaccineBottle } from "react-icons/tb";
+import { TbVaccineBottleOff } from "react-icons/tb";
 
 const VaccineManagerPage = () => {
      const { Search } = Input;
@@ -27,90 +29,31 @@ const VaccineManagerPage = () => {
      const onSearch = (value: string) => {
           setSearch(value);
      };
+     const handleBlockOrActiveVaccine = (
+          idVaccine: number,
+          active: boolean
+     ) => {
+          vaccineService
+               .blockOrActiveVaccine(idVaccine, active)
+               .then(() => {
+                    toast.success(
+                         active
+                              ? "Khóa Người Dùng Thành Công"
+                              : "Mở Khóa Người Dùng Thành Công"
+                    );
+                    refetch();
+               })
+               .catch((error) => {
+                    if (error.response)
+                         toast.error(error.response.data.message);
+                    toast.error(
+                         active
+                              ? "Khóa Người Dùng Thất Bại"
+                              : "Mở Khóa Người Dùng Thất Bại"
+                    );
+               });
+     };
      const searchbutton = <SearchOutlined type="default" />;
-     const columns: ColumnsType<IVaccine> = [
-          {
-               title: "Tên Vaccine",
-               dataIndex: "vaccineName",
-               key: "vaccineName",
-               fixed: "left",
-          },
-          {
-               title: "Số lượng",
-               dataIndex: "quantity",
-               key: "quantity",
-          },
-          {
-               title: "Độ Tuổi (Tháng)",
-               dataIndex: "mothOld",
-               key: "mothOld",
-          },
-          {
-               title: "Giá (Đồng)  ",
-               dataIndex: "price",
-               key: "price",
-          },
-          {
-               title: "Mô tả",
-               dataIndex: "description",
-               key: "description",
-          },
-          {
-               title: "Nguồn gốc",
-               dataIndex: "source",
-               key: "source",
-          },
-          {
-               title: "Trạng Thái",
-               dataIndex: "status",
-               key: "status",
-               render(_, record) {
-                    return record.status !== null ? (
-                         record.status ? (
-                              <span className="text-green-600">
-                                   Đang Sản Xuất
-                              </span>
-                         ) : (
-                              <span className="text-red-600">
-                                   Đã Ngưng Sản Xuất
-                              </span>
-                         )
-                    ) : (
-                         <span className="text-red-600">N/A</span>
-                    );
-               },
-               filters: [
-                    {
-                         text: "Đang Hoạt động",
-                         value: true,
-                    },
-                    {
-                         text: "Đã Khóa",
-                         value: false,
-                    },
-               ],
-               onFilter(value, record) {
-                    return record.status === value;
-               },
-          },
-          {
-               title: "Action",
-               key: "operation",
-               fixed: "right",
-               width: 10,
-               render: (_, record) => {
-                    return (
-                         <div className=" flex gap-3">
-                              <VaccineModal
-                                   refetch={refetch}
-                                   icon={<RxUpdate />}
-                                   data={record}
-                              />
-                         </div>
-                    );
-               },
-          },
-     ];
      if (!vaccines || isLoading) return <Spin />;
 
      return (
@@ -135,24 +78,141 @@ const VaccineManagerPage = () => {
                               style={{ width: 400 }}
                               size="large"
                          />
-                         <Table
-                              className="h-full w-full mt-6"
-                              columns={columns}
-                              dataSource={vaccines.vaccines}
-                              pagination={false}
-                         />
-                         <Pagination
-                              className="!mr-5 !mt-10"
-                              showSizeChanger
-                              defaultCurrent={page}
-                              pageSize={limit}
-                              total={vaccines?.totalPage}
-                              onChange={(current, pageSize) => {
-                                   setPage(current);
-                                   setLimit(pageSize);
-                              }}
-                         />
+                         <div className="flex gap-3 flex-wrap mt-6 justify-start w-full">
+                              {vaccines.vaccines?.length > 0 ? (
+                                   vaccines.vaccines.map((vaccine) => {
+                                        return (
+                                             <Card
+                                                  style={{
+                                                       width: 250,
+                                                       height: 330,
+                                                       marginLeft: 20,
+                                                  }}
+                                                  hoverable={true}
+                                                  title={vaccine.vaccineName}
+                                                  cover={
+                                                       <img
+                                                            alt="vaccine"
+                                                            src={
+                                                                 vaccine.picture
+                                                            }
+                                                            style={{
+                                                                 objectFit:
+                                                                      "cover",
+                                                                 height: "150px",
+                                                            }}
+                                                       />
+                                                  }
+                                                  actions={[
+                                                       <Button
+                                                            ghost
+                                                            className={`${
+                                                                 vaccine.status
+                                                                      ? "!bg-red-600"
+                                                                      : "!bg-green-600"
+                                                            } text-white flex items-center gap-2 text-xl justify-center`}
+                                                            onClick={() => {
+                                                                 vaccine.status !=
+                                                                      undefined &&
+                                                                      handleBlockOrActiveVaccine(
+                                                                           vaccine.id,
+                                                                           vaccine.status
+                                                                      );
+                                                            }}
+                                                       >
+                                                            <span>
+                                                                 {vaccine.status ? (
+                                                                      <TbVaccineBottleOff />
+                                                                 ) : (
+                                                                      <TbVaccineBottle />
+                                                                 )}
+                                                            </span>
+                                                       </Button>,
+                                                       <div className="w-30">
+                                                            <VaccineModal
+                                                                 refetch={
+                                                                      refetch
+                                                                 }
+                                                                 icon={
+                                                                      <RxUpdate />
+                                                                 }
+                                                                 data={vaccine}
+                                                            />
+                                                       </div>,
+                                                  ]}
+                                             >
+                                                  <div className="flex flex-col  w-full">
+                                                       <span className="flex gap-2">
+                                                            <strong>
+                                                                 Số Lượng :
+                                                            </strong>
+                                                            <p>
+                                                                 {
+                                                                      vaccine.quantity
+                                                                 }
+                                                            </p>
+                                                       </span>
+                                                       <span className="flex gap-2">
+                                                            <strong>
+                                                                 Giá Bán:
+                                                            </strong>
+                                                            <p>
+                                                                 {vaccine.price}
+                                                                 (Đồng)
+                                                            </p>
+                                                       </span>
+                                                       <span className="flex gap-2">
+                                                            <strong>
+                                                                 Độ Tuổi:
+                                                            </strong>
+                                                            <p>
+                                                                 {
+                                                                      vaccine.mothOld
+                                                                 }
+                                                                 (Tháng)
+                                                            </p>
+                                                       </span>
+                                                       <span className="flex gap-2">
+                                                            <strong>
+                                                                 Trạng Thái:
+                                                            </strong>
+                                                            <p
+                                                                 className={
+                                                                      !vaccine.status
+                                                                           ? "text-red-600"
+                                                                           : "text-green-600"
+                                                                 }
+                                                            >
+                                                                 {vaccine.status !==
+                                                                 undefined
+                                                                      ? vaccine.status
+                                                                           ? "Đang Sản Xuât"
+                                                                           : "Đã Ngừng Sản Xuât"
+                                                                      : "N/A"}
+                                                            </p>
+                                                       </span>
+                                                  </div>
+                                             </Card>
+                                        );
+                                   })
+                              ) : (
+                                   <p>Không Có Dữ Liệu</p>
+                              )}
+                         </div>
                     </div>
+               </div>
+               <div className="flex justify-end">
+                    <Pagination
+                         className="!mt-20 !mr-10"
+                         showSizeChanger
+                         defaultCurrent={page}
+                         pageSize={limit}
+                         total={vaccines.totalPage}
+                         onChange={(current, pageSize) => {
+                              setPage(current);
+                              setLimit(pageSize);
+                         }}
+                    />
                </div>
           </>
      );

@@ -16,8 +16,6 @@ class VaccineService {
           uploadedImage?: string,
           fileName?: string
      ) {
-          console.log("abc:", vaccine.vaccineName?.split(" ").join("_"));
-
           let urlPictre = vaccine.picture;
           if (uploadedImage && fileName)
                urlPictre = await uploadImageToFirebase(
@@ -30,6 +28,11 @@ class VaccineService {
                picture: urlPictre,
           });
           return response.data;
+     }
+     async blockOrActiveVaccine(idVaccine: number, isActive: boolean) {
+          await baseRequest.get(this.BasseUrl + "/status", {
+               params: { idVaccine, isActive },
+          });
      }
 }
 

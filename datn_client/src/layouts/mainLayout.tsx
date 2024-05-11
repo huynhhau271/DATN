@@ -93,7 +93,7 @@ const MainLayout = () => {
                     >
                          <HeaderComponent />
                     </Header>
-                    <Content className="overflow-x-auto site-layout-sub-header-background">
+                    <Content className="overflow-x-auto site-layout-sub-header-background bg-[#f0f2f5]">
                          <Outlet />
                     </Content>
                </Layout>
