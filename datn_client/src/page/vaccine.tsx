@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Button, Spin, Card } from "antd";
+import { Button, Card } from "antd";
 import { MdOutlineVaccines } from "react-icons/md";
 import { Pagination } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
@@ -12,6 +12,7 @@ import { vaccineService } from "../services/vaccineService";
 import { toast } from "react-toastify";
 import { TbVaccineBottle } from "react-icons/tb";
 import { TbVaccineBottleOff } from "react-icons/tb";
+import { Loading } from "../utils/components/sprin";
 
 const VaccineManagerPage = () => {
      const { Search } = Input;
@@ -54,7 +55,7 @@ const VaccineManagerPage = () => {
                });
      };
      const searchbutton = <SearchOutlined type="default" />;
-     if (!vaccines || isLoading) return <Spin />;
+     if (!vaccines || isLoading) return <Loading />;
 
      return (
           <>

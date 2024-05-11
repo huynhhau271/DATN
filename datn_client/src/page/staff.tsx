@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Spin } from "antd";
+import { Button } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import { IUser } from "../models/user.model";
 import { Pagination } from "antd";
@@ -14,6 +14,7 @@ import UserModal from "../modals/userModal";
 import { staffService } from "../services/staffService";
 import { toast } from "react-toastify";
 import useGetAllStaff from "../hook/useGetStaff";
+import { Loading } from "../utils/components/sprin";
 const UserManagerPage = () => {
      const { Search } = Input;
      const [page, setPage] = useState(1);
@@ -192,7 +193,7 @@ const UserManagerPage = () => {
                ),
           },
      ];
-     if (!staffs || isLoading) return <Spin />;
+     if (!staffs || isLoading) return <Loading />;
 
      return (
           <>

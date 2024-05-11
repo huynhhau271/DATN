@@ -1,68 +1,47 @@
 import { Button, Form, Input } from "antd";
 import { toast } from "react-toastify";
-import { IVaccine } from "../models/vaccine.model";
 import TextArea from "antd/es/input/TextArea";
-import { useEffect, useState } from "react";
-import { vaccineService } from "../services/vaccineService";
-import Uploader from "../utils/components/uploadImage/Uploader";
+import { IDisease } from "../models/disease.model";
+import { diseaseService } from "../services/diseaseService";
+import { useEffect } from "react";
 interface Props {
      setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-     data?: IVaccine;
+     data?: IDisease;
      refetch: () => void;
 }
-const VaccineForm = ({ setOpen, refetch, data }: Props) => {
+const DiseaseForm = ({ setOpen, refetch, data }: Props) => {
      const isEdit = data !== undefined;
-     const [uploadedImage, setUploadedImage] = useState<string | undefined>(
-          undefined
-     );
-     const [fileName, setFileName] = useState<string | undefined>(undefined);
-     const [form] = Form.useForm<IVaccine>();
-     const onFinish = async (value: IVaccine) => {
-          if (isEdit) {
-               await vaccineService
-                    .saveVaccine(
-                         {
-                              ...value,
-                              id: data.id,
-                         },
-                         uploadedImage,
-                         fileName
-                    )
-                    .then(() => {
-                         setOpen(false);
-                         refetch();
-                         setUploadedImage(undefined);
-                         toast.success("Cập Nhật Thông Tin Vaccine Thành Công");
-                    })
-                    .catch((error) => {
-                         if (error.response)
-                              toast.error(error.response.data.message);
-                         else
-                              toast.error(
-                                   "Cập Nhật Thông Tin Vaccine Thất Bại"
-                              );
-                    });
-          } else {
-               await vaccineService
-                    .saveVaccine(value, uploadedImage, fileName)
-                    .then(() => {
-                         setOpen(false);
-                         refetch();
-                         toast.success("Thêm Mới Vaccine Thành Công");
-                    })
-                    .catch((error) => {
-                         if (error.response)
-                              toast.error(error.response.data.message);
-                         else toast.error("Thêm Mới Vaccine Thất Bại");
-                    });
-          }
+     const [form] = Form.useForm<IDisease>();
+     const onFinish = async (value: IDisease) => {
+          diseaseService
+               .saveDisease(isEdit ? { ...value, id: data.id } : value)
+               .then(() => {
+                    toast.success(
+                         isEdit
+                              ? "Cập Nhật Thông Tin Bệnh Thành Công"
+                              : "Thêm Bệnh Mới Thành Công"
+                    );
+                    refetch();
+                    form.resetFields();
+                    setOpen(false);
+               })
+               .catch((error) => {
+                    if (error.response)
+                         toast.error(error.response.data.message);
+                    else
+                         toast.error(
+                              isEdit
+                                   ? "Cập Nhật Thông Tin Bênh Mới Thất Bại"
+                                   : "Thêm Bệnh Mới Thất Bại"
+                         );
+               });
      };
      const onReset = () => {
           form.resetFields();
      };
      useEffect(() => {
           form.resetFields();
-     }, [data, setOpen]);
+     }, []);
      return (
           <div className="mt-2">
                <Form
@@ -77,12 +56,12 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                     style={{ maxWidth: 800 }}
                >
                     <Form.Item
-                         label="Tên Vaccine"
-                         name="vaccineName"
+                         label="Tên Bệnh"
+                         name="diseaseName"
                          rules={[
                               {
                                    required: true,
-                                   message: "Vui Lòng Nhập Tên Vaccine!",
+                                   message: "Vui Lòng Nhập Tên Bệnh!",
                               },
                          ]}
                          className="flex-1"
@@ -91,91 +70,26 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                     </Form.Item>
                     <div className="flex justify-between gap-10 items-center">
                          <Form.Item
-                              label="Giá Tiền (Đồng)"
-                              name="price"
-                              rules={[
-                                   {
-                                        required: true,
-                                        message: "Vui Lòng Nhập Giá Tiền !",
-                                   },
-                              ]}
-                              className="flex-1"
-                         >
-                              <Input type="number" />
-                         </Form.Item>
-                         <Form.Item
-                              label="Độ Tuổi (Tháng)"
-                              name="mothOld"
-                              rules={[
-                                   {
-                                        required: true,
-                                        message: "Vui Lòng Nhập Độ Tuổi !",
-                                   },
-                                   {
-                                        validator: (_, value) => {
-                                             if (value < 0 || value > 216)
-                                                  return Promise.reject(
-                                                       "Độ Tuổi Không Phù Hợp"
-                                                  );
-                                             else return Promise.resolve();
-                                        },
-                                   },
-                              ]}
-                              className="flex-1"
-                         >
-                              <Input type="number" />
-                         </Form.Item>
-                    </div>
-                    <div className="flex justify-between gap-10 items-center">
-                         <Form.Item
-                              label="Nguồn gốc"
-                              name="source"
+                              label="Triệu Chứng"
+                              name="symptom"
                               className="flex-1"
                               rules={[
                                    {
                                         required: true,
-                                        message: "Vui Lòng Nhập Nguồn Gốc!",
+                                        message: "Vui Lòng Nhập Triệu Chứng!",
                                    },
                               ]}
                          >
                               <TextArea />
                          </Form.Item>
                          <Form.Item
-                              label="Đường Tiêm"
-                              name="injectionRoute"
+                              label="Cách Phòng Tránh"
+                              name="revention"
                               className="flex-1"
                               rules={[
                                    {
                                         required: true,
-                                        message: "Vui Lòng Nhập Đường Tiêm!",
-                                   },
-                              ]}
-                         >
-                              <TextArea />
-                         </Form.Item>
-                    </div>
-                    <div className="flex justify-between gap-10 items-center">
-                         <Form.Item
-                              label="Cảnh Báo"
-                              name="warning"
-                              className="flex-1"
-                              rules={[
-                                   {
-                                        required: true,
-                                        message: "Vui Lòng Nhập Cảnh Báo!",
-                                   },
-                              ]}
-                         >
-                              <TextArea />
-                         </Form.Item>
-                         <Form.Item
-                              label="Tác Dụng Không Mong Muốn"
-                              name="unwantedEffects"
-                              className="flex-1"
-                              rules={[
-                                   {
-                                        required: true,
-                                        message: "Vui Lòng Nhập Tác Dụng Không Mong Muốn!",
+                                        message: "Vui Lòng Nhập Cách Phòng Tránh!",
                                    },
                               ]}
                          >
@@ -274,14 +188,6 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                               </div>
                          )}
                     </div> */}
-                    <div className="flex justify-center mb-5">
-                         <Uploader
-                              setFileName={setFileName}
-                              defaultValue={data?.picture || undefined}
-                              setUploadedImage={setUploadedImage}
-                              uploadedImage={uploadedImage}
-                         />
-                    </div>
                     <Form.Item className="flex justify-center ">
                          <Button
                               type="primary"
@@ -302,4 +208,4 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
           </div>
      );
 };
-export default VaccineForm;
+export default DiseaseForm;

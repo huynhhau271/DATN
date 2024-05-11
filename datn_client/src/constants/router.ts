@@ -4,6 +4,7 @@ import { LoginPage } from "../page/login";
 import EmployeeManagerPage from "../page/staff";
 import { RouteObject, createBrowserRouter } from "react-router-dom";
 import VaccineManagerPage from "../page/vaccine";
+import DiseaseManagerPage from "../page/disease";
 
 const routers: RouteObject[] = [
      {
@@ -26,6 +27,11 @@ const routers: RouteObject[] = [
                     path: "/admin/vaccine",
                     id: "vaccine",
                     Component: VaccineManagerPage,
+               },
+               {
+                    path: "/admin/disease",
+                    id: "disease",
+                    Component: DiseaseManagerPage,
                },
           ],
      },
