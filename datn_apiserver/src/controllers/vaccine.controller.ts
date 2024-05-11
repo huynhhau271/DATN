@@ -16,3 +16,17 @@ export const saveVaccine = async (req: AuthenticatedRequest, res: Response) => {
     const result = await vaccineService.saveVaccine(user, vaccine);
     return res.status(httpStatus.OK).send(result);
 };
+export const activeVaccine = async (
+    req: AuthenticatedRequest,
+    res: Response
+) => {
+    const vaccineId = req.query.idVaccine;
+    const active = req.query.isActive as string;
+    console.log({ vaccineId, active });
+
+    await vaccineService.activeAndBlockVaccine(
+        +vaccineId,
+        active === "true" ? true : false
+    );
+    return res.status(httpStatus.OK).send("OK");
+};

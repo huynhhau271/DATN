@@ -37,22 +37,22 @@ export default class Vaccine extends Model {
     @Column({ type: DataType.DECIMAL })
     price?: number;
 
-    @Column({ type: DataType.STRING })
+    @Column({ type: DataType.TEXT })
     description?: string;
 
     @Column({ type: DataType.STRING })
     picture?: string;
 
-    @Column({ type: DataType.STRING })
+    @Column({ type: DataType.TEXT })
     source?: string;
 
-    @Column({ type: DataType.STRING })
+    @Column({ type: DataType.TEXT })
     injectionRoute?: string;
 
-    @Column({ type: DataType.STRING })
+    @Column({ type: DataType.TEXT })
     warning?: string;
 
-    @Column({ type: DataType.STRING })
+    @Column({ type: DataType.TEXT })
     unwantedEffects?: string;
 
     @Column({ type: DataType.BOOLEAN })
@@ -61,7 +61,7 @@ export default class Vaccine extends Model {
     @Column({ type: DataType.INTEGER })
     mothOld?: number;
 
-    @Column({ type: DataType.STRING })
+    @Column({ type: DataType.TEXT })
     postInjectionReact?: string;
 
     @Column({ type: DataType.STRING })

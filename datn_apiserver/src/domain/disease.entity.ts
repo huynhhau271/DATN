@@ -27,10 +27,10 @@ export default class Disease extends Model {
     @Column({ type: DataType.STRING })
     diseaseName: string;
 
-    @Column({ type: DataType.STRING })
+    @Column({ type: DataType.TEXT })
     symptom: string;
 
-    @Column({ type: DataType.STRING })
+    @Column({ type: DataType.TEXT })
     revention: string;
 
     @BelongsToMany(() => Vaccine, () => VaccineDisease)
