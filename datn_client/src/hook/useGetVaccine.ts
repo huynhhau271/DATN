@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { IVaccine } from "../models/vaccine.model";
-import { staffService } from "../services/staffService";
+import { vaccineService } from "../services/vaccineService";
 
 export interface Vaccines {
      vaccines: IVaccine[];
@@ -24,7 +24,7 @@ export const useGetAllVaccine = (
           queryKey: ["getAllStaff", page, limit, search],
           queryFn: async () => {
                // chuyen thanh vaccine
-               const response = await staffService.getAllStaff(
+               const response = await vaccineService.getAllVaccine(
                     page,
                     limit,
                     search

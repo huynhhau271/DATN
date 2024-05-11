@@ -1,5 +1,5 @@
 export interface IVaccine {
-     id?: number;
+     id: number;
      vaccineName?: string;
      quantity?: number;
      price?: number;
@@ -14,4 +14,5 @@ export interface IVaccine {
      type?: string;
      createdDate?: Date;
      lastModifiedDate?: Date;
+     status: boolean;
 }

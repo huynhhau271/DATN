@@ -11,18 +11,9 @@ interface Props {
 }
 const VaccineModal = ({ title, icon, refetch, data }: Props) => {
      const [open, setOpen] = useState(false);
-     const [confirmLoading, setConfirmLoading] = useState(false);
 
      const showModal = () => {
           setOpen(true);
-     };
-
-     const handleOk = () => {
-          setConfirmLoading(true);
-          setTimeout(() => {
-               setOpen(false);
-               setConfirmLoading(false);
-          }, 2000);
      };
 
      const handleCancel = () => {
@@ -34,24 +25,19 @@ const VaccineModal = ({ title, icon, refetch, data }: Props) => {
                <Button
                     type="primary"
                     onClick={showModal}
-                    className={`flex items-center  gap-4 ${
+                    className={`flex  items-center justify-center gap-4 ${
                          title ? "!mr-5" : ""
                     }`}
-                    block
                >
-                    <span className="!mr-2">
-                         {title || "Cập Nhật Thông Tin Vaccine"}
-                    </span>
+                    {title && <span className="!mr-2">{title}</span>}
                     <span className="mt-1">{icon}</span>
                </Button>
                <Modal
-                    title={title || "Cập Nhật Thông Tin Nhân Viên"}
+                    title={title || "Cập Nhật Thông Tin Vaccine"}
                     open={open}
-                    onOk={handleOk}
-                    confirmLoading={confirmLoading}
                     onCancel={handleCancel}
                     footer={null}
-                    width={700}
+                    width={800}
                >
                     <VaccineForm
                          setOpen={setOpen}

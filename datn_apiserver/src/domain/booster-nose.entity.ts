@@ -26,16 +26,9 @@ export default class BoosterNose extends Model {
     @Column({ type: DataType.INTEGER })
     noseNumber: number;
 
-    @Column({ type: DataType.DATE })
-    noDate: string;
+    @Column({ type: DataType.INTEGER })
+    distance: number; // * moth
 
     @ForeignKey(() => Vaccine)
     vaccineId: number;
-
-    @CreatedAt
-    @Column
-    createdDate?: Date;
-
-    @UpdatedAt
-    lastModifiedDate?: Date;
 }
