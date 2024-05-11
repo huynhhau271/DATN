@@ -46,7 +46,7 @@ export const MenuItems: MenuItems[] = [
      },
      {
           title: "Bệnh",
-          link: "###",
+          link: "/admin/disease",
           id: "diseases",
           icon: FaShieldVirus,
      },
