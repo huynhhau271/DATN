@@ -80,7 +80,7 @@ const DiseaseForm = ({ setOpen, refetch, data }: Props) => {
                                    },
                               ]}
                          >
-                              <TextArea />
+                              <TextArea rows={10} />
                          </Form.Item>
                          <Form.Item
                               label="Cách Phòng Tránh"
@@ -93,7 +93,7 @@ const DiseaseForm = ({ setOpen, refetch, data }: Props) => {
                                    },
                               ]}
                          >
-                              <TextArea />
+                              <TextArea rows={10}/>
                          </Form.Item>
                     </div>
                     {/* <div>

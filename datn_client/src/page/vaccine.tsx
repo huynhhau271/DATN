@@ -58,7 +58,7 @@ const VaccineManagerPage = () => {
      if (!vaccines || isLoading) return <Loading />;
 
      return (
-          <>
+          <div className="flex flex-col">
                <div className="flex flex-col h-full mt-4 ml-1">
                     <div className="flex items-end justify-between">
                          <h1 className="text-5xl  ml-4">Vaccine</h1>
@@ -216,7 +216,7 @@ const VaccineManagerPage = () => {
                          }}
                     />
                </div>
-          </>
+          </div>
      );
 };
 export default VaccineManagerPage;

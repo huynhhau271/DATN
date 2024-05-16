@@ -22,4 +22,6 @@ export interface IVaccine {
     mothOld?: number;
 
     postInjectionReact?: string;
+
+    status: boolean;
 }

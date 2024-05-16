@@ -118,7 +118,10 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
           );
      }, [districts, districtId, userData?.wardId]);
 
-     console.log({ userData, provinceId });
+     useEffect(() => {
+          onReset()
+     },[]);
+
 
      return (
           <div className="mt-2">
