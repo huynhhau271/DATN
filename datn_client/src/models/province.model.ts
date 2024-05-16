@@ -3,6 +3,7 @@ export interface IWard {
      name: string;
      type: string;
      districtId: string;
+     districts: IDistrict[];
 }
 
 export interface IDistrict {
