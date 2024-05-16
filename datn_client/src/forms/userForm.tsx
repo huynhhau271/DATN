@@ -147,14 +147,14 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                          </Form.Item>
                          <Form.Item
                               name="roleName"
-                              label="Role"
+                              label="Chức Vụ"
                               className="flex-1"
                          >
                               <Select>
                                    {UserRole.map((role) => {
                                         return (
-                                             <Select.Option value={role.label}>
-                                                  {role.value}
+                                             <Select.Option value={role.value}>
+                                                  {role.label}
                                              </Select.Option>
                                         );
                                    })}
