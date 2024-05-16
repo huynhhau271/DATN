@@ -5,6 +5,7 @@ import {
     Column,
     CreatedAt,
     DataType,
+    Default,
     ForeignKey,
     HasMany,
     Model,
@@ -55,6 +56,7 @@ export default class Vaccine extends Model {
     @Column({ type: DataType.TEXT })
     unwantedEffects?: string;
 
+    @Default(true)
     @Column({ type: DataType.BOOLEAN })
     status: boolean;
 

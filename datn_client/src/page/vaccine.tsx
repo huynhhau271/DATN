@@ -79,7 +79,10 @@ const VaccineManagerPage = () => {
                               style={{ width: 400 }}
                               size="large"
                          />
-                         <div className="flex gap-10 flex-wrap mt-6 justify-center w-full">
+                         <div
+                              className="flex gap-10 flex-wrap mt-6 justify-start
+                          w-full"
+                         >
                               {vaccines.vaccines?.length > 0 ? (
                                    vaccines.vaccines.map((vaccine) => {
                                         return (

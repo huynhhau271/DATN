@@ -18,5 +18,5 @@ export interface UserPayLoad {
 
     wardId?: string;
 
-    roleId?: number;
+    roleName?: string;
 }

@@ -17,17 +17,11 @@ export const getAllStaff = async (req: AuthenticatedRequest, res: Response) => {
     return res.status(httpStatus.OK).send(result);
 };
 
-export const createStaff = async (req: AuthenticatedRequest, res: Response) => {
+export const saveStaff = async (req: AuthenticatedRequest, res: Response) => {
     const newUser = req.body;
     const user = req.user;
-    const result = await userService.createStaff(user, newUser);
+    const result = await userService.saveStaff(user, newUser);
     return res.status(httpStatus.OK).send(result);
-};
-export const updateStaff = async (req: AuthenticatedRequest, res: Response) => {
-    const userUpdate = req.body;
-    const user = req.user;
-    await userService.updateStaff(user, userUpdate);
-    return res.status(httpStatus.OK).send("OK");
 };
 export const activeUser = async (req: AuthenticatedRequest, res: Response) => {
     const user = req.user;

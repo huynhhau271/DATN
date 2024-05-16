@@ -9,6 +9,10 @@ import { Op } from "sequelize";
 import { IUser } from "../interface/IUser";
 import { tranformModel } from "./helper/tranformModelToObject";
 import authorityRepository from "../repositories/authorityRepository";
+import { UserRoles } from "../types/userRoles";
+import wardRepository from "../repositories/wardRepository";
+import districtsRepository from "../repositories/districtsRepository";
+import provinceRepository from "../repositories/provinceRepository";
 interface Login {
     email: string;
     password: string;
@@ -20,7 +24,38 @@ interface Staff {
     totalPage: number;
 }
 class userService {
-    async createStaff(user: User, payload: UserPayLoad) {
+    async saveStaff(user: User, payload: UserPayLoad) {
+        const roleUser = await authorityRepository.findOne({
+            where: {
+                name: payload.roleName || UserRoles.STAFF,
+            },
+            raw: true,
+        });
+        console.log({ roleUser });
+
+        if (payload.id) {
+            const userForUpdate = await userRepository.findByPk(payload.id);
+            if (!userForUpdate)
+                throw new BadRequestError("Người Dùng Không Tồn Tại");
+            else
+                return await userRepository.update(
+                    {
+                        updatedBy: user.userId,
+                        fullName: payload.fullName,
+                        gender: payload.gender,
+                        wardId: payload.wardId,
+                        dob: payload.dob,
+                        email: payload.email,
+                        phone: payload.phone,
+                        roleId: roleUser.id,
+                    },
+                    {
+                        where: {
+                            id: payload.id,
+                        },
+                    }
+                );
+        }
         const checkEmail = await userRepository.findOne({
             where: {
                 email: payload.email,
@@ -32,17 +67,13 @@ class userService {
                 phone: payload.phone,
             },
         });
-        const role = await authorityRepository.findOne({
-            where: {
-                name: "STAFF",
-            },
-        });
+
         if (checkPhone) throw new BadRequestError("Số Điện Thoại Đã Tồn Tại");
         const newUser = await userRepository.create({
             ...payload,
             password: "123456",
             activated: true,
-            roleId: role.id,
+            roleId: roleUser.id,
             createdBy: user.userId,
         });
         return newUser;
@@ -102,12 +133,32 @@ class userService {
                     model: authorityRepository,
                     attributes: ["name"],
                 },
+                {
+                    model: wardRepository,
+                    include: [
+                        {
+                            model: districtsRepository,
+                            include: [
+                                {
+                                    model: provinceRepository,
+                                },
+                            ],
+                        },
+                    ],
+                    attributes: ["id", "districtId"],
+                },
             ],
         });
         let staffs = tranformModel(rows);
         staffs = staffs.map((staff) => {
-            return { ...staff, role: staff?.role.name };
+            return {
+                ...staff,
+                roleName: staff?.role.name,
+                districtId: staff["ward"]["districtId"],
+                provinceId: staff["ward"]["district"]["provinceId"],
+            };
         });
+
         return {
             staffs: staffs,
             limit: limit,
@@ -136,29 +187,6 @@ class userService {
                 },
             }
         );
-    }
-    async updateStaff(user: User, userUpdate: UserPayLoad) {
-        const userForUpdate = await userRepository.findByPk(userUpdate.id);
-        console.log({ ward: userUpdate.wardId });
-        if (!userForUpdate)
-            throw new BadRequestError("Nhân Viên Không Tồn Tại");
-        else
-            return await userRepository.update(
-                {
-                    updatedBy: user.userId,
-                    fullName: userUpdate.fullName,
-                    gender: userUpdate.gender,
-                    wardId: userUpdate.wardId,
-                    dob: userUpdate.dob,
-                    email: userUpdate.email,
-                    phone: userUpdate.phone,
-                },
-                {
-                    where: {
-                        id: userUpdate.id,
-                    },
-                }
-            );
     }
 }
 

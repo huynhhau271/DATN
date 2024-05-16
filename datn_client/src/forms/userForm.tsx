@@ -96,11 +96,30 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
      };
      useEffect(() => {
           form.resetFields();
-     }, [userData]);
+     }, [userData, form]);
      useEffect(() => {
-          setProvinces(provinces);
+          setProvinces(provinceData);
           if (userData?.provinceId) setProvinceId(userData?.provinceId);
-     }, [provinceData]);
+     }, [provinceData, userData?.provinceId]);
+
+     useEffect(() => {
+          if (userData?.districtId) setDistrictId(userData?.districtId);
+          setDistricts(
+               provinces?.find((provice) => provice.id === provinceId)
+                    ?.districts as IDistrict[]
+          );
+     }, [provinceId, provinces, userData?.districtId]);
+
+     useEffect(() => {
+          if (userData?.wardId) setWardId(userData?.wardId);
+          setWards(
+               districts?.find((district) => district.id === districtId)
+                    ?.wards as IWard[]
+          );
+     }, [districts, districtId, userData?.wardId]);
+
+     console.log({ userData, provinceId });
+
      return (
           <div className="mt-2">
                <Form
@@ -147,14 +166,14 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                          </Form.Item>
                          <Form.Item
                               name="roleName"
-                              label="Role"
+                              label="Chức Vụ"
                               className="flex-1"
                          >
                               <Select>
                                    {UserRole.map((role) => {
                                         return (
-                                             <Select.Option value={role.label}>
-                                                  {role.value}
+                                             <Select.Option value={role.value}>
+                                                  {role.label}
                                              </Select.Option>
                                         );
                                    })}
@@ -219,15 +238,10 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                               label="Tỉnh Thành"
                               name="province"
                               className="flex-1"
-                              rules={[
-                                   {
-                                        required: true,
-                                        message: "Vui Lòng Chọn Tỉnh Thành",
-                                   },
-                              ]}
                          >
                               <Select
                                    defaultValue={provinceId}
+                                   value={provinceId}
                                    onChange={(value) =>
                                         handleProvinceChange(value)
                                    }
@@ -245,15 +259,10 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                               label="Quận Huyện"
                               name="district"
                               className="flex-1"
-                              rules={[
-                                   {
-                                        required: true,
-                                        message: "Vui Lòng Chọn Quận Huyện",
-                                   },
-                              ]}
                          >
                               <Select
                                    defaultValue={districtId}
+                                   value={districtId}
                                    disabled={provinceId ? false : true}
                                    onChange={(value) =>
                                         handleDistrictChange(value)

@@ -1,3 +1,5 @@
+import Districts from "../domain/districts.entity";
+import Wards from "../domain/wards.entity";
 export interface IUser {
     email?: string;
 
@@ -16,6 +18,10 @@ export interface IUser {
     avatar?: string;
 
     wardId?: number;
+
+    districtId?: string;
+
+    provinceId?: string;
 
     roleName?: string;
 }
