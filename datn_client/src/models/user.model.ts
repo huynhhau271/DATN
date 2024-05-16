@@ -10,7 +10,7 @@ export interface IUser {
      wardId?: string;
      districtId?: string;
      provinceId?: string;
-     role: string;
+     roleName: string;
 }
 
 export type LoginResponse = {

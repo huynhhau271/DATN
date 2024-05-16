@@ -2,8 +2,7 @@ import { BaseRouter } from "./BaseRouter";
 import {
     activeUser,
     getAllStaff,
-    createStaff,
-    updateStaff,
+    saveStaff,
 } from "../controllers/user.controller";
 import catchAsync from "../utils/catchAsync";
 
@@ -21,8 +20,8 @@ class UserRouter extends BaseRouter {
      */
     protected init() {
         this.router.get("/", catchAsync(getAllStaff));
-        this.router.post("/", catchAsync(createStaff));
-        this.router.put("/", catchAsync(updateStaff));
+        this.router.post("/", catchAsync(saveStaff));
+        this.router.put("/", catchAsync(saveStaff));
         this.router.get("/active", catchAsync(activeUser));
     }
 }

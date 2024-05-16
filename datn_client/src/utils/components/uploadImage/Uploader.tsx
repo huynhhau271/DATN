@@ -2,6 +2,7 @@ import { useDropzone } from "react-dropzone";
 import tw from "tailwind-styled-components";
 import { useEffect } from "react";
 import UploadAvatarImage from "./UploadImages";
+import { Image } from "antd";
 
 type UploadContainerProps = {
      dragactive: string;
@@ -65,19 +66,21 @@ const Uploader: React.FC<UserImageUploaderProps> = ({
                     <div {...getRootProps()}>
                          {uploadedImage ? (
                               <div className="relative">
-                                   <img
+                                   <Image
                                         src={uploadedImage}
                                         alt="Uploaded Image"
+                                        preview={false}
                                         className="h-40 w-40 object-cover"
                                    />
                               </div>
                          ) : (
                               <div className="relative">
                                    {defaultValue ? (
-                                        <img
+                                        <Image
                                              src={defaultValue}
-                                             alt="Uploaded avatar"
-                                             className="h-40 w-40 border-2 border-white object-cover"
+                                             preview={false}
+                                             alt="Uploaded Image"
+                                             className="h-40 w-40 object-cover"
                                         />
                                    ) : (
                                         <UploadAvatarImage />

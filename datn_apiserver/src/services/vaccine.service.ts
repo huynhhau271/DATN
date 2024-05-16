@@ -62,7 +62,6 @@ class VaccineService {
             const newVaccine = await vaccineRepository.create({
                 ...vaccine,
                 quantity: 0,
-                status: false,
             });
             return newVaccine.toJSON();
         }
