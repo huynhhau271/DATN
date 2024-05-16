@@ -15,6 +15,7 @@ import { staffService } from "../services/staffService";
 import { toast } from "react-toastify";
 import useGetAllStaff from "../hook/useGetStaff";
 import { Loading } from "../utils/components/sprin";
+import { UserRole } from "../utils/userRole";
 const UserManagerPage = () => {
      const { Search } = Input;
      const [page, setPage] = useState(1);
@@ -106,7 +107,10 @@ const UserManagerPage = () => {
                dataIndex: "role",
                key: "role",
                render: (_, data) => {
-                    return data.role || "N/A";
+                    return (
+                         UserRole.find((role) => role.value === data.roleName)
+                              ?.label || "N/A"
+                    );
                },
                filters: [
                     {
@@ -119,7 +123,7 @@ const UserManagerPage = () => {
                     },
                ],
                onFilter(value, record) {
-                    return record.role === value;
+                    return record.roleName === value;
                },
           },
           {

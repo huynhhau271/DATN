@@ -9,7 +9,7 @@ function UploadAvatarImage() {
       justify-center
       border-2 border-dashed `}
           >
-               <strong className="text-sm ">Uploader</strong>
+               <strong className="text-sm ">Upload Image</strong>
           </div>
      );
 }

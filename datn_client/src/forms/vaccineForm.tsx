@@ -1,8 +1,8 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, InputNumber } from "antd";
 import { toast } from "react-toastify";
 import { IVaccine } from "../models/vaccine.model";
 import TextArea from "antd/es/input/TextArea";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { vaccineService } from "../services/vaccineService";
 import Uploader from "../utils/components/uploadImage/Uploader";
 interface Props {
@@ -17,6 +17,11 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
      );
      const [fileName, setFileName] = useState<string | undefined>(undefined);
      const [form] = Form.useForm<IVaccine>();
+     const onReset = () => {
+          form.resetFields();
+          setFileName(undefined);
+          setUploadedImage(undefined);
+     };
      const onFinish = async (value: IVaccine) => {
           if (isEdit) {
                await vaccineService
@@ -32,12 +37,14 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                          setOpen(false);
                          refetch();
                          setUploadedImage(undefined);
+                         onReset();
                          toast.success("Cập Nhật Thông Tin Vaccine Thành Công");
                     })
                     .catch((error) => {
-                         if (error.response)
+                         if (error.response) {
+                              console.log({ abc: error.response });
                               toast.error(error.response.data.message);
-                         else
+                         } else
                               toast.error(
                                    "Cập Nhật Thông Tin Vaccine Thất Bại"
                               );
@@ -48,6 +55,7 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                     .then(() => {
                          setOpen(false);
                          refetch();
+                         onReset();
                          toast.success("Thêm Mới Vaccine Thành Công");
                     })
                     .catch((error) => {
@@ -57,12 +65,6 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                     });
           }
      };
-     const onReset = () => {
-          form.resetFields();
-     };
-     useEffect(() => {
-          form.resetFields();
-     }, [data, setOpen]);
      return (
           <div className="mt-2">
                <Form
@@ -101,7 +103,22 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                               ]}
                               className="flex-1"
                          >
-                              <Input type="number" />
+                              <InputNumber<number>
+                                   defaultValue={1000}
+                                   formatter={(value) =>
+                                        ` ${value}`.replace(
+                                             /\B(?=(\d{3})+(?!\d))/g,
+                                             ","
+                                        )
+                                   }
+                                   parser={(value) =>
+                                        value?.replace(
+                                             /\$\s?|(,*)/g,
+                                             ""
+                                        ) as unknown as number
+                                   }
+                                   className="!w-full"
+                              />
                          </Form.Item>
                          <Form.Item
                               label="Độ Tuổi (Tháng)"
@@ -113,7 +130,7 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                                    },
                                    {
                                         validator: (_, value) => {
-                                             if (value < 0 || value > 216)
+                                             if (value < 0)
                                                   return Promise.reject(
                                                        "Độ Tuổi Không Phù Hợp"
                                                   );
@@ -123,7 +140,7 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                               ]}
                               className="flex-1"
                          >
-                              <Input type="number" />
+                              <Input type="number" min={0} defaultValue={0} />
                          </Form.Item>
                     </div>
                     <div className="flex justify-between gap-10 items-center">

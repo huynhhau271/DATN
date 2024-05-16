@@ -79,16 +79,12 @@ const VaccineManagerPage = () => {
                               style={{ width: 400 }}
                               size="large"
                          />
-                         <div className="flex gap-3 flex-wrap mt-6 justify-start w-full">
+                         <div className="flex gap-10 flex-wrap mt-6 justify-center w-full">
                               {vaccines.vaccines?.length > 0 ? (
                                    vaccines.vaccines.map((vaccine) => {
                                         return (
                                              <Card
-                                                  style={{
-                                                       width: 250,
-                                                       height: 330,
-                                                       marginLeft: 20,
-                                                  }}
+                                                  className="!ml-7 w-72 h-96"
                                                   hoverable={true}
                                                   title={vaccine.vaccineName}
                                                   cover={
@@ -197,7 +193,9 @@ const VaccineManagerPage = () => {
                                         );
                                    })
                               ) : (
-                                   <p>Không Có Dữ Liệu</p>
+                                   <p className="text-center">
+                                        Không Có Dữ Liệu
+                                   </p>
                               )}
                          </div>
                     </div>

@@ -7,6 +7,7 @@ import { staffService } from "../services/staffService";
 import { toast } from "react-toastify";
 import { formatDate } from "../utils/formatDate";
 import moment from "moment";
+import { UserRole } from "../utils/userRole";
 interface Props {
      setOpen: React.Dispatch<React.SetStateAction<boolean>>;
      userData?: IUser;
@@ -48,7 +49,6 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                return Promise.reject("Nhân Viên Chưa Đủ 18 Tuổi");
           else return Promise.resolve();
      };
-
      const [form] = Form.useForm<IUser>();
      const onFinish = (value: IUser) => {
           if (!isEdit)
@@ -98,24 +98,9 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
           form.resetFields();
      }, [userData]);
      useEffect(() => {
-          setProvinces(provinceData);
-          if (userData?.wardId) setWardId(userData?.wardId);
+          setProvinces(provinces);
           if (userData?.provinceId) setProvinceId(userData?.provinceId);
-          if (userData?.districtId) setDistrictId(userData?.districtId);
-     }, [provinceData, userData]);
-     useEffect(() => {
-          setDistricts(
-               provinceData?.find((data) => data.id === provinceId)
-                    ?.districts ?? []
-          );
-     }, [provinceData, userData]);
-     useEffect(() => {
-          const wards = districts?.find(
-               (data) => data.id === userData?.districtId
-          )?.wards;
-          setWards(wards);
-     }, [districts]);
-
+     }, [provinceData]);
      return (
           <div className="mt-2">
                <Form
@@ -160,6 +145,21 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                          >
                               <Input type="email" />
                          </Form.Item>
+                         <Form.Item
+                              name="roleName"
+                              label="Role"
+                              className="flex-1"
+                         >
+                              <Select>
+                                   {UserRole.map((role) => {
+                                        return (
+                                             <Select.Option value={role.value}>
+                                                  {role.label}
+                                             </Select.Option>
+                                        );
+                                   })}
+                              </Select>
+                         </Form.Item>
                     </div>
                     <div className="flex justify-between gap-10 items-center">
                          <Form.Item
@@ -172,7 +172,7 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                                         message: "Vui Lòng Nhập Số Điện Thoại!",
                                    },
                                    {
-                                        pattern: /^\d{10,11}$/,
+                                        pattern: /^\d{10}$/,
                                         message: "Số Điện Thoại Không Hợp Lệ",
                                    },
                               ]}
@@ -228,7 +228,6 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                          >
                               <Select
                                    defaultValue={provinceId}
-                                   value={provinceId}
                                    onChange={(value) =>
                                         handleProvinceChange(value)
                                    }
@@ -255,7 +254,6 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                          >
                               <Select
                                    defaultValue={districtId}
-                                   value={districtId}
                                    disabled={provinceId ? false : true}
                                    onChange={(value) =>
                                         handleDistrictChange(value)
