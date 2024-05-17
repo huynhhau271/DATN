@@ -45,7 +45,7 @@ export const MenuItems: MenuItems[] = [
           icon: LiaUserNurseSolid,
      },
      {
-          title: "Bệnh",
+          title: "Bệnh Học",
           link: "/admin/disease",
           id: "diseases",
           icon: FaShieldVirus,

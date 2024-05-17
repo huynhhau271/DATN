@@ -39,8 +39,8 @@ const VaccineManagerPage = () => {
                .then(() => {
                     toast.success(
                          active
-                              ? "Khóa Người Dùng Thành Công"
-                              : "Mở Khóa Người Dùng Thành Công"
+                              ? "Vac Xin Đã Ngừng Sản Xuất"
+                              : "Vac Xin Hiện Đang Sản Xuất"
                     );
                     refetch();
                })
@@ -49,8 +49,8 @@ const VaccineManagerPage = () => {
                          toast.error(error.response.data.message);
                     toast.error(
                          active
-                              ? "Khóa Người Dùng Thất Bại"
-                              : "Mở Khóa Người Dùng Thất Bại"
+                              ? "Khóa Vac Xin Thất Bại"
+                              : "Mở Khóa Vac Xin Thất Bại"
                     );
                });
      };
@@ -186,8 +186,8 @@ const VaccineManagerPage = () => {
                                                                  {vaccine.status !==
                                                                  undefined
                                                                       ? vaccine.status
-                                                                           ? "Đang Sản Xuât"
-                                                                           : "Đã Ngừng Sản Xuât"
+                                                                           ? "Đang Sản Xuất"
+                                                                           : "Đã Ngừng Sản Xuất"
                                                                       : "N/A"}
                                                             </p>
                                                        </span>

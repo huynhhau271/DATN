@@ -152,7 +152,7 @@ const UserManagerPage = () => {
                },
           },
           {
-               title: "Action",
+               title: "Tính năng",
                key: "operation",
                fixed: "right",
                width: 100,
