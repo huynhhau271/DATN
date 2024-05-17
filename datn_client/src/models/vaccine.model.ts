@@ -1,3 +1,5 @@
+import { IBoosterNoses } from "./boosterNoses.model";
+
 export interface IVaccine {
      id: number;
      vaccineName?: string;
@@ -15,4 +17,5 @@ export interface IVaccine {
      createdDate?: Date;
      lastModifiedDate?: Date;
      status: boolean;
+     boosterNoses?: IBoosterNoses[];
 }

@@ -1,10 +1,12 @@
-import { Button, Form, Input, InputNumber } from "antd";
+import { Button, Form, Input, InputNumber, Space } from "antd";
 import { toast } from "react-toastify";
 import { IVaccine } from "../models/vaccine.model";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { vaccineService } from "../services/vaccineService";
 import Uploader from "../utils/components/uploadImage/Uploader";
+import { useForm } from "antd/es/form/Form";
 interface Props {
      setOpen: React.Dispatch<React.SetStateAction<boolean>>;
      data?: IVaccine;
@@ -16,7 +18,7 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
           undefined
      );
      const [fileName, setFileName] = useState<string | undefined>(undefined);
-     const [form] = Form.useForm<IVaccine>();
+     const [form] = useForm<IVaccine>();
      const onReset = () => {
           form.resetFields();
           setFileName(undefined);
@@ -42,7 +44,6 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                     })
                     .catch((error) => {
                          if (error.response) {
-                              console.log({ abc: error.response });
                               toast.error(error.response.data.message);
                          } else
                               toast.error(
@@ -95,12 +96,8 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                          <Form.Item
                               label="Giá Tiền (Đồng)"
                               name="price"
-                              rules={[
-                                   {
-                                        required: true,
-                                        message: "Vui Lòng Nhập Giá Tiền !",
-                                   },
-                              ]}
+                              initialValue={1000}
+                              required
                               className="flex-1"
                          >
                               <InputNumber<number>
@@ -123,11 +120,9 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                          <Form.Item
                               label="Độ Tuổi (Tháng)"
                               name="mothOld"
+                              required
+                              initialValue={0}
                               rules={[
-                                   {
-                                        required: true,
-                                        message: "Vui Lòng Nhập Độ Tuổi !",
-                                   },
                                    {
                                         validator: (_, value) => {
                                              if (value < 0)
@@ -199,98 +194,104 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                               <TextArea />
                          </Form.Item>
                     </div>
-                    {/* <div>
+                    <div>
                          <Form.Item
-                              label="Loại Vaccine"
-                              name="type"
+                              label="Mũi Tăng Cường"
+                              name="boosterNoses"
+                              initialValue={{
+                                   boosterNoses: data?.boosterNoses,
+                              }}
                               className="flex-1"
-                              rules={[
-                                   {
-                                        required: true,
-                                        message: "Vui Lòng Chọn Loại Vaccine!",
-                                   },
-                              ]}
                          >
-                              <Select
-                                   onChange={(vl) => setTypeVaccine(vl)}
-                                   options={typeVaccineOption}
-                              />
-                         </Form.Item>
-                         {typeVaccine == "goi" && (
-                              <div className="flex flex-wrap">
-                                   <Form.List name="boosterNoses">
-                                        {(fields, { add, remove }) => (
-                                             <div className="flex-1">
-                                                  {fields.map(
-                                                       (
-                                                            {
-                                                                 key,
-                                                                 name,
-                                                                 ...restField
-                                                            },
-                                                            index
-                                                       ) => (
-                                                            <Space
-                                                                 key={key}
-                                                                 style={{
-                                                                      marginBottom: 8,
-                                                                 }}
-                                                                 align="center"
+                              <Form.List name="boosterNoses">
+                                   {(fields, { add, remove }) => (
+                                        <div className="flex-1">
+                                             {fields.map(
+                                                  (
+                                                       {
+                                                            key,
+                                                            name,
+                                                            ...restField
+                                                       },
+                                                       index
+                                                  ) => (
+                                                       <Space
+                                                            key={key}
+                                                            style={{
+                                                                 marginBottom: 8,
+                                                            }}
+                                                            align="center"
+                                                       >
+                                                            <Form.Item
+                                                                 name={[
+                                                                      name,
+                                                                      `noseNumber`,
+                                                                 ]}
+                                                                 hidden
+                                                                 initialValue={
+                                                                      index + 2
+                                                                 }
+                                                                 {...restField}
                                                             >
-                                                                 <Form.Item
-                                                                      {...restField}
-                                                                      name={[
-                                                                           name,
-                                                                           `Mũi ${
-                                                                                index +
-                                                                                1
-                                                                           }`,
-                                                                      ]}
-                                                                      label={`Mũi ${
+                                                                 <InputNumber
+                                                                      value={
                                                                            index +
-                                                                           1
-                                                                      }`}
-                                                                      rules={[
-                                                                           {
-                                                                                required:
-                                                                                     true,
-                                                                                message: "Vui Lòng nhập số tháng!",
-                                                                           },
-                                                                      ]}
-                                                                      className="!ml-7"
-                                                                 >
-                                                                      <Input placeholder="First Name" />
-                                                                 </Form.Item>
-                                                                 <MinusCircleOutlined
-                                                                      onClick={() =>
-                                                                           remove(
-                                                                                name
-                                                                           )
+                                                                           2
+                                                                      }
+                                                                      defaultValue={
+                                                                           index +
+                                                                           2
                                                                       }
                                                                  />
-                                                            </Space>
-                                                       )
-                                                  )}
-                                                  <Form.Item>
-                                                       <Button
-                                                            type="dashed"
-                                                            onClick={() =>
-                                                                 add()
-                                                            }
-                                                            block
-                                                            icon={
-                                                                 <PlusOutlined />
-                                                            }
-                                                       >
-                                                            Add field
-                                                       </Button>
-                                                  </Form.Item>
-                                             </div>
-                                        )}
-                                   </Form.List>
-                              </div>
-                         )}
-                    </div> */}
+                                                            </Form.Item>
+                                                            <Form.Item
+                                                                 {...restField}
+                                                                 name={[
+                                                                      name,
+                                                                      `distance`,
+                                                                 ]}
+                                                                 initialValue={
+                                                                      1
+                                                                 }
+                                                                 label={`Khoảng Thời Gian Sau Mũi ${
+                                                                      index + 1
+                                                                 }`}
+                                                                 className="!ml-7"
+                                                            >
+                                                                 <InputNumber
+                                                                      className="!w-full"
+                                                                      placeholder="Nhập Số Tháng"
+                                                                      min={1}
+                                                                      defaultValue={
+                                                                           1
+                                                                      }
+                                                                 />
+                                                            </Form.Item>
+                                                            <MinusCircleOutlined
+                                                                 onClick={() =>
+                                                                      remove(
+                                                                           name
+                                                                      )
+                                                                 }
+                                                            />
+                                                       </Space>
+                                                  )
+                                             )}
+                                             <Form.Item>
+                                                  <Button
+                                                       type="dashed"
+                                                       onClick={() => add()}
+                                                       block
+                                                       icon={<PlusOutlined />}
+                                                  >
+                                                       Add field
+                                                  </Button>
+                                             </Form.Item>
+                                        </div>
+                                   )}
+                              </Form.List>
+                         </Form.Item>
+                    </div>
                     <div className="flex justify-center mb-5">
                          <Uploader
                               setFileName={setFileName}

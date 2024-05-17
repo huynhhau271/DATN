@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
     AutoIncrement,
+    BelongsTo,
     Column,
     CreatedAt,
     DataType,
@@ -31,4 +32,7 @@ export default class BoosterNose extends Model {
 
     @ForeignKey(() => Vaccine)
     vaccineId: number;
+
+    @BelongsTo(() => Vaccine)
+    vaccine: Vaccine;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Button, Card } from "antd";
+import { Button, Card, Empty } from "antd";
 import { MdOutlineVaccines } from "react-icons/md";
 import { Pagination } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
@@ -196,9 +196,22 @@ const VaccineManagerPage = () => {
                                         );
                                    })
                               ) : (
-                                   <p className="text-center">
-                                        Không Có Dữ Liệu
-                                   </p>
+                                   <Empty
+                                        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                                        imageStyle={{ height: 60 }}
+                                        description={
+                                             <span>
+                                                  Chưa Có Vaccine Nào Trong Hệ
+                                                  Thống
+                                             </span>
+                                        }
+                                   >
+                                        <VaccineModal
+                                             title="Thêm Vaccine"
+                                             icon={<MdOutlineVaccines />}
+                                             refetch={refetch}
+                                        />
+                                   </Empty>
                               )}
                          </div>
                     </div>
