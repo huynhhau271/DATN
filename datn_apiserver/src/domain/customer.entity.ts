@@ -6,14 +6,14 @@ import {
     CreatedAt,
     DataType,
     ForeignKey,
+    HasMany,
     Model,
     PrimaryKey,
     Table,
     UpdatedAt,
 } from "sequelize-typescript";
-import Vaccine from "./vaccine.entity";
 import Wards from "./wards.entity";
-import User from "./user.entity";
+import Booking from "./booking.entity";
 /**
  * A Booking.
  */
@@ -25,9 +25,6 @@ export default class Customer extends Model {
     @AutoIncrement
     @Column({ type: DataType.BIGINT })
     id?: number;
-
-    @Column({ type: DataType.STRING })
-    createdBy?: string;
 
     @Column({ type: DataType.STRING })
     customerName: string;
@@ -63,6 +60,8 @@ export default class Customer extends Model {
     @BelongsTo(() => Wards)
     ward: Wards;
 
+    @HasMany(() => Booking)
+    bookings: Booking[];
     @CreatedAt
     @Column
     createdDate?: Date;

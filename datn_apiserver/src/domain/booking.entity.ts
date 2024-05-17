@@ -15,6 +15,7 @@ import Vaccine from "./vaccine.entity";
 import Wards from "./wards.entity";
 import User from "./user.entity";
 import NurseStaff from "./nurseStaff.entity";
+import Customer from "./customer.entity";
 /**
  * A Booking.
  */
@@ -26,9 +27,6 @@ export default class Booking extends Model {
     @AutoIncrement
     @Column({ type: DataType.BIGINT })
     id?: number;
-
-    @Column({ type: DataType.STRING })
-    createdBy?: string;
 
     @Column({ type: DataType.DATE })
     expectedDate: Date;
@@ -59,6 +57,12 @@ export default class Booking extends Model {
 
     @BelongsTo(() => NurseStaff)
     nurseStaff: NurseStaff;
+
+    @ForeignKey(() => Customer)
+    customerId: number;
+
+    @BelongsTo(() => Customer)
+    customer: Customer;
 
     @CreatedAt
     @Column
