@@ -40,7 +40,7 @@ const DiseaseManagerPage = () => {
                key: "revention",
           },
           {
-               title: "Action",
+               title: "Tính năng",
                key: "operation",
                fixed: "right",
                width: 100,
@@ -70,7 +70,7 @@ const DiseaseManagerPage = () => {
           <>
                <div className="flex flex-col h-full mt-4 ml-1">
                     <div className="flex items-end justify-between">
-                         <h1 className="text-5xl  ml-4">Bệnh</h1>
+                         <h1 className="text-5xl  ml-4">Bệnh Học</h1>
                          <DiseaseModal
                               title="Thêm Bệnh Mới"
                               icon={<IoMdAdd />}
