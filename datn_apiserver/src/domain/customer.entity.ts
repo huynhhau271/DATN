@@ -10,6 +10,7 @@ import {
     Model,
     PrimaryKey,
     Table,
+    Unique,
     UpdatedAt,
 } from "sequelize-typescript";
 import Wards from "./wards.entity";
@@ -35,23 +36,24 @@ export default class Customer extends Model {
     @Column({ type: DataType.BOOLEAN })
     gender: boolean;
 
-    @PrimaryKey
+    @Unique
     @Column({ type: DataType.CHAR })
     trackingNumberId: string;
 
-    @Column({
-        type: DataType.DATE,
-    })
-    dob: Date;
-
     @Column({ type: DataType.STRING })
     parentsName: string;
+
+    @Column({ type: DataType.STRING })
+    relation: string;
 
     @Column({ type: DataType.CHAR })
     phone: string;
 
     @Column({ type: DataType.CHAR })
     email: string;
+
+    @Column({ type: DataType.STRING })
+    address: string;
 
     @ForeignKey(() => Wards)
     @Column({ type: DataType.CHAR })

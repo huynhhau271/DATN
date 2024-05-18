@@ -16,4 +16,5 @@ export interface ICustomer {
     email: string;
 
     wardId?: string;
+    address: string;
 }

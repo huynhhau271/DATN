@@ -3,7 +3,11 @@ import { ICustomer } from "./ICustomer";
 export interface IBooking {
     id?: number;
 
+    createdBy?: string;
+
     expectedDate: Date;
+
+    bookingDate: Date;
 
     statused: string;
 
@@ -11,7 +15,9 @@ export interface IBooking {
 
     userId: number;
 
-    customerId?: number;
+    nurseStaffId: number;
 
-    customer?: ICustomer;
+    customerId: number;
+
+    customer: ICustomer;
 }

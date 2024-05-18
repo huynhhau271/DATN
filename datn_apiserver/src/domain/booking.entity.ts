@@ -37,6 +37,9 @@ export default class Booking extends Model {
     @Column({ type: DataType.STRING })
     statused: string;
 
+    @Column({ type: DataType.STRING })
+    address: string;
+
     @ForeignKey(() => Vaccine)
     @Column({ type: DataType.BIGINT })
     vaccineId: number;

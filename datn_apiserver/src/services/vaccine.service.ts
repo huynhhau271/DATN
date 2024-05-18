@@ -40,6 +40,15 @@ class VaccineService {
             totalPage: Math.ceil(count / limit),
         };
     }
+    async getAllVaccineByMontOld(mothOld: number) {
+        const vaccines = await vaccineRepository.findAll({
+            where: {
+                mothOld: { [Op.lte]: mothOld },
+            },
+            raw: true,
+        });
+        return vaccines;
+    }
     async saveVaccine(user: User, vaccine: IVaccine) {
         if (vaccine.id) {
             const vaccineForUpdate = await vaccineRepository.findByPk(

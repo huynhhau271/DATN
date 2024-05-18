@@ -2,6 +2,7 @@ import { Anchor, Image } from "antd";
 import { MenuUser } from "../constants/menuItems";
 import { BiSolidMessageRoundedDetail } from "react-icons/bi";
 import { MdPhoneInTalk } from "react-icons/md";
+import { FaCalendarAlt } from "react-icons/fa";
 import Search from "antd/es/input/Search";
 
 function HeaderUserComponent() {
@@ -26,8 +27,12 @@ function HeaderUserComponent() {
                                    allowClear
                               />
                          </div>
-                         <div className="flex gap-20">
-                              <div className="flex justify-center items-center text-[#102A83] font-bold gap-2">
+                         <div className="flex gap-10">
+                              <div className="flex justify-center items-center text-[#102A83] font-bold gap-2 hover:text-white">
+                                   <FaCalendarAlt size={20} color="#102A83" />
+                                   <span>Đặt Lịch Tiêm</span>
+                              </div>
+                              <div className="flex justify-center items-center text-[#102A83] font-bold gap-2 hover:text-white">
                                    <BiSolidMessageRoundedDetail
                                         size={20}
                                         color="#102A83"

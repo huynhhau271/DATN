@@ -23,5 +23,5 @@ export interface IVaccine {
 
     postInjectionReact?: string;
 
-    status: boolean;
+    status?: boolean;
 }

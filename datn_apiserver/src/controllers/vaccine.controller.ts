@@ -30,3 +30,11 @@ export const activeVaccine = async (
     );
     return res.status(httpStatus.OK).send("OK");
 };
+export const getAllVaccineByMontOld = async (
+    req: AuthenticatedRequest,
+    res: Response
+) => {
+    const mothOld = req.query.mothOld;
+    const response = await vaccineService.getAllVaccineByMontOld(+mothOld);
+    res.status(httpStatus.OK).send(response);
+};

@@ -118,11 +118,6 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
           );
      }, [districts, districtId, userData?.wardId]);
 
-     useEffect(() => {
-          onReset()
-     },[]);
-
-
      return (
           <div className="mt-2">
                <Form
@@ -131,7 +126,6 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                     layout="vertical"
                     form={form}
                     name="control-hooks"
-                    className=""
                     onFinish={onFinish}
                     autoComplete="off"
                     style={{ maxWidth: 800 }}
