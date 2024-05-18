@@ -1,3 +1,5 @@
+import { IBoosterNoses } from "./boosterNoses.model";
+
 export interface IVaccine {
     id?: number;
 
@@ -23,5 +25,6 @@ export interface IVaccine {
 
     postInjectionReact?: string;
 
-    status?: boolean;
+    status: boolean;
+    boosterNoses?: IBoosterNoses[];
 }
