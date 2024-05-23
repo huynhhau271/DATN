@@ -12,6 +12,7 @@
      "dependencies": {
           "@tanstack/react-query": "^5.29.2",
           "antd": "^5.15.3",
+          "antd-input-otp": "^2.1.0",
           "axios": "^1.6.8",
           "dayjs": "^1.11.10",
           "firebase": "^10.11.1",
