@@ -34,6 +34,15 @@ class VaccineService {
                params: { idVaccine, isActive },
           });
      }
+     async getAllVaccineByMothOld(mothOld: number) {
+          const response = await baseRequest.get(
+               this.BasseUrl + "//bymothOld",
+               {
+                    params: { mothOld },
+               }
+          );
+          return response.data;
+     }
 }
 
 export const vaccineService = new VaccineService();

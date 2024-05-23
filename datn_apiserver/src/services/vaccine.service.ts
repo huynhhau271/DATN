@@ -44,6 +44,19 @@ class VaccineService {
             totalPage: Math.ceil(count / limit),
         };
     }
+    async getAllVaccineByMontOld(mothOld: number) {
+        const vaccines = await vaccineRepository.findAll({
+            where: {
+                mothOld: { [Op.lte]: mothOld },
+            },
+            include: [
+                {
+                    model: boosterNoseRepository,
+                },
+            ],
+        });
+        return vaccines;
+    }
     async saveVaccine(user: User, vaccine: IVaccine) {
         if (vaccine.id) {
             let vaccineForUpdate = (

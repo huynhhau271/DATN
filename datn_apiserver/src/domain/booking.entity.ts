@@ -15,6 +15,7 @@ import Vaccine from "./vaccine.entity";
 import Wards from "./wards.entity";
 import User from "./user.entity";
 import NurseStaff from "./nurseStaff.entity";
+import Customer from "./customer.entity";
 /**
  * A Booking.
  */
@@ -27,17 +28,20 @@ export default class Booking extends Model {
     @Column({ type: DataType.BIGINT })
     id?: number;
 
-    @Column({ type: DataType.STRING })
-    createdBy?: string;
-
     @Column({ type: DataType.DATE })
     expectedDate: Date;
 
-    @Column({ type: DataType.DATE })
-    bookingDate: Date;
-
     @Column({ type: DataType.STRING })
     statused: string;
+
+    @Column({ type: DataType.BOOLEAN })
+    paymentSatus: boolean;
+
+    @Column({ type: DataType.STRING })
+    note: string;
+
+    @Column({ type: DataType.STRING })
+    confirmKey: string;
 
     @ForeignKey(() => Vaccine)
     @Column({ type: DataType.BIGINT })
@@ -59,6 +63,12 @@ export default class Booking extends Model {
 
     @BelongsTo(() => NurseStaff)
     nurseStaff: NurseStaff;
+
+    @ForeignKey(() => Customer)
+    customerId: number;
+
+    @BelongsTo(() => Customer)
+    customer: Customer;
 
     @CreatedAt
     @Column

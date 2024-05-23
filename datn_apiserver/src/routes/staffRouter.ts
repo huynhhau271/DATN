@@ -5,6 +5,7 @@ import {
     saveStaff,
 } from "../controllers/user.controller";
 import catchAsync from "../utils/catchAsync";
+import { veryfyToken } from "../middleware/verifyToken";
 
 /**
  * @description AuthLoginRouter
@@ -19,6 +20,7 @@ class UserRouter extends BaseRouter {
      * Connect routes to their matching controller endpoints.
      */
     protected init() {
+        this.router.use(veryfyToken);
         this.router.get("/", catchAsync(getAllStaff));
         this.router.post("/", catchAsync(saveStaff));
         this.router.put("/", catchAsync(saveStaff));
