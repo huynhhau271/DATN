@@ -16,11 +16,11 @@ interface Props {
 const UserForm = ({ setOpen, refetch, userData }: Props) => {
      const { provinces: provinceData } = useGetProvince();
      const [provinces, setProvinces] = useState<IProvince[] | undefined>([]);
-     const [provinceId, setProvinceId] = useState("");
+     const [provinceId, setProvinceId] = useState<string | undefined>("");
      const [districts, setDistricts] = useState<IDistrict[]>([]);
-     const [districtId, setDistrictId] = useState<string>("");
+     const [districtId, setDistrictId] = useState<string | null>();
      const [wards, setWards] = useState<IWard[] | undefined>([]);
-     const [wardId, setWardId] = useState<string>("");
+     const [wardId, setWardId] = useState<string | undefined>();
      const isEdit = userData !== undefined;
      const defaultValues = useMemo(
           () =>
@@ -31,6 +31,8 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
      );
      const handleProvinceChange = (value: string) => {
           setProvinceId(value);
+          setDistrictId(null);
+          setWardId(undefined);
           setDistricts(
                provinceData?.find((data) => data.id === value)?.districts ?? []
           );
@@ -55,10 +57,15 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                staffService
                     .createUser({ ...value, wardId: wardId })
                     .then(() => {
+                         form.resetFields();
                          toast.success("Thêm Mới Nhân Viên Thành Công");
                          refetch();
-                         form.resetFields();
                          setOpen(false);
+                         setDistrictId(undefined);
+                         setDistricts([]);
+                         setWardId(undefined);
+                         setWards([]);
+                         setProvinceId(undefined);
                     })
                     .catch((error) => {
                          if (error.response)
@@ -69,11 +76,11 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                staffService
                     .updateStaff({ ...value, id: userData.id })
                     .then(() => {
+                         form.resetFields();
                          toast.success(
                               "Cập Nhật Thông Tinh Nhân Viên Thành Công"
                          );
                          refetch();
-                         form.resetFields();
                          setOpen(false);
                     })
                     .catch((error) => {
@@ -239,9 +246,9 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                               <Select
                                    defaultValue={provinceId}
                                    value={provinceId}
-                                   onChange={(value) =>
-                                        handleProvinceChange(value)
-                                   }
+                                   onChange={(value) => {
+                                        handleProvinceChange(value);
+                                   }}
                                    options={
                                         provinces &&
                                         provinces.map((province) => ({
@@ -260,7 +267,11 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                               <Select
                                    defaultValue={districtId}
                                    value={districtId}
-                                   disabled={provinceId ? false : true}
+                                   disabled={
+                                        districts && districts.length > 0
+                                             ? false
+                                             : true
+                                   }
                                    onChange={(value) =>
                                         handleDistrictChange(value)
                                    }
@@ -288,7 +299,11 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                               <Select
                                    defaultValue={wardId}
                                    value={wardId}
-                                   disabled={districtId ? false : true}
+                                   disabled={
+                                        wards && wards?.length > 0
+                                             ? false
+                                             : true
+                                   }
                                    onChange={(value) => handleWardChange(value)}
                                    options={
                                         wards &&

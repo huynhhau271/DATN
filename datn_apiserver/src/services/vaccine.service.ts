@@ -49,7 +49,11 @@ class VaccineService {
             where: {
                 mothOld: { [Op.lte]: mothOld },
             },
-            raw: true,
+            include: [
+                {
+                    model: boosterNoseRepository,
+                },
+            ],
         });
         return vaccines;
     }

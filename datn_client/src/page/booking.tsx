@@ -3,7 +3,7 @@ import BookingForm from "../forms/bookingForm";
 
 const Booking: React.FC = () => {
      return (
-          <div className="py-10 flex items-center flex-col gap-6  w-full">
+          <div className="py-10 flex items-center flex-col gap-6 mt-10 w-full">
                <div className="w-2/4 items-start justify-center flex flex-col">
                     <div className="text-4xl text-left ml-2 w-full text-[#102A83]">
                          ĐĂNG KÝ TIÊM CHỦNG
