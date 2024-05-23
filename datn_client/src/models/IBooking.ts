@@ -1,23 +1,31 @@
 import { ICustomer } from "./ICustomer";
 
 export interface IBooking {
-    id?: number;
+     expectedDate: Date;
 
-    createdBy?: string;
+     customerDoB?: Date;
 
-    expectedDate: Date;
+     vaccineId: number;
 
-    bookingDate: Date;
+     customerName?: string;
 
-    statused: string;
+     gender?: boolean;
 
-    vaccineId: number;
+     parentsName?: string;
 
-    userId: number;
+     relation?: string;
 
-    nurseStaffId: number;
+     phone?: string;
 
-    customerId: number;
+     email?: string;
 
-    customer: ICustomer;
+     wardId?: string;
+
+     address?: string;
+}
+export interface IBookingPayload {
+     vaccineId: number;
+     expectedDate: Date;
+     customerId?: number;
+     customer?: ICustomer;
 }

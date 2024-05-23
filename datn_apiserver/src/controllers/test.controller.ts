@@ -26,6 +26,7 @@ export const seederUser = async (req: Request, res: Response) => {
         fullName: "Hải Hậu",
         gender: true,
         activated: true,
+        wardId: "00001",
     });
 
     res.status(httpStatus.OK).send("OKe");

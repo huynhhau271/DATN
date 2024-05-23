@@ -1,24 +1,45 @@
-import { Button, DatePicker, Form, Input, Select, Typography } from "antd";
+import { Button, Form, Input, Select, Typography } from "antd";
 import { useGetProvince } from "../hook/useGetProvince";
 import { useEffect, useState } from "react";
 import { IDistrict, IWard } from "../models/province.model";
-import { ICustomer } from "../models/ICustomer";
 import useGetAllVaccineByMothOld from "../hook/useGetAllVaccineByMoth";
-import dayjs from "dayjs";
-
+import { IBooking, IBookingPayload } from "../models/IBooking";
+import moment from "moment";
+import { formatDate } from "../utils/formatDate";
+import { rotations } from "../utils/rotation";
+import { ICustomer } from "../models/ICustomer";
+import { bookingService } from "../services/bookingService";
+import ConfirmBookingModal from "../modals/confirmBookingModal";
+import { toast } from "react-toastify";
+import Table, { ColumnsType } from "antd/es/table";
+interface DataTable {
+     vaccineName: string;
+     noseNumber: number;
+     date: Date;
+}
 function BookingForm() {
      const [mothOld, setMothOld] = useState(0);
      const { provinces } = useGetProvince();
      const { vaccines, refetch } = useGetAllVaccineByMothOld(mothOld);
-     const [districts, setDistricts] = useState<IDistrict[]>([]);
-     const [wards, setWards] = useState<IWard[]>([]);
+     const [districts, setDistricts] = useState<IDistrict[] | undefined>([]);
+     const [wards, setWards] = useState<IWard[] | undefined>([]);
      const [wardId, setWardId] = useState<string>("");
-     // const isEdit = data !== undefined;
-     const [form] = Form.useForm<ICustomer>();
+     const [form] = Form.useForm();
+     const [email, setEmail] = useState("");
+     const [name, setName] = useState("");
+     const [dob, setDob] = useState("");
+     const [openModal, setOpenModal] = useState(false);
+     const [dataTable, setDataTable] = useState<DataTable[] | undefined>([]);
+     const [vaccineId, setVaccineId] = useState();
+     const [dateinject, setDateInject] = useState(
+          formatDate(moment().add(7, "days").toString())
+     );
      const handleProvinceChange = (value: string) => {
           setDistricts(
                provinces?.find((data) => data.id === value)?.districts ?? []
           );
+          form.setFieldValue("district", undefined);
+          form.setFieldValue("wardId", undefined);
      };
 
      const handleDistrictChange = (value: string) => {
@@ -27,15 +48,135 @@ function BookingForm() {
      const handleWardChange = (value: string) => {
           setWardId(value);
      };
-     // const onReset = () => {
-     //      form.resetFields();
-     // };
-     const handleSubmit = (value: ICustomer) => {
-          console.log(value);
+     const validateDob = (value: string) => {
+          const today = moment();
+          if (moment(value).isSameOrAfter(today))
+               return Promise.reject("Ngày Sinh Không Hợp Lệ");
+          else return Promise.resolve();
+     };
+     const handleSubmit = (value: IBooking) => {
+          const customer: ICustomer = {
+               customerName: value?.customerName,
+
+               customerDoB: value.customerDoB,
+
+               gender: value.gender,
+
+               parentsName: value.parentsName,
+
+               phone: value.phone,
+
+               email: value.email,
+
+               wardId: value.wardId,
+               address: value.address,
+          };
+          const booking: IBookingPayload = {
+               vaccineId: value.vaccineId,
+               expectedDate: value.expectedDate,
+               customer: customer,
+          };
+          const payload =
+               dataTable && dataTable.length > 0
+                    ? dataTable?.map((data: DataTable) => {
+                           return {
+                                ...booking,
+                                expectedDate: data.date,
+                           };
+                      })
+                    : [booking];
+          console.log({ payload });
+
+          bookingService
+               .Booking([booking].concat(payload))
+               .then(() => {
+                    setOpenModal(true);
+                    toast.success("Vui Lòng Kiểm Tra Email");
+                    form.resetFields();
+               })
+               .catch((error) => {
+                    if (error.response)
+                         toast.error(error.response.data.message);
+                    else toast.error("Đăng Ký Tiêm Chủng Thất Bại");
+               });
      };
      useEffect(() => {
           refetch();
      }, [mothOld, refetch]);
+     const columns: ColumnsType<DataTable> = [
+          {
+               title: "Vaccine",
+               width: 100,
+               dataIndex: "vaccineName",
+               key: "vaccine",
+          },
+          {
+               title: "Mũi Thứ",
+               width: 100,
+               dataIndex: "noseNumber",
+               key: "noseNumber",
+               sorter: (a, b) => a.noseNumber - b.noseNumber,
+          },
+          {
+               title: "Ngày Tiêm",
+               width: 100,
+               dataIndex: "date",
+               key: "date",
+               render: (_, record) => {
+                    return record.date
+                         ? formatDate(record.date).toString()
+                         : "N/A";
+               },
+               sorter: {
+                    compare: (a, b) =>
+                         moment(a.date).unix() - moment(b.date).unix(),
+               },
+          },
+     ];
+     useEffect(() => {
+          const vaccine = vaccines?.find((vc) => vc.id === vaccineId);
+          let currentDate: Date;
+          let data: DataTable[] | undefined = vaccine?.boosterNoses?.map(
+               (boot, index) => {
+                    if (index == 0) {
+                         currentDate = moment(dateinject)
+                              .add(boot.distance, "M")
+                              .toDate();
+                         return {
+                              vaccineName: vaccine.vaccineName,
+                              noseNumber: boot.noseNumber,
+                              date: moment(dateinject)
+                                   .add(boot.distance, "M")
+                                   .toDate(),
+                         } as DataTable;
+                    } else {
+                         currentDate = moment(currentDate)
+                              .add(currentDate.toString(), "M")
+                              .toDate();
+                         return {
+                              vaccineName: vaccine.vaccineName,
+                              noseNumber: boot.noseNumber,
+                              date: moment(currentDate)
+                                   .add(boot.distance, "M")
+                                   .toDate(),
+                         } as DataTable;
+                    }
+               }
+          );
+          const first: DataTable[] = [
+               {
+                    vaccineName: vaccine?.vaccineName
+                         ? vaccine?.vaccineName
+                         : "",
+                    noseNumber: 1,
+                    date: moment(dateinject).toDate(),
+               },
+          ];
+          data = data ? first.concat(data) : first;
+          console.log({ data });
+
+          setDataTable(data);
+     }, [vaccineId, vaccines, dateinject]);
      return (
           <>
                <Form
@@ -44,7 +185,9 @@ function BookingForm() {
                     }}
                     form={form}
                     layout="vertical"
+                    name="customer"
                     onFinish={handleSubmit}
+                    autoComplete="off"
                >
                     <Typography.Title editable={false} level={5}>
                          THÔNG TIN NGƯỜI TIÊM
@@ -72,24 +215,34 @@ function BookingForm() {
                                         required: true,
                                         message: "Vui Lòng Chọn Ngày Sinh Của Trẻ!",
                                    },
+                                   {
+                                        validator: (_, e) => validateDob(e),
+                                   },
                               ]}
                               className="flex-1"
                          >
-                              <DatePicker
-                                   className="w-full"
-                                   onChange={(value) => {
-                                        const now = dayjs();
-                                        const monthsDifference = now.diff(
-                                             value,
-                                             "month",
-                                             true
-                                        );
-                                        setMothOld(monthsDifference);
+                              <Input
+                                   type="date"
+                                   onChange={(e) => {
+                                        {
+                                             const today = moment();
+                                             const monthsDifference =
+                                                  today.diff(
+                                                       moment(e.target.value),
+                                                       "month"
+                                                  );
+                                             setMothOld(monthsDifference);
+                                             setDob(e.target.value);
+                                        }
                                    }}
+                                   defaultValue={formatDate(
+                                        moment().toString()
+                                   )}
+                                   max={formatDate(moment().toString())}
                               />
                          </Form.Item>
                     </div>
-                    <div className="flex justify-between gap-5 w-1/2">
+                    <div className="w-[50%]">
                          <Form.Item
                               label="Giới tính"
                               name="gender"
@@ -99,27 +252,31 @@ function BookingForm() {
                                         message: "Vui Lòng Chọn Giởi Tính Của Trẻ!",
                                    },
                               ]}
-                              className="flex-1"
                          >
-                              <Select>
-                                   <Select.Option value={true}>
-                                        Nam
-                                   </Select.Option>
-                                   <Select.Option value={false}>
-                                        Nữ
-                                   </Select.Option>
-                              </Select>
+                              <Select
+                                   placeholder="Giới Tính"
+                                   options={[
+                                        {
+                                             value: true,
+                                             label: "Nam",
+                                        },
+                                        {
+                                             value: false,
+                                             label: "Nữ",
+                                        },
+                                   ]}
+                              />
                          </Form.Item>
                     </div>
 
                     <div className="flex w-full justify-between gap-2">
                          <Form.Item
                               label="Tỉnh thành"
-                              name="tinhthanh"
+                              name="province"
                               rules={[
                                    {
                                         required: true,
-                                        message: "Please input!",
+                                        message: "Vui Lòng Chọn Tỉnh Thành!",
                                    },
                               ]}
                               className="flex-1"
@@ -141,18 +298,20 @@ function BookingForm() {
 
                          <Form.Item
                               label="Quận Huyện"
-                              name="quanHuyen"
+                              name="district"
                               className="flex-1"
                               rules={[
                                    {
                                         required: true,
-                                        message: "Please input!",
+                                        message: "Vui Lòng Chọn Quận Huyện!",
                                    },
                               ]}
                          >
                               <Select
                                    disabled={
-                                        districts.length > 0 ? false : true
+                                        districts && districts.length > 0
+                                             ? false
+                                             : true
                                    }
                                    onChange={(value) =>
                                         handleDistrictChange(value)
@@ -175,14 +334,18 @@ function BookingForm() {
                               rules={[
                                    {
                                         required: true,
-                                        message: "Please input!",
+                                        message: "Vui Lòng Chọn Xã Phường",
                                    },
                               ]}
                          >
                               <Select
                                    defaultValue={wardId}
                                    value={wardId}
-                                   disabled={wards?.length > 0 ? false : true}
+                                   disabled={
+                                        wards && wards?.length > 0
+                                             ? false
+                                             : true
+                                   }
                                    onChange={(value) => handleWardChange(value)}
                                    options={
                                         wards &&
@@ -228,7 +391,10 @@ function BookingForm() {
                                    },
                               ]}
                          >
-                              <Input placeholder="Nguyễn Văn A" />
+                              <Input
+                                   placeholder="Nguyễn Văn A"
+                                   onChange={(e) => setName(e.target.value)}
+                              />
                          </Form.Item>
                          <Form.Item
                               label="Số điện thoại liên hệ"
@@ -265,7 +431,9 @@ function BookingForm() {
                                    },
                               ]}
                          >
-                              <Input />
+                              <Input
+                                   onChange={(e) => setEmail(e.target.value)}
+                              />
                          </Form.Item>
                          <Form.Item
                               label="Mối quan hệ với người tiêm"
@@ -274,25 +442,26 @@ function BookingForm() {
                               rules={[
                                    {
                                         required: true,
-                                        message: "Please input!",
+                                        message: "Vui Lòng Chọn Mối Quan Hệ Với Người Tiêm",
                                    },
                               ]}
                          >
                               <Select>
-                                   <Select.Option value="demo">
-                                        Bố
-                                   </Select.Option>
+                                   {rotations.map((rotation) => (
+                                        <Select.Option value={rotation.value}>
+                                             {rotation.lable}
+                                        </Select.Option>
+                                   ))}
                               </Select>
                          </Form.Item>
                     </div>
-
                     <Typography.Title editable={false} level={5}>
                          THÔNG TIN DỊCH VỤ
                     </Typography.Title>
                     <div className="flex w-full justify-between gap-2">
                          <Form.Item
                               label="Vaccine"
-                              name="relation"
+                              name="vaccineId"
                               className="flex-1"
                               rules={[
                                    {
@@ -301,7 +470,7 @@ function BookingForm() {
                                    },
                               ]}
                          >
-                              <Select>
+                              <Select onChange={setVaccineId}>
                                    {vaccines?.map((vaccine) => {
                                         return (
                                              <Select.Option value={vaccine.id}>
@@ -314,7 +483,7 @@ function BookingForm() {
 
                          <Form.Item
                               label="Ngày mong muốn tiêm"
-                              name="date"
+                              name="expectedDate"
                               className="flex-1"
                               rules={[
                                    {
@@ -322,11 +491,24 @@ function BookingForm() {
                                         message: "Please choose date",
                                    },
                               ]}
+                              initialValue={formatDate(
+                                   moment().add(7, "days").toString()
+                              )}
                          >
-                              <DatePicker className="w-full" />
+                              <Input
+                                   type="date"
+                                   defaultValue={formatDate(
+                                        moment().add(7, "days").toString()
+                                   )}
+                                   min={formatDate(
+                                        moment().add(7, "days").toString()
+                                   )}
+                                   onChange={(e) =>
+                                        setDateInject(e.target.value)
+                                   }
+                              />
                          </Form.Item>
                     </div>
-
                     <Form.Item>
                          <Button
                               type="primary"
@@ -337,6 +519,21 @@ function BookingForm() {
                          </Button>
                     </Form.Item>
                </Form>
+               {dataTable && dataTable.length > 0 && (
+                    <Table
+                         className="h-full w-3/4"
+                         columns={columns}
+                         dataSource={dataTable}
+                         pagination={false}
+                    />
+               )}
+               <ConfirmBookingModal
+                    email={email}
+                    open={openModal}
+                    name={name}
+                    dob={dob}
+                    setOpen={setOpenModal}
+               />
           </>
      );
 }

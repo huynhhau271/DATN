@@ -31,14 +31,17 @@ export default class Booking extends Model {
     @Column({ type: DataType.DATE })
     expectedDate: Date;
 
-    @Column({ type: DataType.DATE })
-    bookingDate: Date;
-
     @Column({ type: DataType.STRING })
     statused: string;
 
+    @Column({ type: DataType.BOOLEAN })
+    paymentSatus: boolean;
+
     @Column({ type: DataType.STRING })
-    address: string;
+    note: string;
+
+    @Column({ type: DataType.STRING })
+    confirmKey: string;
 
     @ForeignKey(() => Vaccine)
     @Column({ type: DataType.BIGINT })

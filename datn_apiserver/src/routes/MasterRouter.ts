@@ -8,6 +8,7 @@ import staffRouter from "./staffRouter";
 import provinceRouter from "./provinceRouter";
 import vaccineRouter from "./vaccineRouter";
 import diseaseRouter from "./diseaseRouter";
+import bookingRouter from "./bookingRouter";
 
 class MasterRouter extends BaseRouter {
     constructor() {
@@ -38,6 +39,7 @@ class MasterRouter extends BaseRouter {
         this.router.use("/staff", staffRouter);
         this.router.use("/vaccine", vaccineRouter);
         this.router.use("/disease", diseaseRouter);
+        this.router.use("/booking", bookingRouter);
         this.router.use(errorHandler);
     }
 }

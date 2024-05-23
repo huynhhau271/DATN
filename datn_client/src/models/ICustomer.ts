@@ -1,22 +1,18 @@
 export interface ICustomer {
-     customerName: string;
+     customerName?: string;
 
-     customerDoB: Date;
+     customerDoB?: Date;
 
-     gender: boolean;
+     gender?: boolean;
 
-     trackingNumberId: string;
+     dob?: Date;
 
-     dob: Date;
+     parentsName?: string;
 
-     parentsName: string;
+     phone?: string;
 
-     phone: string;
-
-     email: string;
+     email?: string;
 
      wardId?: string;
-     provinceId: string;
-     districtId: string;
-     address: string;
+     address?: string;
 }

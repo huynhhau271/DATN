@@ -5,12 +5,12 @@ class MailService {
     private transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: process.env.EMAIL,
+            user: process.env.MAIL_SENDER,
             pass: process.env.EMAIL_PASS,
         },
     });
 
-    public sendmail = async (to: string, subject: string, html: string) => {
+    async sendmail(to: string, subject: string, html: string) {
         await this.transporter
             .sendMail({
                 to: to, // list of receivers
@@ -24,6 +24,6 @@ class MailService {
             .catch(() => {
                 throw new BadRequestError("send mail failed");
             });
-    };
+    }
 }
 export default new MailService();

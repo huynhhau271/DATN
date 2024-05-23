@@ -7,11 +7,22 @@ export interface IBooking {
 
     statused: string;
 
+    paymentSatus: boolean;
+
     vaccineId: number;
 
-    userId: number;
+    userId?: number;
 
     customerId?: number;
 
     customer?: ICustomer;
+}
+export interface BookingPayload {
+    expectedDate: Date;
+
+    vaccineId: number;
+
+    customerId?: number;
+
+    customer: ICustomer;
 }
