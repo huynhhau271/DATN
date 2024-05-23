@@ -6,6 +6,7 @@ import {
     getAllDisease,
     saveDisease,
 } from "../controllers/disease.controller";
+import { veryfyToken } from "../middleware/verifyToken";
 
 /**
  * @description AuthLoginRouter
@@ -21,6 +22,7 @@ class DiseaseRouter extends BaseRouter {
      */
     protected init() {
         this.router.get("/", catchAsync(getAllDisease));
+        this.router.use(veryfyToken);
         this.router.post("/", catchAsync(saveDisease));
         this.router.delete("/", catchAsync(deleteDisease));
     }

@@ -198,9 +198,11 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                          <Form.Item
                               label="Mũi Tăng Cường"
                               name="boosterNoses"
-                              initialValue={{
-                                   boosterNoses: data?.boosterNoses,
-                              }}
+                              initialValue={
+                                   data?.boosterNoses
+                                        ? data.boosterNoses
+                                        : undefined
+                              }
                               className="flex-1"
                          >
                               <Form.List name="boosterNoses">

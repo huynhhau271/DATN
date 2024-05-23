@@ -55,3 +55,15 @@
 .ant-input-search-button {
      background-color: #2563eb !important;
 }
+.ant-anchor-link-title {
+     color: #fff !important;
+}
+.ant-anchor {
+     display: flex !important;
+     justify-content: center !important;
+     gap: 10% !important;
+}
+.ant-anchor-ink-visible {
+     background-color: #fff !important;
+     margin-bottom: 3px;
+}

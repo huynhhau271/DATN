@@ -2,32 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import { IVaccine } from "../models/vaccine.model";
 import { vaccineService } from "../services/vaccineService";
 
-export interface Vaccines {
-     vaccines: IVaccine[];
-     limit: number;
-     page: number;
-     totalPage: number;
-}
-
-export const useGetAllVaccine = (
-     page: number,
-     limit: number,
-     search: string
-) => {
+export const useGetAllVaccineByMothOld = (mothOld: number) => {
      const {
           data: vaccines,
           isLoading,
           isError,
           refetch,
           isFetching,
-     } = useQuery<Vaccines, Error>({
-          queryKey: ["getALlVaccine", page, limit, search],
+     } = useQuery<IVaccine[], Error>({
+          queryKey: ["getALlVaccineByMothOld", mothOld],
           queryFn: async () => {
-               // chuyen thanh vaccine
-               const response = await vaccineService.getAllVaccine(
-                    page,
-                    limit,
-                    search
+               const response = await vaccineService.getAllVaccineByMothOld(
+                    mothOld
                );
                return response;
           },
@@ -43,4 +29,4 @@ export const useGetAllVaccine = (
      };
 };
 
-export default useGetAllVaccine;
+export default useGetAllVaccineByMothOld;

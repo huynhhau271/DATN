@@ -79,12 +79,13 @@ const VaccineManagerPage = () => {
                               style={{ width: 400 }}
                               size="large"
                          />
-                         <div
-                              className="flex gap-10 flex-wrap mt-6 justify-start
-                          w-full"
-                         >
-                              {vaccines.vaccines?.length > 0 ? (
-                                   vaccines.vaccines.map((vaccine) => {
+
+                         {vaccines.vaccines?.length > 0 ? (
+                              <div
+                                   className="flex gap-10 flex-wrap mt-6 justify-start items-center
+                           w-full"
+                              >
+                                   {vaccines.vaccines.map((vaccine) => {
                                         return (
                                              <Card
                                                   className="!ml-7 w-72 h-96"
@@ -194,8 +195,13 @@ const VaccineManagerPage = () => {
                                                   </div>
                                              </Card>
                                         );
-                                   })
-                              ) : (
+                                   })}
+                              </div>
+                         ) : (
+                              <div
+                                   className="flex gap-10 flex-wrap mt-6 justify-center items-center
+                      w-full"
+                              >
                                    <Empty
                                         image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
                                         imageStyle={{ height: 60 }}
@@ -205,6 +211,7 @@ const VaccineManagerPage = () => {
                                                   Thống
                                              </span>
                                         }
+                                        className="flex justify-center flex-col items-center"
                                    >
                                         <VaccineModal
                                              title="Thêm Vaccine"
@@ -212,8 +219,8 @@ const VaccineManagerPage = () => {
                                              refetch={refetch}
                                         />
                                    </Empty>
-                              )}
-                         </div>
+                              </div>
+                         )}
                     </div>
                </div>
                <div className="flex justify-end">

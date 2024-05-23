@@ -6,14 +6,15 @@ import {
     CreatedAt,
     DataType,
     ForeignKey,
+    HasMany,
     Model,
     PrimaryKey,
     Table,
+    Unique,
     UpdatedAt,
 } from "sequelize-typescript";
-import Vaccine from "./vaccine.entity";
 import Wards from "./wards.entity";
-import User from "./user.entity";
+import Booking from "./booking.entity";
 /**
  * A Booking.
  */
@@ -26,43 +27,46 @@ export default class Customer extends Model {
     @Column({ type: DataType.BIGINT })
     id?: number;
 
+    @PrimaryKey
     @Column({ type: DataType.STRING })
-    createdBy?: string;
-
-    @Column({ type: DataType.STRING })
-    customerName: string;
-
-    @Column({ type: DataType.DATE })
-    customerDoB: Date;
-
-    @Column({ type: DataType.BOOLEAN })
-    gender: boolean;
+    customerName?: string;
 
     @PrimaryKey
-    @Column({ type: DataType.CHAR })
-    trackingNumberId: string;
+    @Column({ type: DataType.DATE })
+    customerDoB?: Date;
 
-    @Column({
-        type: DataType.DATE,
-    })
-    dob: Date;
+    @Column({ type: DataType.BOOLEAN })
+    gender?: boolean;
+
+    @Unique
+    @Column({ type: DataType.CHAR })
+    trackingNumberId?: string;
 
     @Column({ type: DataType.STRING })
-    parentsName: string;
+    parentsName?: string;
+
+    @Column({ type: DataType.STRING })
+    relation?: string;
 
     @Column({ type: DataType.CHAR })
-    phone: string;
+    phone?: string;
 
-    @Column({ type: DataType.CHAR })
-    email: string;
+    @PrimaryKey
+    @Column({ type: DataType.STRING })
+    email?: string;
+
+    @Column({ type: DataType.STRING })
+    address?: string;
 
     @ForeignKey(() => Wards)
     @Column({ type: DataType.CHAR })
     wardId?: string;
 
     @BelongsTo(() => Wards)
-    ward: Wards;
+    ward?: Wards;
 
+    @HasMany(() => Booking)
+    bookings?: Booking[];
     @CreatedAt
     @Column
     createdDate?: Date;

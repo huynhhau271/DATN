@@ -31,8 +31,6 @@ class userService {
             },
             raw: true,
         });
-        console.log({ roleUser });
-
         if (payload.id) {
             const userForUpdate = await userRepository.findByPk(payload.id);
             if (!userForUpdate)

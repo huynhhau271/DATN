@@ -5,10 +5,10 @@ import { BaseRouter } from "./BaseRouter";
 import testRouter from "./TestRouter";
 import authLoginRouter from "./AuthLoginRouter";
 import staffRouter from "./staffRouter";
-import { veryfyToken } from "../middleware/verifyToken";
 import provinceRouter from "./provinceRouter";
 import vaccineRouter from "./vaccineRouter";
 import diseaseRouter from "./diseaseRouter";
+import bookingRouter from "./bookingRouter";
 
 class MasterRouter extends BaseRouter {
     constructor() {
@@ -36,10 +36,10 @@ class MasterRouter extends BaseRouter {
         this.router.use("/authenticate", authLoginRouter);
         this.router.use("/test", testRouter);
         this.router.use("/province", provinceRouter);
-        this.router.use(veryfyToken);
         this.router.use("/staff", staffRouter);
         this.router.use("/vaccine", vaccineRouter);
         this.router.use("/disease", diseaseRouter);
+        this.router.use("/booking", bookingRouter);
         this.router.use(errorHandler);
     }
 }
