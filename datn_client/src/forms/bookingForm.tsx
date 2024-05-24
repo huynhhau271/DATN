@@ -29,7 +29,7 @@ function BookingForm() {
      const [name, setName] = useState("");
      const [dob, setDob] = useState("");
      const [openModal, setOpenModal] = useState(false);
-     const [dataTable, setDataTable] = useState<DataTable[] | undefined>([]);
+     const [dataTable, setDataTable] = useState<DataTable[] | undefined>(undefined);
      const [vaccineId, setVaccineId] = useState();
      const [dateinject, setDateInject] = useState(
           formatDate(moment().add(7, "days").toString())
@@ -92,6 +92,8 @@ function BookingForm() {
                .then(() => {
                     setOpenModal(true);
                     toast.success("Vui Lòng Kiểm Tra Email");
+                    setVaccineId(undefined)
+                    setDataTable(undefined)
                     form.resetFields();
                })
                .catch((error) => {
@@ -172,7 +174,7 @@ function BookingForm() {
                     date: moment(dateinject).toDate(),
                },
           ];
-          data = data ? first.concat(data) : first;
+          data = vaccine? data ? first.concat(data) : first :undefined;
           console.log({ data });
 
           setDataTable(data);

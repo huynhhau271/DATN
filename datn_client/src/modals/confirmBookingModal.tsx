@@ -19,11 +19,6 @@ const ConfirmBookingModal = ({
      const { Title } = Typography;
      const [form] = Form.useForm();
 
-     const handleCancel = () => {
-          setOpen(false);
-          form.resetFields();
-     };
-
      const handleFinish = (value: any) => {
           const otp = value["otp"].map((vl: string) => vl).join("");
           bookingService
@@ -44,7 +39,6 @@ const ConfirmBookingModal = ({
                <Modal
                     title={"Xác Nhận Tiêm Chủng"}
                     open={open}
-                    onCancel={handleCancel}
                     footer={null}
                     width={800}
                >
