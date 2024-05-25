@@ -69,7 +69,7 @@ export const MenuUser: MenuUser[] = [
      },
      {
           key: "vaccination",
-          href: "/tiem-chung",
+          href: "/#tiem-chung",
           title: "Tiêm Chủng",
      },
      {

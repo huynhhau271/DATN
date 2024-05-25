@@ -1,6 +1,7 @@
 import { ICustomer } from "./ICustomer";
+import { IVaccine } from "./vaccine.model";
 
-export interface IBooking {
+export interface IBookingForm {
      expectedDate: Date;
 
      customerDoB?: Date;
@@ -25,6 +26,14 @@ export interface IBooking {
 }
 export interface IBookingPayload {
      vaccineId: number;
+     expectedDate: Date;
+     customerId?: number;
+     customer?: ICustomer;
+}
+export interface Booking {
+     statused: string;
+     vaccineId: number;
+     vaccine: IVaccine;
      expectedDate: Date;
      customerId?: number;
      customer?: ICustomer;
