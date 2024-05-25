@@ -121,9 +121,6 @@ class BookingService {
         }
     }
     async confirm(email: string, name: string, dob: Date, otp: string) {
-        console.log(new Date(dob).toISOString().slice(0, 19).replace("T", " "));
-        console.log({ name, email });
-
         const customer = await customerRepository.findOne({
             where: {
                 email: email,

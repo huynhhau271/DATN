@@ -1,7 +1,9 @@
+import { Booking } from "./IBooking";
+
 export interface ICustomer {
      customerName?: string;
 
-     customerDoB?: Date;
+     customerDoB?: string | Date;
 
      gender?: boolean;
 
@@ -15,4 +17,5 @@ export interface ICustomer {
 
      wardId?: string;
      address?: string;
+     bookings?: Booking[];
 }

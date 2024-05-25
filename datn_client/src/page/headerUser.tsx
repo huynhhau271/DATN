@@ -4,6 +4,7 @@ import { BiSolidMessageRoundedDetail } from "react-icons/bi";
 import { MdPhoneInTalk } from "react-icons/md";
 import { FaCalendarAlt } from "react-icons/fa";
 import Search from "antd/es/input/Search";
+import { Link } from "react-router-dom";
 
 function HeaderUserComponent() {
      return (
@@ -28,10 +29,15 @@ function HeaderUserComponent() {
                               />
                          </div>
                          <div className="flex gap-10">
-                              <div className="flex justify-center items-center text-[#102A83] font-bold gap-2 hover:text-white">
-                                   <FaCalendarAlt size={20} color="#102A83" />
-                                   <span>Đặt Lịch Tiêm</span>
-                              </div>
+                              <Link to="/dang-ky-tiem-chung">
+                                   <div className="flex justify-center items-center text-[#102A83] font-bold gap-2 hover:text-white hover:cursor-pointer">
+                                        <FaCalendarAlt
+                                             size={20}
+                                             color="#102A83"
+                                        />
+                                        <span>Đặt Lịch Tiêm</span>
+                                   </div>
+                              </Link>
                               <div className="flex justify-center items-center text-[#102A83] font-bold gap-2 hover:text-white">
                                    <BiSolidMessageRoundedDetail
                                         size={20}

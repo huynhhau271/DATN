@@ -31,28 +31,30 @@ const VaccineManagerPage = () => {
           setSearch(value);
      };
      const handleBlockOrActiveVaccine = (
-          idVaccine: number,
-          active: boolean
+          idVaccine?: number,
+          active?: boolean
      ) => {
-          vaccineService
-               .blockOrActiveVaccine(idVaccine, active)
-               .then(() => {
-                    toast.success(
-                         active
-                              ? "Vac Xin Đã Ngừng Sản Xuất"
-                              : "Vac Xin Hiện Đang Sản Xuất"
-                    );
-                    refetch();
-               })
-               .catch((error) => {
-                    if (error.response)
-                         toast.error(error.response.data.message);
-                    toast.error(
-                         active
-                              ? "Khóa Vac Xin Thất Bại"
-                              : "Mở Khóa Vac Xin Thất Bại"
-                    );
-               });
+          idVaccine &&
+               active &&
+               vaccineService
+                    .blockOrActiveVaccine(idVaccine, active)
+                    .then(() => {
+                         toast.success(
+                              active
+                                   ? "Vac Xin Đã Ngừng Sản Xuất"
+                                   : "Vac Xin Hiện Đang Sản Xuất"
+                         );
+                         refetch();
+                    })
+                    .catch((error) => {
+                         if (error.response)
+                              toast.error(error.response.data.message);
+                         toast.error(
+                              active
+                                   ? "Khóa Vac Xin Thất Bại"
+                                   : "Mở Khóa Vac Xin Thất Bại"
+                         );
+                    });
      };
      const searchbutton = <SearchOutlined type="default" />;
      if (!vaccines || isLoading) return <Loading />;
@@ -116,8 +118,8 @@ const VaccineManagerPage = () => {
                                                                  vaccine.status !=
                                                                       undefined &&
                                                                       handleBlockOrActiveVaccine(
-                                                                           vaccine.id,
-                                                                           vaccine.status
+                                                                           vaccine?.id,
+                                                                           vaccine?.status
                                                                       );
                                                             }}
                                                        >
