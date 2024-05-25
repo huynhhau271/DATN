@@ -3,9 +3,9 @@ import { InputOTP } from "antd-input-otp";
 import { bookingService } from "../services/bookingService";
 import { toast } from "react-toastify";
 interface Props {
-     email: string;
-     name: string;
-     dob: string;
+     email: string | undefined;
+     name: string | undefined;
+     dob: string | undefined | Date;
      setOpen: (value: boolean) => void;
      open: boolean;
 }

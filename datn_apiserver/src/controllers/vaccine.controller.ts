@@ -22,7 +22,6 @@ export const activeVaccine = async (
 ) => {
     const vaccineId = req.query.idVaccine;
     const active = req.query.isActive as string;
-    console.log({ vaccineId, active });
 
     await vaccineService.activeAndBlockVaccine(
         +vaccineId,

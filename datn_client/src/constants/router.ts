@@ -40,11 +40,13 @@ const routers: RouteObject[] = [
      {
           path: "/",
           id: "user",
-          children: [{
-               path: "/tiem-chung",
-               id: "tiem-chung",
-               Component: Booking
-          }],
+          children: [
+               {
+                    path: "/dang-ky-tiem-chung",
+                    id: "tiem-chung",
+                    Component: Booking,
+               },
+          ],
           Component: UserLayout,
      },
      {

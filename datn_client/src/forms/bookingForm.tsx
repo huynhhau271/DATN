@@ -3,13 +3,12 @@ import { useGetProvince } from "../hook/useGetProvince";
 import { useEffect, useState } from "react";
 import { IDistrict, IWard } from "../models/province.model";
 import useGetAllVaccineByMothOld from "../hook/useGetAllVaccineByMoth";
-import { IBooking, IBookingPayload } from "../models/IBooking";
+import { IBookingForm, IBookingPayload } from "../models/IBooking";
 import moment from "moment";
 import { formatDate } from "../utils/formatDate";
 import { rotations } from "../utils/rotation";
 import { ICustomer } from "../models/ICustomer";
 import { bookingService } from "../services/bookingService";
-import ConfirmBookingModal from "../modals/confirmBookingModal";
 import { toast } from "react-toastify";
 import Table, { ColumnsType } from "antd/es/table";
 interface DataTable {
@@ -17,7 +16,18 @@ interface DataTable {
      noseNumber: number;
      date: Date;
 }
-function BookingForm() {
+interface IProps {
+     setEmail: (vl: string) => void;
+     setName: (vl: string) => void;
+     setDob: (vl: string) => void;
+     setOpenModalConfirm: (vl: boolean) => void;
+}
+function BookingForm({
+     setEmail,
+     setDob,
+     setName,
+     setOpenModalConfirm,
+}: IProps) {
      const [mothOld, setMothOld] = useState(0);
      const { provinces } = useGetProvince();
      const { vaccines, refetch } = useGetAllVaccineByMothOld(mothOld);
@@ -25,11 +35,10 @@ function BookingForm() {
      const [wards, setWards] = useState<IWard[] | undefined>([]);
      const [wardId, setWardId] = useState<string>("");
      const [form] = Form.useForm();
-     const [email, setEmail] = useState("");
-     const [name, setName] = useState("");
-     const [dob, setDob] = useState("");
-     const [openModal, setOpenModal] = useState(false);
-     const [dataTable, setDataTable] = useState<DataTable[] | undefined>(undefined);
+
+     const [dataTable, setDataTable] = useState<DataTable[] | undefined>(
+          undefined
+     );
      const [vaccineId, setVaccineId] = useState();
      const [dateinject, setDateInject] = useState(
           formatDate(moment().add(7, "days").toString())
@@ -54,7 +63,7 @@ function BookingForm() {
                return Promise.reject("Ngày Sinh Không Hợp Lệ");
           else return Promise.resolve();
      };
-     const handleSubmit = (value: IBooking) => {
+     const handleSubmit = (value: IBookingForm) => {
           const customer: ICustomer = {
                customerName: value?.customerName,
 
@@ -90,10 +99,10 @@ function BookingForm() {
           bookingService
                .Booking([booking].concat(payload))
                .then(() => {
-                    setOpenModal(true);
+                    setOpenModalConfirm(true);
                     toast.success("Vui Lòng Kiểm Tra Email");
-                    setVaccineId(undefined)
-                    setDataTable(undefined)
+                    setVaccineId(undefined);
+                    setDataTable(undefined);
                     form.resetFields();
                })
                .catch((error) => {
@@ -174,7 +183,7 @@ function BookingForm() {
                     date: moment(dateinject).toDate(),
                },
           ];
-          data = vaccine? data ? first.concat(data) : first :undefined;
+          data = vaccine ? (data ? first.concat(data) : first) : undefined;
           console.log({ data });
 
           setDataTable(data);
@@ -468,7 +477,7 @@ function BookingForm() {
                               rules={[
                                    {
                                         required: true,
-                                        message: "Please input!",
+                                        message: "Vui Lòng Chọn Vaccine!",
                                    },
                               ]}
                          >
@@ -490,7 +499,7 @@ function BookingForm() {
                               rules={[
                                    {
                                         required: true,
-                                        message: "Please choose date",
+                                        message: "Vui Lòng Chọn Ngày Tiêm",
                                    },
                               ]}
                               initialValue={formatDate(
@@ -529,13 +538,6 @@ function BookingForm() {
                          pagination={false}
                     />
                )}
-               <ConfirmBookingModal
-                    email={email}
-                    open={openModal}
-                    name={name}
-                    dob={dob}
-                    setOpen={setOpenModal}
-               />
           </>
      );
 }
