@@ -78,7 +78,7 @@ export const LoginPage = () => {
                                         <Button
                                              type="primary"
                                              htmlType="submit"
-                                             className="bg-[#0B08AB] text-white w-48 h-10 rounded-lg"
+                                             className="bg-[#6260cf] text-white w-48 h-10 rounded-lg"
                                         >
                                              Login
                                         </Button>
