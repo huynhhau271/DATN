@@ -23,6 +23,8 @@ export interface IBookingForm {
      wardId?: string;
 
      address?: string;
+
+     cccd: string;
 }
 export interface IBookingPayload {
      vaccineId: number;
@@ -36,5 +38,5 @@ export interface Booking {
      vaccine: IVaccine;
      expectedDate: Date;
      customerId?: number;
-     customer?: ICustomer;
+     customer: ICustomer;
 }

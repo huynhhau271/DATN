@@ -18,4 +18,5 @@ export interface ICustomer {
      wardId?: string;
      address?: string;
      bookings?: Booking[];
+     CCCD: string;
 }

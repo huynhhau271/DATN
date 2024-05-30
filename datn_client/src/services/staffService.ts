@@ -1,4 +1,5 @@
 import { IUser } from "../models/user.model";
+import { uploadImageToFirebase } from "../utils/firebase";
 import baseRequest from "./baseRequest";
 
 class StaffService {
@@ -22,13 +23,34 @@ class StaffService {
           });
      }
 
-     async createUser(user: IUser) {
-          const response = await baseRequest.post(this.BasseUrl, user);
+     async createUser(user: IUser, uploadedImage?: string, fileName?: string) {
+          let urlPictre = user.imageUrl;
+          if (uploadedImage && fileName)
+               urlPictre = await uploadImageToFirebase(
+                    fileName,
+                    uploadedImage,
+                    `staff/${user.fullName?.split(" ").join("_")}`
+               );
+          const response = await baseRequest.post(this.BasseUrl, {
+               ...user,
+               imageUrl: urlPictre,
+          });
           return response.data;
      }
 
-     async updateStaff(user: IUser) {
-          const response = await baseRequest.put(this.BasseUrl, user);
+     async updateStaff(user: IUser, uploadedImage?: string, fileName?: string) {
+          let urlPictre = user.imageUrl;
+          if (uploadedImage && fileName)
+               urlPictre = await uploadImageToFirebase(
+                    fileName,
+                    uploadedImage,
+                    `staff/${user.fullName?.split(" ").join("_")}`
+               );
+
+          const response = await baseRequest.put(this.BasseUrl, {
+               ...user,
+               imageUrl: urlPictre,
+          });
           return response.data;
      }
 }

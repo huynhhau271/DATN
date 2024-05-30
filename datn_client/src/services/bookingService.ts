@@ -16,6 +16,13 @@ class BookingService {
           });
           return response.data;
      }
+
+     async getAllBooking(page: number, limit: number, search?: string) {
+          const response = await baseRequest.get(this.BasseUrl, {
+               params: { page, limit, search },
+          });
+          return response.data;
+     }
 }
 
 export const bookingService = new BookingService();

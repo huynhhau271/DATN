@@ -17,3 +17,12 @@ export const confirmBooking = async (
     await bookingService.confirm(email, name, dob, otp);
     return res.status(httpStatus.OK).send();
 };
+
+export const getAllBooking = async (
+    req: AuthenticatedRequest,
+    res: Response
+) => {
+    const { limit, page } = req.query;
+    const result = await bookingService.getAllBooking(+limit, +page);
+    return res.status(httpStatus.OK).send(result);
+};

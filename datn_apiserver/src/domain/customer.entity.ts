@@ -39,6 +39,10 @@ export default class Customer extends Model {
     gender?: boolean;
 
     @Unique
+    @Column({ type: DataType.STRING })
+    CCCD: string;
+
+    @Unique
     @Column({ type: DataType.CHAR })
     trackingNumberId?: string;
 

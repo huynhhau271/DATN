@@ -6,4 +6,6 @@ export interface IDisease {
     symptom: string;
 
     revention: string;
+
+    image: string;
 }

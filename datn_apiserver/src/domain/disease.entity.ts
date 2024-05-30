@@ -33,6 +33,9 @@ export default class Disease extends Model {
     @Column({ type: DataType.TEXT })
     revention: string;
 
+    @Column({ type: DataType.STRING })
+    image: string;
+
     @BelongsToMany(() => Vaccine, () => VaccineDisease)
     vaccines: Vaccine[];
 

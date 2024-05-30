@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { formatDate } from "../utils/formatDate";
 import moment from "moment";
 import { UserRole } from "../utils/userRole";
+import Uploader from "../utils/components/uploadImage/Uploader";
 interface Props {
      setOpen: React.Dispatch<React.SetStateAction<boolean>>;
      userData?: IUser;
@@ -21,6 +22,10 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
      const [districtId, setDistrictId] = useState<string | null>();
      const [wards, setWards] = useState<IWard[] | undefined>([]);
      const [wardId, setWardId] = useState<string | undefined>();
+     const [uploadedImage, setUploadedImage] = useState<string | undefined>(
+          undefined
+     );
+     const [fileName, setFileName] = useState<string | undefined>(undefined);
      const isEdit = userData !== undefined;
      const defaultValues = useMemo(
           () =>
@@ -55,7 +60,11 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
      const onFinish = (value: IUser) => {
           if (!isEdit)
                staffService
-                    .createUser({ ...value, wardId: wardId })
+                    .createUser(
+                         { ...value, wardId: wardId },
+                         uploadedImage,
+                         fileName
+                    )
                     .then(() => {
                          form.resetFields();
                          toast.success("Thêm Mới Nhân Viên Thành Công");
@@ -66,6 +75,8 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                          setWardId(undefined);
                          setWards([]);
                          setProvinceId(undefined);
+                         setFileName(undefined);
+                         setUploadedImage(undefined);
                     })
                     .catch((error) => {
                          if (error.response)
@@ -74,7 +85,14 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                     });
           else {
                staffService
-                    .updateStaff({ ...value, id: userData.id })
+                    .updateStaff(
+                         {
+                              ...value,
+                              id: userData.id,
+                         },
+                         uploadedImage,
+                         fileName
+                    )
                     .then(() => {
                          form.resetFields();
                          toast.success(
@@ -315,6 +333,14 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                                    }
                               />
                          </Form.Item>
+                    </div>
+                    <div className="flex justify-center mb-5">
+                         <Uploader
+                              setFileName={setFileName}
+                              defaultValue={userData?.imageUrl || undefined}
+                              setUploadedImage={setUploadedImage}
+                              uploadedImage={uploadedImage}
+                         />
                     </div>
                     <Form.Item className="flex justify-center">
                          <Button

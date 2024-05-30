@@ -7,6 +7,7 @@ import VaccineManagerPage from "../page/vaccine";
 import DiseaseManagerPage from "../page/disease";
 import UserLayout from "../layouts/userLayout";
 import Booking from "../page/booking";
+import BookingManagerPage from "../page/bookingManager";
 
 const routers: RouteObject[] = [
      {
@@ -34,6 +35,11 @@ const routers: RouteObject[] = [
                     path: "/admin/disease",
                     id: "disease",
                     Component: DiseaseManagerPage,
+               },
+               {
+                    path: "/admin/booking",
+                    id: "booking",
+                    Component: BookingManagerPage,
                },
           ],
      },

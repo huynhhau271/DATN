@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { BookingPayload } from "../interface/IBooking";
+import { BookingPayload, IBooking } from "../interface/IBooking";
 import bookingRepository from "../repositories/bookingRepository";
 import vaccineRepository from "../repositories/vaccineRepository";
 import { BadRequestError } from "../utils/httpErrors";
@@ -11,7 +11,13 @@ import { genKeyConfirm } from "../utils/genKeyActive";
 import { StatusBooking } from "../domain/enum/statusBooking";
 import Customer from "../domain/customer.entity";
 import moment from "moment";
-
+import { tranformModel } from "./helper/tranformModelToObject";
+interface Bookings {
+    bookings: IBooking[];
+    limit: number;
+    page: number;
+    totalPage: number;
+}
 class BookingService {
     async booking(bookingPayload: BookingPayload[]) {
         const checkVaccine = await vaccineRepository.findOne({
@@ -157,6 +163,34 @@ class BookingService {
                 },
             }
         );
+    }
+    async getAllBooking(
+        limit: number,
+        page: number,
+        search?: string
+    ): Promise<Bookings> {
+        const { rows, count } = await bookingRepository.findAndCountAll({
+            limit: limit,
+            offset: (page - 1) * limit,
+            include: [
+                {
+                    model: vaccineRepository,
+                },
+                {
+                    model: customerRepository,
+                },
+            ],
+        });
+
+        let bookings = tranformModel(rows);
+        console.log({ abc: bookings[0] });
+
+        return {
+            bookings,
+            limit: limit,
+            page: page,
+            totalPage: Math.ceil(count / limit),
+        };
     }
 }
 

@@ -79,6 +79,7 @@ function BookingForm({
 
                wardId: value.wardId,
                address: value.address,
+               CCCD: value.cccd,
           };
           const booking: IBookingPayload = {
                vaccineId: value.vaccineId,
@@ -94,10 +95,8 @@ function BookingForm({
                            };
                       })
                     : [booking];
-          console.log({ payload });
-
           bookingService
-               .Booking([booking].concat(payload))
+               .Booking(payload)
                .then(() => {
                     setOpenModalConfirm(true);
                     toast.success("Vui Lòng Kiểm Tra Email");
@@ -184,7 +183,6 @@ function BookingForm({
                },
           ];
           data = vaccine ? (data ? first.concat(data) : first) : undefined;
-          console.log({ data });
 
           setDataTable(data);
      }, [vaccineId, vaccines, dateinject]);
@@ -253,10 +251,11 @@ function BookingForm({
                               />
                          </Form.Item>
                     </div>
-                    <div className="w-[50%]">
+                    <div className="flex justify-between gap-2 w-full">
                          <Form.Item
                               label="Giới tính"
                               name="gender"
+                              className="flex-1"
                               rules={[
                                    {
                                         required: true,
@@ -277,6 +276,23 @@ function BookingForm({
                                         },
                                    ]}
                               />
+                         </Form.Item>
+                         <Form.Item
+                              className="flex-1"
+                              label="Mã Định Danh"
+                              name="cccd"
+                              rules={[
+                                   {
+                                        required: true,
+                                        message: "Vui Lòng Nhập Mã Định Danh!",
+                                   },
+                                   {
+                                        pattern: /^\d{12}$/,
+                                        message: "Mã Định Danh Không Hợp Lệ",
+                                   },
+                              ]}
+                         >
+                              <Input />
                          </Form.Item>
                     </div>
 

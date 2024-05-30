@@ -39,15 +39,9 @@ export const MenuItems: MenuItems[] = [
      },
      {
           title: "Danh Sách Tiêm Chủng",
-          link: "###",
+          link: "/admin/booking",
           id: "vaccination",
           icon: PiListDashesFill,
-     },
-     {
-          title: "Nhân Viên Y Tế",
-          link: "###",
-          id: "healthcare_staff",
-          icon: LiaUserNurseSolid,
      },
      {
           title: "Bệnh Học",

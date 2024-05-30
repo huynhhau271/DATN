@@ -3,7 +3,8 @@ import { toast } from "react-toastify";
 import TextArea from "antd/es/input/TextArea";
 import { IDisease } from "../models/disease.model";
 import { diseaseService } from "../services/diseaseService";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Uploader from "../utils/components/uploadImage/Uploader";
 interface Props {
      setOpen: React.Dispatch<React.SetStateAction<boolean>>;
      data?: IDisease;
@@ -11,10 +12,18 @@ interface Props {
 }
 const DiseaseForm = ({ setOpen, refetch, data }: Props) => {
      const isEdit = data !== undefined;
+     const [uploadedImage, setUploadedImage] = useState<string | undefined>(
+          undefined
+     );
+     const [fileName, setFileName] = useState<string | undefined>(undefined);
      const [form] = Form.useForm<IDisease>();
      const onFinish = async (value: IDisease) => {
           diseaseService
-               .saveDisease(isEdit ? { ...value, id: data.id } : value)
+               .saveDisease(
+                    isEdit ? { ...value, id: data.id } : value,
+                    uploadedImage,
+                    fileName
+               )
                .then(() => {
                     toast.success(
                          isEdit
@@ -93,101 +102,17 @@ const DiseaseForm = ({ setOpen, refetch, data }: Props) => {
                                    },
                               ]}
                          >
-                              <TextArea rows={10}/>
+                              <TextArea rows={10} />
                          </Form.Item>
                     </div>
-                    {/* <div>
-                         <Form.Item
-                              label="Loại Vaccine"
-                              name="type"
-                              className="flex-1"
-                              rules={[
-                                   {
-                                        required: true,
-                                        message: "Vui Lòng Chọn Loại Vaccine!",
-                                   },
-                              ]}
-                         >
-                              <Select
-                                   onChange={(vl) => setTypeVaccine(vl)}
-                                   options={typeVaccineOption}
-                              />
-                         </Form.Item>
-                         {typeVaccine == "goi" && (
-                              <div className="flex flex-wrap">
-                                   <Form.List name="boosterNoses">
-                                        {(fields, { add, remove }) => (
-                                             <div className="flex-1">
-                                                  {fields.map(
-                                                       (
-                                                            {
-                                                                 key,
-                                                                 name,
-                                                                 ...restField
-                                                            },
-                                                            index
-                                                       ) => (
-                                                            <Space
-                                                                 key={key}
-                                                                 style={{
-                                                                      marginBottom: 8,
-                                                                 }}
-                                                                 align="center"
-                                                            >
-                                                                 <Form.Item
-                                                                      {...restField}
-                                                                      name={[
-                                                                           name,
-                                                                           `Mũi ${
-                                                                                index +
-                                                                                1
-                                                                           }`,
-                                                                      ]}
-                                                                      label={`Mũi ${
-                                                                           index +
-                                                                           1
-                                                                      }`}
-                                                                      rules={[
-                                                                           {
-                                                                                required:
-                                                                                     true,
-                                                                                message: "Vui Lòng nhập số tháng!",
-                                                                           },
-                                                                      ]}
-                                                                      className="!ml-7"
-                                                                 >
-                                                                      <Input placeholder="First Name" />
-                                                                 </Form.Item>
-                                                                 <MinusCircleOutlined
-                                                                      onClick={() =>
-                                                                           remove(
-                                                                                name
-                                                                           )
-                                                                      }
-                                                                 />
-                                                            </Space>
-                                                       )
-                                                  )}
-                                                  <Form.Item>
-                                                       <Button
-                                                            type="dashed"
-                                                            onClick={() =>
-                                                                 add()
-                                                            }
-                                                            block
-                                                            icon={
-                                                                 <PlusOutlined />
-                                                            }
-                                                       >
-                                                            Add field
-                                                       </Button>
-                                                  </Form.Item>
-                                             </div>
-                                        )}
-                                   </Form.List>
-                              </div>
-                         )}
-                    </div> */}
+                    <div className="flex justify-center mb-5">
+                         <Uploader
+                              setFileName={setFileName}
+                              defaultValue={data?.image || undefined}
+                              setUploadedImage={setUploadedImage}
+                              uploadedImage={uploadedImage}
+                         />
+                    </div>
                     <Form.Item className="flex justify-center ">
                          <Button
                               type="primary"

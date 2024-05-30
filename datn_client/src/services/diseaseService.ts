@@ -1,4 +1,5 @@
 import { IDisease } from "../models/disease.model";
+import { uploadImageToFirebase } from "../utils/firebase";
 import baseRequest from "./baseRequest";
 
 class DiseaseService {
@@ -10,8 +11,22 @@ class DiseaseService {
           });
           return response.data;
      }
-     async saveDisease(disease: IDisease) {
-          const response = await baseRequest.post(this.BasseUrl, disease);
+     async saveDisease(
+          disease: IDisease,
+          uploadedImage?: string,
+          fileName?: string
+     ) {
+          let urlPictre = disease.image;
+          if (uploadedImage && fileName)
+               urlPictre = await uploadImageToFirebase(
+                    fileName,
+                    uploadedImage,
+                    `disease/${disease.diseaseName?.split(" ").join("_")}`
+               );
+          const response = await baseRequest.post(this.BasseUrl, {
+               ...disease,
+               image: urlPictre,
+          });
           return response.data;
      }
 
