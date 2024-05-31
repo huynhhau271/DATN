@@ -3,6 +3,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import { database } from "./configs/database";
 import path from "path";
+import { cronjobNotifi } from "./cron-job/notification";
 dotenv.config({
     path: ".env",
 });
@@ -15,6 +16,7 @@ export class Application {
     private initServer() {
         this.server = new Server();
         this.server.app.use(morgan("common"));
+        cronjobNotifi.start();
         database
             .sync()
             .then((res) => {

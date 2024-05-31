@@ -183,14 +183,47 @@ class BookingService {
         });
 
         let bookings = tranformModel(rows);
-        console.log({ abc: bookings[0] });
-
         return {
             bookings,
             limit: limit,
             page: page,
             totalPage: Math.ceil(count / limit),
         };
+    }
+    async notification() {
+        const today = moment().add(3, "d").toDate();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+        const day = String(today.getDate()).padStart(2, "0");
+        const later = `${year}-${month}-${day}`;
+
+        const boookings = await bookingRepository.findAll({
+            where: {
+                expectedDate: new Date(later)
+                    .toISOString()
+                    .slice(0, 19)
+                    .replace("T", " "),
+                // statused:B
+            },
+            include: [customerRepository, vaccineRepository],
+        });
+
+        boookings.forEach((booking) => {
+            const customer = booking.toJSON().customer;
+            const vaccine = booking.toJSON().vaccine;
+            mailService.sendmail(
+                customer.email,
+                "[PHÒNG TIÊM CHỦNG VACXIN ĐẠI LỘC] - Nhắc nhở lịch tiêm chủng của Quý khách hàng.",
+                mailConfirm(
+                    customer.customerName,
+                    customer.phone,
+                    moment(customer.customerDoB).format("DD-MM-YYYY"),
+                    vaccine.vaccineName,
+                    moment(booking.toJSON().expectedDate).format("DD-MM-YYYY"),
+                    "23322"
+                )
+            );
+        });
     }
 }
 
