@@ -20,6 +20,7 @@ import Post from "./post.entity";
 import Booking from "./booking.entity";
 import Wards from "./wards.entity";
 import ImAndExWarehouse from "./ImAndExWarehouse.entity";
+import HealtSheet from "./healtSheet.entity";
 
 @Table({
     timestamps: true,
@@ -89,6 +90,8 @@ export default class User extends Model {
     @HasMany(() => ImAndExWarehouse, "approveId")
     approveImportExport: ImAndExWarehouse[];
 
+    @HasMany(() => HealtSheet)
+    healtSheets: HealtSheet[];
     @Column
     @ForeignKey(() => User)
     createdBy?: number;

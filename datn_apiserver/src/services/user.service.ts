@@ -13,6 +13,7 @@ import { UserRoles } from "../types/userRoles";
 import wardRepository from "../repositories/wardRepository";
 import districtsRepository from "../repositories/districtsRepository";
 import provinceRepository from "../repositories/provinceRepository";
+import { getAllStaff } from "../controllers/user.controller";
 interface Login {
     email: string;
     password: string;
@@ -185,6 +186,22 @@ class userService {
                 },
             }
         );
+    }
+
+    async getStaff() {
+        const authori = await authorityRepository.findOne({
+            where: {
+                name: UserRoles.STAFF,
+            },
+        });
+
+        const staffs = await userRepository.findAll({
+            where: {
+                roleId: authori.id,
+            },
+        });
+
+        return staffs;
     }
 }
 

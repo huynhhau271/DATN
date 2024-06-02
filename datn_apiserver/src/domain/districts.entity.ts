@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-    AutoIncrement,
     BelongsTo,
     Column,
     DataType,

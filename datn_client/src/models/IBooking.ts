@@ -4,13 +4,13 @@ import { IVaccine } from "./vaccine.model";
 export interface IBookingForm {
      expectedDate: Date;
 
-     customerDoB?: Date;
+     customerDoB: Date;
 
      vaccineId: number;
 
-     customerName?: string;
+     customerName: string;
 
-     gender?: boolean;
+     gender: boolean;
 
      parentsName?: string;
 
@@ -33,10 +33,12 @@ export interface IBookingPayload {
      customer?: ICustomer;
 }
 export interface Booking {
+     id: number;
      statused: string;
      vaccineId: number;
      vaccine: IVaccine;
      expectedDate: Date;
      customerId?: number;
      customer: ICustomer;
+     paymentSatus: boolean;
 }

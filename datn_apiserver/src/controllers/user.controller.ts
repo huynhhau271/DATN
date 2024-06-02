@@ -34,3 +34,7 @@ export const activeUser = async (req: AuthenticatedRequest, res: Response) => {
     );
     return res.status(httpStatus.OK).send("OK");
 };
+export const getStaffs = async (req: AuthenticatedRequest, res: Response) => {
+    const staffs = await userService.getStaff();
+    return res.status(httpStatus.OK).send(staffs);
+};

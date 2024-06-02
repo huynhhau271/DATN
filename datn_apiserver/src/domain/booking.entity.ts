@@ -6,6 +6,7 @@ import {
     CreatedAt,
     DataType,
     ForeignKey,
+    HasOne,
     Model,
     PrimaryKey,
     Table,
@@ -16,6 +17,7 @@ import Wards from "./wards.entity";
 import User from "./user.entity";
 import NurseStaff from "./nurseStaff.entity";
 import Customer from "./customer.entity";
+import HealtSheet from "./healtSheet.entity";
 /**
  * A Booking.
  */
@@ -76,4 +78,7 @@ export default class Booking extends Model {
 
     @UpdatedAt
     lastModifiedDate?: Date;
+
+    @HasOne(() => HealtSheet)
+    healtSheet: HealtSheet;
 }

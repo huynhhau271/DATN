@@ -12,6 +12,8 @@ import { StatusBooking } from "../domain/enum/statusBooking";
 import Customer from "../domain/customer.entity";
 import moment from "moment";
 import { tranformModel } from "./helper/tranformModelToObject";
+import { mailNotification } from "../utils/mailTemplate/mailNotification";
+import { User } from "../utils/user";
 interface Bookings {
     bookings: IBooking[];
     limit: number;
@@ -196,6 +198,7 @@ class BookingService {
         const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
         const day = String(today.getDate()).padStart(2, "0");
         const later = `${year}-${month}-${day}`;
+        const t = await database.transaction();
 
         const boookings = await bookingRepository.findAll({
             where: {
@@ -203,27 +206,65 @@ class BookingService {
                     .toISOString()
                     .slice(0, 19)
                     .replace("T", " "),
-                // statused:B
+                statused: StatusBooking.CONFIRMED,
             },
             include: [customerRepository, vaccineRepository],
         });
-
+        await bookingRepository.update(
+            { statused: StatusBooking.NOTIFICATION_SENT },
+            {
+                where: {
+                    expectedDate: new Date(later)
+                        .toISOString()
+                        .slice(0, 19)
+                        .replace("T", " "),
+                    statused: StatusBooking.CONFIRMED,
+                },
+            }
+        );
         boookings.forEach((booking) => {
             const customer = booking.toJSON().customer;
             const vaccine = booking.toJSON().vaccine;
-            mailService.sendmail(
-                customer.email,
-                "[PHÒNG TIÊM CHỦNG VACXIN ĐẠI LỘC] - Nhắc nhở lịch tiêm chủng của Quý khách hàng.",
-                mailConfirm(
-                    customer.customerName,
-                    customer.phone,
-                    moment(customer.customerDoB).format("DD-MM-YYYY"),
-                    vaccine.vaccineName,
-                    moment(booking.toJSON().expectedDate).format("DD-MM-YYYY"),
-                    "23322"
+            mailService
+                .sendmail(
+                    customer.email,
+                    "[PHÒNG TIÊM CHỦNG VACXIN ĐẠI LỘC] – Thông báo nhắc nhở lịch tiêm đến Quý khách hàng.",
+                    mailNotification(
+                        customer.customerName,
+                        customer.phone,
+                        moment(customer.customerDoB).format("DD-MM-YYYY"),
+                        vaccine.vaccineName,
+                        moment(booking.toJSON().expectedDate).format(
+                            "DD-MM-YYYY"
+                        )
+                    )
                 )
-            );
+                .then(() => t.commit().then())
+                .catch(() => t.rollback().then());
         });
+    }
+    async payment(user: User, bookingId: number) {
+        const booking = await bookingRepository.findAll({
+            where: {
+                id: bookingId,
+                statused: StatusBooking.BE_INJECTED,
+            },
+        });
+        if (!booking) throw new BadRequestError("Đơn hàng không tồn tại");
+        else
+            await bookingRepository.update(
+                {
+                    paymentSatus: true,
+                    userId: user.userId,
+                },
+                {
+                    where: {
+                        id: bookingId,
+                        paymentSatus: false,
+                        statused: StatusBooking.BE_INJECTED,
+                    },
+                }
+            );
     }
 }
 

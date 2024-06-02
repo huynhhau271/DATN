@@ -2,7 +2,7 @@ import { CronJob } from "cron";
 import bookingService from "../services/booking.service";
 
 export const cronjobNotifi = CronJob.from({
-    cronTime: "* * 9 * * *",
+    cronTime: "0 0 9 * * *",
     onTick: async function () {
         await bookingService.notification();
     },

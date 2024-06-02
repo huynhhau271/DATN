@@ -26,3 +26,10 @@ export const getAllBooking = async (
     const result = await bookingService.getAllBooking(+limit, +page);
     return res.status(httpStatus.OK).send(result);
 };
+
+export const payment = async (req: AuthenticatedRequest, res: Response) => {
+    const { bookingId } = req.query;
+    const user = req.user;
+    await bookingService.payment(user, +bookingId);
+    return res.status(httpStatus.OK).send();
+};

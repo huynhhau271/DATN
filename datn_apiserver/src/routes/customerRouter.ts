@@ -1,7 +1,10 @@
 import { BaseRouter } from "./BaseRouter";
 import catchAsync from "../utils/catchAsync";
 import { booking, confirmBooking } from "../controllers/booking.controller";
-import { getAllCustomerByInfor } from "../controllers/customer.controller";
+import {
+    getAllCustomerByInfor,
+    trackingCustomer,
+} from "../controllers/customer.controller";
 
 /**
  * @description AuthLoginRouter
@@ -17,6 +20,7 @@ class CustomerRouter extends BaseRouter {
      */
     protected init() {
         this.router.post("/info", catchAsync(getAllCustomerByInfor));
+        this.router.post("/tracking", catchAsync(trackingCustomer));
     }
 }
 
