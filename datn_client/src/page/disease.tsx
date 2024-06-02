@@ -10,6 +10,7 @@ import { Loading } from "../utils/components/sprin";
 import DiseaseModal from "../modals/diseaseModal";
 import DeleteDiseaseModal from "../modals/deleteDiseaseMoadl";
 import { IoMdAdd } from "react-icons/io";
+import { Image } from "antd"
 const DiseaseManagerPage = () => {
      const { Search } = Input;
      const [page, setPage] = useState(1);
@@ -38,6 +39,18 @@ const DiseaseManagerPage = () => {
                title: "Cách Phòng Tránh",
                dataIndex: "revention",
                key: "revention",
+          },
+          {
+               title: "Hình Ảnh",
+               dataIndex: "image",
+               key: "image",
+               width: 250,
+               render: (_, record) => (
+                    <div className="flex gap-1">
+                         <div>
+                             <Image src={record.image}/>    
+                         </div>
+                         </div>)
           },
           {
                title: "Tính năng",

@@ -8,6 +8,7 @@ import DiseaseManagerPage from "../page/disease";
 import UserLayout from "../layouts/userLayout";
 import Booking from "../page/booking";
 import BookingManagerPage from "../page/bookingManager";
+import { TrackingPage } from "../page/trackingPage";
 
 const routers: RouteObject[] = [
      {
@@ -51,6 +52,11 @@ const routers: RouteObject[] = [
                     path: "/dang-ky-tiem-chung",
                     id: "tiem-chung",
                     Component: Booking,
+               },
+               {
+                    path: "/so-theo-gioi",
+                    id: "tracking",
+                    Component: TrackingPage,
                },
           ],
           Component: UserLayout,

@@ -24,7 +24,7 @@ class StaffService {
      }
 
      async createUser(user: IUser, uploadedImage?: string, fileName?: string) {
-          let urlPictre = user.imageUrl;
+          let urlPictre = user.avatar;
           if (uploadedImage && fileName)
                urlPictre = await uploadImageToFirebase(
                     fileName,
@@ -33,13 +33,13 @@ class StaffService {
                );
           const response = await baseRequest.post(this.BasseUrl, {
                ...user,
-               imageUrl: urlPictre,
+               avatar: urlPictre,
           });
           return response.data;
      }
 
      async updateStaff(user: IUser, uploadedImage?: string, fileName?: string) {
-          let urlPictre = user.imageUrl;
+          let urlPictre = user.avatar;
           if (uploadedImage && fileName)
                urlPictre = await uploadImageToFirebase(
                     fileName,
@@ -49,8 +49,13 @@ class StaffService {
 
           const response = await baseRequest.put(this.BasseUrl, {
                ...user,
-               imageUrl: urlPictre,
+               avatar: urlPictre,
           });
+          return response.data;
+     }
+
+     async getStaff() {
+          const response = await baseRequest.get(this.BasseUrl + "/staffs");
           return response.data;
      }
 }

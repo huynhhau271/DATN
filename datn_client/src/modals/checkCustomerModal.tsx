@@ -1,4 +1,4 @@
-import { Button, Form, Modal, Typography } from "antd";
+import { Button, Modal, Typography } from "antd";
 interface Props {
      setOpen: (value: boolean) => void;
      open: boolean;
@@ -14,7 +14,7 @@ const CheckCustomerModal = ({
      const { Title } = Typography;
      return (
           <>
-               <Modal open={open} footer={null}>
+               <Modal open={open} footer={null} onCancel={()=>setOpen(false)}>
                     <div className="flex flex-col items-center">
                          <Title level={5}>
                               Bạn Đã Sử Dụng Dịch Vụ Tại Trung Tâm Chúng Tôi

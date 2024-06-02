@@ -11,3 +11,15 @@ export const getAllCustomerByInfor = async (
     const result = await customerService.getCustomerByInfo(name, dob, email);
     return res.status(httpStatus.OK).send(result);
 };
+export const trackingCustomer = async (
+    req: AuthenticatedRequest,
+    res: Response
+) => {
+    const { email, fullName, dob } = req.body;
+    const result = await customerService.getTrackingCustomer({
+        fullName,
+        dob,
+        email,
+    });
+    return res.status(httpStatus.OK).send(result);
+};

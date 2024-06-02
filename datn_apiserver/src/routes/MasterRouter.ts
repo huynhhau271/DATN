@@ -10,6 +10,7 @@ import vaccineRouter from "./vaccineRouter";
 import diseaseRouter from "./diseaseRouter";
 import bookingRouter from "./bookingRouter";
 import customerRouter from "./customerRouter";
+import healtSheetRouter from "./healtSheetRouter";
 
 class MasterRouter extends BaseRouter {
     constructor() {
@@ -42,6 +43,7 @@ class MasterRouter extends BaseRouter {
         this.router.use("/disease", diseaseRouter);
         this.router.use("/booking", bookingRouter);
         this.router.use("/customer", customerRouter);
+        this.router.use("/healtSheet", healtSheetRouter);
         this.router.use(errorHandler);
     }
 }

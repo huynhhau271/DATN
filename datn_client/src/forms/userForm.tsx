@@ -337,7 +337,7 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                     <div className="flex justify-center mb-5">
                          <Uploader
                               setFileName={setFileName}
-                              defaultValue={userData?.imageUrl || undefined}
+                              defaultValue={userData?.avatar || undefined}
                               setUploadedImage={setUploadedImage}
                               uploadedImage={uploadedImage}
                          />
