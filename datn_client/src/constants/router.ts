@@ -8,7 +8,10 @@ import DiseaseManagerPage from "../page/disease";
 import UserLayout from "../layouts/userLayout";
 import Booking from "../page/booking";
 import BookingManagerPage from "../page/bookingManager";
-import { TrackingPage } from "../page/trackingPage";
+import HomeUses from "../page/homeUses";
+import IntroduceUsers from "../page/introduceUsers";
+import VacxinUsers from "../page/vacxinUsers";
+
 
 const routers: RouteObject[] = [
      {
@@ -53,10 +56,25 @@ const routers: RouteObject[] = [
                     id: "tiem-chung",
                     Component: Booking,
                },
+               // {
+               //      path: "/so-theo-gioi",
+               //      id: "tracking",
+               //      Component: TrackingPage,
+               // },
                {
-                    path: "/so-theo-gioi",
-                    id: "tracking",
-                    Component: TrackingPage,
+                    path: "/trang-chu",
+                    id: "trang-chu",
+                    Component: HomeUses,
+               },
+               {
+                    path: "/gioi-thieu",
+                    id: "gioi-thieu",
+                    Component: IntroduceUsers,
+               },
+               {
+                    path: "/vac-xin",
+                    id: "vac-xin",
+                    Component: VacxinUsers,
                },
           ],
           Component: UserLayout,

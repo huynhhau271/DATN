@@ -1,0 +1,57 @@
+.IntroduceUsers img {
+    width: 1315px;
+    margin: 0 20px;
+}
+.home{
+    margin-left: -1150px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.gt-title{
+    margin-left: -1150px;
+    font-size: 30px;
+    font-weight: bold;
+}
+.title {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 20px;
+}
+
+.title p {
+    margin: 0; 
+    text-align: justify;
+    font-size: 16px;
+}
+
+figure img {
+    margin-left: 270px;
+}
+
+.wp-caption-text{
+    margin-left: 450px;
+}
+
+.h2_1{
+    margin-left: -100px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #2a388f;
+}
+.h2_2{
+    margin-left: -280px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #2a388f;
+}
+.h2_3{
+    margin-left: -430px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #2a388f;
+}
+
+
+

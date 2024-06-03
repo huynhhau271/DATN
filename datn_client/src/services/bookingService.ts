@@ -23,12 +23,6 @@ class BookingService {
           });
           return response.data;
      }
-
-     async payment(bookingId: number) {
-          return await baseRequest.get(this.BasseUrl + "/payment", {
-               params: { bookingId },
-          });
-     }
 }
 
 export const bookingService = new BookingService();

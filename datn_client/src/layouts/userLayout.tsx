@@ -2,6 +2,8 @@ import { Layout } from "antd";
 import { Footer } from "antd/es/layout/layout";
 import { Outlet } from "react-router-dom";
 import HeaderUserComponent from "../page/headerUser";
+import FooterUser from './../page/footerUser';
+
 const { Header, Content } = Layout;
 const UserLayout = () => {
      return (
@@ -12,8 +14,8 @@ const UserLayout = () => {
                <Content className="overflow-x-auto site-layout-sub-header-background bg-[#f0f2f5]">
                     <Outlet />
                </Content>
-               <Footer className="site-layout-sub-header-background h-fit sticky top-0 z-10 !bg-white border-solid ">
-                    Footer
+               <Footer className=" h-fit  z-10 !bg-white border-solid ">
+                    <FooterUser />
                </Footer>
           </Layout>
      );

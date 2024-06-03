@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import Table, { ColumnsType } from "antd/es/table";
-import { Button, Pagination } from "antd";
+import { Pagination } from "antd";
 import { formatDate } from "../utils/formatDate";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input } from "antd";
+import { toast } from "react-toastify";
 import { Loading } from "../utils/components/sprin";
 import { Booking } from "../models/IBooking";
 import useGetAllBooking from "../hook/useGetAllBooking";
-import { StatusBooking, statusBookingOption } from "../utils/statusBooking";
-import HealtCheckModal from "../modals/healtCheckModal";
-import PaymentModal from "../modals/paymentModal";
-import InjectModal from "../modals/injectModal";
+import { statusBooking } from "../utils/statusBooking";
 const BookingManagerPage = () => {
      const { Search } = Input;
      const [page, setPage] = useState(1);
@@ -119,7 +117,7 @@ const BookingManagerPage = () => {
                dataIndex: "activated",
                key: "activated",
                fixed: "right",
-               filters: statusBookingOption.map((status) => {
+               filters: statusBooking.map((status) => {
                     return {
                          text: status.value,
                          value: status.value,
@@ -137,38 +135,6 @@ const BookingManagerPage = () => {
                key: "operation",
                fixed: "right",
                width: 100,
-               render: (_, record) => {
-                    if (record.statused === StatusBooking.NOTIFICATION_SENT)
-                         return (
-                              <HealtCheckModal
-                                   refetch={refetch}
-                                   idBooking={record.id}
-                                   fullName={record.customer.customerName}
-                                   dob={record.customer.customerDoB}
-                                   gender={record.customer.gender}
-                              />
-                         );
-                    if (
-                         record.statused === StatusBooking.BE_INJECTED &&
-                         !record.paymentSatus
-                    )
-                         return (
-                              <PaymentModal
-                                   bookingId={record.id}
-                                   refetch={refetch}
-                              />
-                         );
-                    if (
-                         record.statused === StatusBooking.BE_INJECTED &&
-                         record.paymentSatus
-                    )
-                         return (
-                              <InjectModal
-                                   bookingId={record.id}
-                                   refetch={refetch}
-                              />
-                         );
-               },
           },
      ];
      if (!bookings || isLoading) return <Loading />;
