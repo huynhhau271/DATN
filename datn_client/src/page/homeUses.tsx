@@ -13,7 +13,7 @@ const HomeUses = () => {
         <SwiperUser/>
       </div>
       <div className='img_home'>
-        <img src="https://hcdc.vn/public/img/02bf8460bf0d6384849ca010eda38cf8e9dbc4c7/images/dangbai2/images/file-thong-diep-truyen-thong-ve-loi-ich-tiem-vac-xin-phong-covid19-cho-tre-em/images/F6AF7ECB-BD5D-491A-AF58-FB7728D51480.jpeg"/>
+        <img src="../user_Image/Banner.png"/>
       </div>
       <div className='img_home'>
         <IntroduceUser/>

@@ -25,11 +25,11 @@ const IntroduceUsers = () => {
             <div className="title">
                 <p style={{ textAlign: 'center' }}>
                     <span style={{ color: '#000080', fontSize: '14pt' }}>
-                        <strong>HỆ THỐNG HÀNG TRĂM TRUNG TÂM TIÊM CHỦNG VNVC: AN TOÀN, UY TÍN, </strong>
+                        <strong>PHÒNG TIÊM CHỦNG VẮC XIN ĐẠI LỘC </strong>
                     </span>
                     <br />
                     <span style={{ color: '#000080', fontSize: '14pt' }}>
-                        <strong>CHẤT LƯỢNG SỐ 1 VIỆT NAM, ĐƯỢC HÀNG CHỤC TRIỆU GIA ĐÌNH TIN TƯỞNG LỰA CHỌN!</strong>
+                        <strong>TIÊM CHỦNG CHẤT LƯỢNG - AN TOÀN - UY TÍN, BÉ KHOẺ TOÀN DIỆN - BA MẸ YÊN TÂM </strong>
                     </span>
                 </p>
                 <p style={{ textAlign: 'justify' }}>

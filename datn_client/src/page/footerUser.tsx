@@ -15,6 +15,7 @@ const FooterUser = () => {
             />
           </div>
           <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
+          
             <div>
               <Footer.Title title={<><BsHouseDoor className="inline mr-2" /> <span className="font-bold">Địa chỉ</span></>} /> 
               <Footer.LinkGroup col>
