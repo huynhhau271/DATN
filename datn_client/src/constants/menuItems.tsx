@@ -72,13 +72,14 @@ export const MenuUser: MenuUser[] = [
           title: "Lịch tiêm vacxin",
      },
      {
-          key: "news",
-          href: "/#tin-tuc",
-          title: "Tin Tức",
+          key: "center",
+          href: "/quy-trinh-tiem-chung",
+          title: "Quy trình tiêm chủng",
      },
      {
-          key: "center",
-          href: "/#trung-tam",
-          title: "Về Trung Tâm",
+          key: "news",
+          href: "/cam-nang",
+          title: "Cẩm nang",
      },
+     
 ];

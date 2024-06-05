@@ -7,7 +7,7 @@ import { Swiper as SwiperType } from 'swiper';
 
 const newsItems = [
     {
-        imgSrc: "../../public/User_Image/LichTiemChungChoTreTu0Den5Tuoi.png",
+        imgSrc: "https://vnvc.vn/wp-content/uploads/2024/05/lich-tiem-chung-cho-tre-tu-0-den-5-tuoi.jpg",
         imgAlt: "Lịch tiêm chủng cho trẻ từ 0 đến 5 tuổi",
         title: "Lịch tiêm chủng cho trẻ từ 0 đến 5 tuổi theo Bộ Y Tế",
         intro: "Bố mẹ cần cho trẻ em tiêm vắc xin theo lịch tiêm chủng cho trẻ từ 0 đến 5 tuổi do Bộ Y tế khuyến cáo để ngăn chặn các bệnh truyền nhiễm nguy hiểm, trẻ..."
@@ -19,7 +19,7 @@ const newsItems = [
         intro: "Cùng với miễn dịch tự nhiên, miễn dịch nhân tạo là lá chắn quan trọng giúp cơ thể chống lại mầm bệnh. Miễn dịch nhân tạo được xây dựng thông qua việc..."
     },
     {
-        imgSrc: "../../public/User_Image/MienDichTuNhien.png",
+        imgSrc: "https://vnvc.vn/wp-content/uploads/2024/05/mien-dich-tu-nhien-la-gi.jpg",
         imgAlt: "Miễn dịch tự nhiên là gì? Cách để tăng cường hệ miễn dịch",
         title: "Miễn dịch tự nhiên là gì? Vai trò quan trọng và cách để tăng cường",
         intro: "Miễn dịch tự nhiên là hàng rào đầu tiên của cơ thể ngăn chặn không cho các loại virus, vi khuẩn, vi sinh vật xâm nhập và tấn công, trong khi đó miễn..."
