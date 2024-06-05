@@ -5,7 +5,7 @@ const HandBook = () => {
     return (
         <div className='parent'>
             <div className='HandBook'>
-                <div className='vc_img'>
+                <div className='vc_img1'>
                     <img src="https://vnvc.vn/wp-content/uploads/2017/06/dc-luuy.jpg" alt="Vaccination Info" />
                 </div>
                 <p className="home">

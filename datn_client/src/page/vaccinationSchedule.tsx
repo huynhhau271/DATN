@@ -6,8 +6,8 @@ const VaccinationSchedule = () => {
   return (
     <div>
       <div className='VaccinationSchedule'>
-        <div className='vc_img'>
-          <img src="https://vnvc.vn/wp-content/uploads/2017/06/dc-cnang.jpg" alt="" />
+        <div className='vc_img1'>
+          <img src="https://benhvien331.com.vn/wp-content/uploads/2022/09/pictures_library_10962_20200420134341_4731.png" alt="" />
         </div>
         <p className="home">
           <a href="/trang-chu">Trang chủ</a>
