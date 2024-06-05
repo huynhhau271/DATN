@@ -11,6 +11,9 @@ import BookingManagerPage from "../page/bookingManager";
 import HomeUses from "../page/homeUses";
 import IntroduceUsers from "../page/introduceUsers";
 import VacxinUsers from "../page/vacxinUsers";
+import VaccinationSchedule from "../page/vaccinationSchedule";
+import HandBook from "../page/handBook";
+import Procedure from "../page/procedure";
 
 
 const routers: RouteObject[] = [
@@ -75,6 +78,21 @@ const routers: RouteObject[] = [
                     path: "/vac-xin",
                     id: "vac-xin",
                     Component: VacxinUsers,
+               },
+               {
+                    path: "/lich-tiem-chung",
+                    id: "lich-tiem-chung",
+                    Component: VaccinationSchedule,
+               },
+               {
+                    path: "/quy-trinh-tiem-chung",
+                    id: "quy-trinh-tiem-chung",
+                    Component: Procedure,
+               },
+               {
+                    path: "/cam-nang",
+                    id: "cam-nang",
+                    Component: HandBook,
                },
           ],
           Component: UserLayout,
