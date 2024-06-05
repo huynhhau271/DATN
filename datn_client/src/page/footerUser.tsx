@@ -19,24 +19,25 @@ const FooterUser = () => {
             <div>
               <Footer.Title title={<><BsHouseDoor className="inline mr-2" /> <span className="font-bold">Địa chỉ</span></>} /> 
               <Footer.LinkGroup col>
-                <Footer.Link href="#">18 Phạm Văn Đồng, TT. Ái Nghĩa,</Footer.Link>
+                <Footer.Link href="#">CS1: 18 Phạm Văn Đồng, TT. Ái Nghĩa,</Footer.Link>
                 <Footer.Link href="#">Đại Lộc, Quảng Nam</Footer.Link>
+                <Footer.Link href="#">CS2: Gia Huệ, Đại Minh, Đại Lộc, Quảng Nam </Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
               <Footer.Title title={<><BsPhone className="inline mr-2" /> <span className="font-bold">Liên hệ với chúng tôi</span></>} />
               <Footer.LinkGroup col>
-                <Footer.Link href="#">Hotline: 0918341155 - (024) 3 2444 086</Footer.Link>
+                <Footer.Link href="#">SDT: 0905.470.207 - 0795.194.082</Footer.Link>
                 <Footer.Link href="#">
                   Mở cửa 7:30 – 17:00 xuyên trưa* <br />
-                  (*) Một số Trung tâm có giờ hoạt động riêng
+                  (*) Cơ sở 2 có giờ hoạt động riêng
                 </Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
               <Footer.Title title={<><BsEnvelope className="inline mr-2" /> <span className="font-bold">Email</span></>} />
               <Footer.LinkGroup col>
-                <Footer.Link href="#">tcvxdl@gmail.com</Footer.Link>
+                <Footer.Link href="#">tiemchung.dailoc@gmail.com</Footer.Link>
               </Footer.LinkGroup>
             </div>
           </div>

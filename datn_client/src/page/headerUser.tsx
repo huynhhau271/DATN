@@ -52,10 +52,10 @@ function HeaderUserComponent() {
                                              color="#102A83"
                                         />
                                    </div>
-                                   <div className="flex flex-col justify-center items-start gap- leading-6">
-                                        <p>HotLine 24/7</p>
-                                        <p className="text-[#102A83] font-bold">
-                                             0918341155 - (024) 3 2444 086
+                                   <div className="text-[#102A83] font-bold backdrop:flex flex-col justify-center items-start gap- leading-6">
+                                        <p>Liên hệ với chúng tôi 24/7</p>
+                                        <p className="text-[#e73b3b] font-bold">
+                                             0905.470.207 - 0795.194.082
                                         </p>
                                    </div>
                               </div>
