@@ -81,13 +81,13 @@ const IntroduceUsers = () => {
                 <img
                     decoding="async"
                     className="size-full wp-image-77882"
-                    src="https://vnvc.vn/wp-content/uploads/2024/05/vnvc-luon-cung-ung-day-du-vac-xin.jpg"
+                    src="../../public/User_Image/KhoLuuGiuVacXin.png"
                     alt="vnvc luôn cung ứng đầy đủ vắc xin"
                     width="800"
                     height="532"
                 />
                 <figcaption id="caption-attachment-77882" className="wp-caption-text">
-                    VNVC cam kết cung ứng đầy đủ vắc xin cho trẻ em và người lớn chất lượng cao, nhập khẩu chính hãng từ các nhà sản xuất vắc xin hàng đầu Thế giới
+                    Vacxin Đại Lộc cam kết cung ứng đầy đủ vắc xin cho trẻ em và người lớn chất lượng cao, nhập khẩu chính hãng từ các nhà sản xuất vắc xin hàng đầu Thế giới
                 </figcaption>
             </figure>
             <h2 className="h2_2">

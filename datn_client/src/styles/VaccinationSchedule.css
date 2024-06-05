@@ -1,0 +1,57 @@
+.vc_img{
+  width: auto;
+  margin: 0px 150px;
+}
+.VaccinationSchedule .home{
+  margin-left: -1120px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.VaccinationSchedule .gt-title{
+  margin-left: -1000px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.vaccination-schedule {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.vaccination-schedule table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.vaccination-schedule th, .vaccination-schedule td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.vaccination-schedule th {
+  background-color: #f2f2f2;
+  color: black;
+}
+
+.vaccination-schedule tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.vaccination-schedule tr:hover {
+  background-color: #ddd;
+}
+
+.vaccination-schedule th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: rgb(48, 64, 149);
+  color: white;
+}
+
+.vaccination-schedule td {
+  text-align: left;
+}
+
+
+
