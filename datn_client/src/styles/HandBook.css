@@ -1,0 +1,116 @@
+.HandBook img {
+    width: 100%;
+    margin: 0 10px;
+}
+.HandBook .home{
+    margin-left: -812px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.HandBook .gt-title{
+    margin-left: -515px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #2f4f98;
+}
+.HandBook_1, .HandBook_2{
+    text-align: left;
+}
+
+.parent {
+    margin: 50px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .HandBook {
+    margin-bottom: 20px;
+  }
+  
+  .vc_img img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .home {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  .home a {
+    color: #2f4f98;
+    text-decoration: none;
+  }
+  
+  .home .separator {
+    margin: 0 5px;
+  }
+  
+  .home .last {
+    color: #555;
+  }
+  
+  .title {
+    margin: 20px 0;
+  }
+  
+  .gt-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2f4f98;
+  }
+  
+  .parent hr {
+    border: 1px solid #ddd;
+    margin: 20px 0;
+  }
+  
+  .parent h2, h3 {
+    color: #2f4f98;
+  }
+  
+  .parent h2 {
+    font-size: 25px;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  .parent h3 {
+    font-size: 18px;
+    margin-top: 15px;
+  }
+  
+  .parent p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  .parent ul {
+    margin: 10px 0;
+    padding-left: 20px;
+    list-style-type: disc;
+  }
+  
+  .parent ul li {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  .HandBook_1 img{
+    margin-left: 100px;
+}
+.HandBook_3 img{
+  margin-left: 200px;
+  margin-top: 10px;
+}
+.HandBook .home3{
+  margin-left: -1000px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.HandBook .gt-title3{
+  margin-left: -900px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #2f4f98;
+}
