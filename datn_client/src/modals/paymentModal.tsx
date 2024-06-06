@@ -15,7 +15,7 @@ const PaymentModal = ({ bookingId, refetch }: Props) => {
                .then(() => {
                     refetch();
                     setOpen(false);
-                    toast.success("Đơn Hàng Đã Được Thanh Toán");
+                    toast.success("Đã Thanh Toán Thành Công");
                })
                .catch((error) => {
                     if (error.response) {

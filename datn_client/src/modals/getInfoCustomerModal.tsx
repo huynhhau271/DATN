@@ -56,7 +56,6 @@ const GetInfoBookingModal = ({
                          layout="vertical"
                          name="customer"
                          onFinish={handleSubmit}
-                         autoComplete="off"
                     >
                          <Typography.Title editable={false} level={5}>
                               Kiểm Tra Thông Tin Khách Hàng

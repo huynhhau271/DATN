@@ -1,4 +1,5 @@
 import { ICustomer } from "./ICustomer";
+import { IUser } from "./user.model";
 import { IVaccine } from "./vaccine.model";
 
 export interface IBookingForm {
@@ -39,4 +40,6 @@ export interface Booking {
      expectedDate: Date;
      customerId?: number;
      customer: ICustomer;
+     paymentSatus: boolean;
+     nurseStaff: IUser;
 }

@@ -11,19 +11,22 @@ interface Props {
 const InjectModal = ({ bookingId, refetch }: Props) => {
      const [open, setOpen] = useState(false);
      const { staffs } = getUserRoleStaff();
+     const [nuffId, setNuffId] = useState();
      const handleOk = () => {
-          bookingService
-               .payment(bookingId)
-               .then(() => {
-                    refetch();
-                    setOpen(false);
-                    toast.success("Xác Nhận Tiêm Chủng");
-               })
-               .catch((error) => {
-                    if (error.response) {
-                         toast.error(error.response.data.message);
-                    } else toast.error("Có Lỗi Hệ Thống Vui Lòng Thử Lại");
-               });
+          if (!nuffId) toast.error("Vui Lòng Chọn Nhân Viên Tiêm Chủng");
+          else
+               bookingService
+                    .inject(bookingId, nuffId)
+                    .then(() => {
+                         refetch();
+                         setOpen(false);
+                         toast.success("Xác Nhận Tiêm Chủng Thành Công");
+                    })
+                    .catch((error) => {
+                         if (error.response) {
+                              toast.error(error.response.data.message);
+                         } else toast.error("Có Lỗi Hệ Thống Vui Lòng Thử Lại");
+                    });
      };
      const showModal = () => {
           setOpen(true);
@@ -43,16 +46,16 @@ const InjectModal = ({ bookingId, refetch }: Props) => {
                     Tiêm Chủng
                </Button>
                <Modal
-                    title={"Xác Nhận Thanh Toán"}
+                    title={"Tiêm Chủng"}
                     open={open}
                     onCancel={handleCancel}
                     width={300}
                     okType="primary"
                     onOk={handleOk}
-                    okText="Thanh Toán"
+                    okText="Xác Nhận Tiêm"
                >
                     <p>Người Tiêm</p>
-                    <Select className="w-full">
+                    <Select className="w-full" onChange={setNuffId}>
                          {staffs?.map((staff) => (
                               <Select.Option value={staff.id}>
                                    {staff.fullName}

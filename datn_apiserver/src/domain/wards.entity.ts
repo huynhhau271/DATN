@@ -13,7 +13,6 @@ import {
 import Districts from "./districts.entity";
 import User from "./user.entity";
 import Customer from "./customer.entity";
-import NurseStaff from "./nurseStaff.entity";
 
 /**
  * A Wards.
@@ -37,9 +36,6 @@ export default class Wards extends Model {
 
     @HasMany(() => Customer)
     customers?: Customer[];
-
-    @HasMany(() => NurseStaff)
-    nurseStaffs: NurseStaff[];
 
     @BelongsTo(() => Districts)
     district?: Districts;

@@ -8,15 +8,15 @@ export const seederUser = async (req: Request, res: Response) => {
     await authorityRepository.bulkCreate([
         {
             name: UserRoles.MANAGER,
-            description: "Role Manager",
+            description: "Role Giám Đốc",
         },
         {
             name: UserRoles.DEPUTY,
-            description: "Role Deputy",
+            description: "Role Phó Giám Đốc",
         },
         {
             name: UserRoles.STAFF,
-            description: "Role Staff",
+            description: "Role Nhân Viên",
         },
     ]);
     await userRepository.create({

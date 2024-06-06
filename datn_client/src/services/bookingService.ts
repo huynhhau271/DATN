@@ -23,6 +23,18 @@ class BookingService {
           });
           return response.data;
      }
+
+     async payment(bookingId: number) {
+          return await baseRequest.put(this.BasseUrl + "/payment", {
+               bookingId,
+          });
+     }
+     async inject(bookingId: number, nuffId: number) {
+          return await baseRequest.put(this.BasseUrl + "/inject", {
+               bookingId,
+               nuffId,
+          });
+     }
 }
 
 export const bookingService = new BookingService();

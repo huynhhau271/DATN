@@ -31,7 +31,7 @@ const Booking: React.FC = () => {
                               hỗ trợ đặt lịch hẹn chính xác theo giờ.
                          </div>
                     </div>
-                    {iscustomer === undefined ? (
+                    {iscustomer === undefined || !customer ? (
                          <></>
                     ) : iscustomer ? (
                          <CustomerBookingForm

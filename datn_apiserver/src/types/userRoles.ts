@@ -1,5 +1,5 @@
 export enum UserRoles {
-    DEPUTY = "DEPUTY",
-    STAFF = "STAFF",
-    MANAGER = "MANAGER",
+    DEPUTY = "Phó Giám Đốc",
+    STAFF = "Nhân Viên",
+    MANAGER = "Giám Đốc",
 }
