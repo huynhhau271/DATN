@@ -65,9 +65,10 @@ const routers: RouteObject[] = [
                //      Component: TrackingPage,
                // },
                {
-                    path: "/trang-chu",
+                    path: "/",
                     id: "trang-chu",
                     Component: HomeUses,
+                    index: true,
                },
                {
                     path: "/gioi-thieu",

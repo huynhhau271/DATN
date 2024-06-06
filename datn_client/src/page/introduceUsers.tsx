@@ -7,7 +7,7 @@ const IntroduceUsers = () => {
             <div className="row">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div className="IntroduceUsers">
-                        <img className=" hidden-lg hidden-md hidden-sm" src="https://phongkhamminhhoang.vn/wp-content/uploads/2022/03/phong-kham-minh-hoang.jpg" alt="GIỚI THIỆU" />
+                        <img className=" hidden-lg hidden-md hidden-sm" src="https://fivevac.com.vn/uploads/plugin/gallery/122/1654564446-1102989442-slide-23.png" alt="GIỚI THIỆU" />
                     </div>
                 </div>
             </div>

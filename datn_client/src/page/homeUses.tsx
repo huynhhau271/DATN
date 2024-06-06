@@ -13,7 +13,7 @@ const HomeUses = () => {
         <SwiperUser/>
       </div>
       <div className='img_home'>
-        <img src="../user_Image/Banner.png"/>
+        <img src="https://fivevac.com.vn/uploads/plugin/custom_img/2021-08-12/1628755451-1624747782-custom.png"/>
       </div>
       <div className='img_home'>
         <IntroduceUser/>

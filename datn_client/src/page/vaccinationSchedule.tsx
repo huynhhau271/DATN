@@ -7,7 +7,7 @@ const VaccinationSchedule = () => {
     <div>
       <div className='VaccinationSchedule'>
         <div className='vc_img1'>
-          <img src="https://benhvien331.com.vn/wp-content/uploads/2022/09/pictures_library_10962_20200420134341_4731.png" alt="" />
+          <img src="https://fivevac.com.vn/uploads/plugin/gallery/124/1652149751-272652582-slide-5.png" alt="" />
         </div>
         <p className="home">
           <a href="/trang-chu">Trang chủ</a>

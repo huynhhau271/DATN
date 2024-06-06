@@ -5,7 +5,7 @@ const Procedure = () => {
         <div className='parent'>
             <div className='HandBook'>
                 <div className='vc_img1'>
-                    <img src="https://VNVC.vn/wp-content/uploads/2017/06/dc-cnang.jpg" alt="Vaccination Info" />
+                    <img src="https://tanimed.vn/userimages/2022/06/30/9/2%20thang.png" alt="Vaccination Info" />
                 </div>
                 <p className="home3">
                     <a href="/trang-chu">Trang chủ</a>

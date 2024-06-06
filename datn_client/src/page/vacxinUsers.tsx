@@ -28,7 +28,7 @@ const VacxinUsers = () => {
                     <Card style={{ width: '18rem' }}>
                         <Card.Img variant="top" src="https://vnvc.vn/wp-content/uploads/2020/04/1-1.jpg" />
                         <Card.Body>
-                            <Card.Title>Lịch tiêm chuẩn cho trẻ em</Card.Title>
+                            <Card.Title>Lịch tiêm chủng cho trẻ em</Card.Title>
                             <Card.Text>
                                 Cập nhật mới và đầy đủ nhất lịch tiêm chủng cho trẻ em, đảm bảo bé yêu được chủng ngừa sớm, đầy đủ, đúng lịch, bảo vệ bé trước nhiều bệnh truyền nhiễm nguy hiểm.
                             </Card.Text>

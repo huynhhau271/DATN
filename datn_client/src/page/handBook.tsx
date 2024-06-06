@@ -6,7 +6,7 @@ const HandBook = () => {
         <div className='parent'>
             <div className='HandBook'>
                 <div className='vc_img1'>
-                    <img src="https://vnvc.vn/wp-content/uploads/2017/06/dc-luuy.jpg" alt="Vaccination Info" />
+                    <img src="https://tiemchunggianguyen.com.vn/wp-content/uploads/2021/02/banner3-1.jpg" alt="Vaccination Info" />
                 </div>
                 <p className="home">
                     <a href="/trang-chu">Trang chủ</a>

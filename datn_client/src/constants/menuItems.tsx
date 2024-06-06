@@ -53,23 +53,23 @@ export const MenuItems: MenuItems[] = [
 export const MenuUser: MenuUser[] = [
      {
           key: "contact",
-          href: "/trang-chu",
+          href: "/",
           title: "Trang chủ",
      },
      {
           key: "introduce",
           href: "/gioi-thieu",
-          title: "Giới Thiệu",
+          title: "Giới thiệu",
      },
      {
           key: "vaccine",
           href: "/vac-xin",
-          title: "Vắc Xin",
+          title: "Vắc xin cho trẻ em",
      },
      {
           key: "vaccination",
           href: "/lich-tiem-chung",
-          title: "Lịch tiêm vacxin",
+          title: "Lịch tiêm chủng",
      },
      {
           key: "center",
