@@ -52,33 +52,34 @@ export const MenuItems: MenuItems[] = [
 ];
 export const MenuUser: MenuUser[] = [
      {
+          key: "contact",
+          href: "/",
+          title: "Trang chủ",
+     },
+     {
           key: "introduce",
-          href: "/#gioi-thieu",
-          title: "Giới Thiệu",
+          href: "/gioi-thieu",
+          title: "Giới thiệu",
      },
      {
           key: "vaccine",
-          href: "/#vac-xin",
-          title: "Vắc Xin",
+          href: "/vac-xin",
+          title: "Vắc xin cho trẻ em",
      },
      {
           key: "vaccination",
-          href: "/#tiem-chung",
-          title: "Tiêm Chủng",
-     },
-     {
-          key: "news",
-          href: "/#tin-tuc",
-          title: "Tin Tức",
-     },
-     {
-          key: "contact",
-          href: "/#lien-he",
-          title: "Liên Hệ",
+          href: "/lich-tiem-chung",
+          title: "Lịch tiêm chủng",
      },
      {
           key: "center",
-          href: "/#trung-tam",
-          title: "Về Trung Tâm",
+          href: "/quy-trinh-tiem-chung",
+          title: "Quy trình tiêm chủng",
      },
+     {
+          key: "news",
+          href: "/cam-nang",
+          title: "Cẩm nang",
+     },
+     
 ];
