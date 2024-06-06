@@ -4,6 +4,7 @@ import {
     booking,
     confirmBooking,
     getAllBooking,
+    inject,
     payment,
 } from "../controllers/booking.controller";
 import { veryfyToken } from "../middleware/verifyToken";
@@ -25,7 +26,8 @@ class BookingRouter extends BaseRouter {
         this.router.post("/confirm", catchAsync(confirmBooking));
         this.router.use(veryfyToken);
         this.router.get("/", catchAsync(getAllBooking));
-        this.router.get("/payment", catchAsync(payment));
+        this.router.put("/payment", catchAsync(payment));
+        this.router.put("/inject", catchAsync(inject));
     }
 }
 

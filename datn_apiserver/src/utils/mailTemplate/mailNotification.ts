@@ -12,7 +12,7 @@ export const mailNotification = (
         <strong>
         Để đảm bảo quý khách không quên lịch hẹn tiêm chủng sắp tới, chúng tôi xin gửi thông báo nhắc nhở  đến Quý khách về lịch hẹn tiêm chủng sắp tới như sau:
         </strong>
-        <h2>Thông tin lịch hẹn::</h2>
+        <h2>Thông tin lịch hẹn:</h2>
         <p>Họ và tên người tiêm: <strong>${customerName}</strong></p>
         <p>Ngày Sinh: <strong>${dob}</strong></p>
         <p>Số Điện Thoại: <strong>${phone}</strong></p>

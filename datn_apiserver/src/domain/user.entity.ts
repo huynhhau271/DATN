@@ -67,8 +67,11 @@ export default class User extends Model {
     @HasMany(() => Post, "postId")
     posts?: Post[];
 
-    @HasMany(() => Booking, "bookingId")
+    @HasMany(() => Booking, "userId")
     bookings?: Booking[];
+
+    @HasMany(() => Booking, "nurseStaffId")
+    bookingInjects?: Booking[];
 
     @ForeignKey(() => Wards)
     @Column({ type: DataType.CHAR })

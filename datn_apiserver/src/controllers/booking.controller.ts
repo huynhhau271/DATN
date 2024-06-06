@@ -28,8 +28,16 @@ export const getAllBooking = async (
 };
 
 export const payment = async (req: AuthenticatedRequest, res: Response) => {
-    const { bookingId } = req.query;
+    const { bookingId } = req.body;
     const user = req.user;
+    console.log({ bookingId });
+
     await bookingService.payment(user, +bookingId);
+    return res.status(httpStatus.OK).send();
+};
+
+export const inject = async (req: AuthenticatedRequest, res: Response) => {
+    const { bookingId, nuffId } = req.body;
+    await bookingService.inject(+bookingId, +nuffId);
     return res.status(httpStatus.OK).send();
 };

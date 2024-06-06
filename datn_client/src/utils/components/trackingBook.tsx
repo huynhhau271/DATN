@@ -6,6 +6,7 @@ import {
      StyleSheet,
      PDFViewer,
      Font,
+     Image,
 } from "@react-pdf/renderer";
 import { Table, TR, TH, TD } from "@ag-media/react-pdf-table";
 import { ICustomer } from "../../models/ICustomer";
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
      },
      page: {
           flexDirection: "column",
-          backgroundColor: "#fff",
+          backgroundColor: "#A7E6FF",
      },
      section: {
           margin: 10,
@@ -63,7 +64,7 @@ export const TrackingBook = ({ tracking }: Props) => {
                          <View
                               style={{
                                    border: "2",
-                                   height: "90%",
+                                   height: "95%",
                                    marginTop: 20,
                                    width: "95%",
                                    marginLeft: 10,
@@ -76,16 +77,7 @@ export const TrackingBook = ({ tracking }: Props) => {
                                              textAlign: "center",
                                         }}
                                    >
-                                        PHÒNG TIÊM CHỦNG VẮC XIN
-                                   </Text>
-                                   <Text
-                                        style={{
-                                             fontWeight: "demibold",
-                                             textAlign: "center",
-                                             marginTop: 2,
-                                        }}
-                                   >
-                                        DỊCH VỤ ĐẠI LỘC
+                                        PHÒNG TIÊM CHỦNG VẮC XIN ĐẠI LỘC
                                    </Text>
                               </View>
                               <View>
@@ -108,11 +100,29 @@ export const TrackingBook = ({ tracking }: Props) => {
                                         ĐT: 02356.257768 - 02356.257768
                                    </Text>
                               </View>
+                              <View
+                                   style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        position: "absolute",
+                                        top: 150,
+                                        justifyContent: "center",
+                                        alignContent: "center",
+                                        width: "100%",
+                                   }}
+                              >
+                                   <Image
+                                        src="src\assets\logo.png"
+                                        style={{
+                                             width: 100,
+                                        }}
+                                   />
+                              </View>
                               <View>
                                    <Text
                                         style={{
                                              textAlign: "center",
-                                             marginTop: 140,
+                                             marginTop: 200,
                                              fontSize: 25,
                                         }}
                                    >
@@ -135,7 +145,7 @@ export const TrackingBook = ({ tracking }: Props) => {
                                              top: -10,
                                         }}
                                    >
-                                        Họ Và tên: {tracking.customerName}
+                                        Họ và tên: {tracking.customerName}
                                    </Text>
                                    <Text
                                         style={{
@@ -189,10 +199,20 @@ export const TrackingBook = ({ tracking }: Props) => {
                               </View>
                          </View>
                     </Page>
-                    {bookings.map((bk) => (
+                    {bookings.map((bk, index) => (
                          <Page size="A5" style={styles.page}>
-                              <View>
-                                   <Text>{bk.vaccine}</Text>
+                              <View
+                                   style={{
+                                        backgroundColor: "#A1DD70",
+                                   }}
+                              >
+                                   <Text
+                                        style={{
+                                             marginLeft: 5,
+                                        }}
+                                   >
+                                        {index + 1} Vắc-xin {bk.vaccine}
+                                   </Text>
                               </View>
                               <View style={styles.section}>
                                    <Table
@@ -201,26 +221,52 @@ export const TrackingBook = ({ tracking }: Props) => {
                                         }}
                                    >
                                         <TH>
-                                             <TD>Lần Tiêm </TD>
-                                             <TD>Ngày Tiêm</TD>
-                                             <TD>Người Tiêm</TD>
+                                             <TD
+                                                  style={{
+                                                       display: "flex",
+                                                       justifyContent: "center",
+                                                  }}
+                                             >
+                                                  Lần Tiêm{" "}
+                                             </TD>
+                                             <TD
+                                                  style={{
+                                                       display: "flex",
+                                                       justifyContent: "center",
+                                                  }}
+                                             >
+                                                  Ngày Tiêm
+                                             </TD>
+                                             <TD
+                                                  style={{
+                                                       display: "flex",
+                                                       justifyContent: "center",
+                                                  }}
+                                             >
+                                                  Người Tiêm
+                                             </TD>
                                         </TH>
                                         {bk.bookings?.map((b, index) => (
                                              <TR
                                                   style={{
-                                                       textAlign: "center",
+                                                       display: "flex",
+                                                       justifyContent: "center",
                                                   }}
                                              >
                                                   <TD
                                                        style={{
-                                                            textAlign: "center",
+                                                            display: "flex",
+                                                            justifyContent:
+                                                                 "center",
                                                        }}
                                                   >
-                                                       {index}
+                                                       {index + 1}
                                                   </TD>
                                                   <TD
                                                        style={{
-                                                            textAlign: "center",
+                                                            display: "flex",
+                                                            justifyContent:
+                                                                 "center",
                                                        }}
                                                   >
                                                        {formatDate(
@@ -229,10 +275,12 @@ export const TrackingBook = ({ tracking }: Props) => {
                                                   </TD>
                                                   <TD
                                                        style={{
-                                                            textAlign: "center",
+                                                            display: "flex",
+                                                            justifyContent:
+                                                                 "center",
                                                        }}
                                                   >
-                                                       Hau
+                                                       {b.nurseStaff.fullName}
                                                   </TD>
                                              </TR>
                                         ))}

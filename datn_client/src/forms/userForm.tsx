@@ -7,8 +7,8 @@ import { staffService } from "../services/staffService";
 import { toast } from "react-toastify";
 import { formatDate } from "../utils/formatDate";
 import moment from "moment";
-import { UserRole } from "../utils/userRole";
 import Uploader from "../utils/components/uploadImage/Uploader";
+import { UserRoles } from "../utils/userRole";
 interface Props {
      setOpen: React.Dispatch<React.SetStateAction<boolean>>;
      userData?: IUser;
@@ -192,13 +192,11 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                               className="flex-1"
                          >
                               <Select>
-                                   {UserRole.map((role) => {
-                                        return (
-                                             <Select.Option value={role.value}>
-                                                  {role.label}
-                                             </Select.Option>
-                                        );
-                                   })}
+                                   {Object.values(UserRoles).map((role) => (
+                                        <Select.Option value={role}>
+                                             {role as string}
+                                        </Select.Option>
+                                   ))}
                               </Select>
                          </Form.Item>
                     </div>

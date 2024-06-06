@@ -4,6 +4,10 @@ import vaccineRepository from "../repositories/vaccineRepository";
 import { BadRequestError } from "../utils/httpErrors";
 import exportDetail from "../domain/exportDetail.entity";
 import wardRepository from "../repositories/wardRepository";
+import userRepository from "../repositories/userRepository";
+import { StatusBooking } from "../domain/enum/statusBooking";
+import { booking } from "../controllers/booking.controller";
+import User from "../domain/user.entity";
 
 class CustomerService {
     async getCustomerByInfo(name: string, dob: string, email: string) {
@@ -38,10 +42,19 @@ class CustomerService {
             include: [
                 {
                     model: bookingRepository,
+                    where: {
+                        statused: StatusBooking.INJECTED,
+                    },
                     include: [
                         {
                             model: vaccineRepository,
                             attributes: ["vaccineName"],
+                        },
+                        {
+                            model: userRepository,
+                            foreignKey: "nurseStaffId",
+                            association: "nurseStaff",
+                            as: "nurseStaff",
                         },
                     ],
                 },

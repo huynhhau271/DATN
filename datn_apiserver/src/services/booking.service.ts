@@ -14,6 +14,7 @@ import moment from "moment";
 import { tranformModel } from "./helper/tranformModelToObject";
 import { mailNotification } from "../utils/mailTemplate/mailNotification";
 import { User } from "../utils/user";
+import userRepository from "../repositories/userRepository";
 interface Bookings {
     bookings: IBooking[];
     limit: number;
@@ -122,8 +123,10 @@ class BookingService {
                 ),
             ])
                 .then(() => t.commit())
-                .catch(() => {
+                .catch((err) => {
                     t.rollback();
+                    console.log(err);
+
                     throw new BadRequestError("Đăng Ký Tiêm Chủng Thất Bại");
                 });
         }
@@ -265,6 +268,26 @@ class BookingService {
                     },
                 }
             );
+    }
+
+    async inject(bookingId: number, nuffId: number) {
+        const booking = await bookingRepository.findByPk(bookingId);
+        if (!booking)
+            throw new BadRequestError("Có Lỗi Hệ Thống Vui Lòng Thử Lại Sau");
+        const nuff = await userRepository.findByPk(nuffId);
+        if (!nuff) throw new BadRequestError("Nhân Viên Y Tế Không Tồn Tại");
+
+        await bookingRepository.update(
+            {
+                nurseStaffId: nuffId,
+                statused: StatusBooking.INJECTED,
+            },
+            {
+                where: {
+                    id: bookingId,
+                },
+            }
+        );
     }
 }
 
