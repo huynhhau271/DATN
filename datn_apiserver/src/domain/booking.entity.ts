@@ -13,9 +13,7 @@ import {
     UpdatedAt,
 } from "sequelize-typescript";
 import Vaccine from "./vaccine.entity";
-import Wards from "./wards.entity";
 import User from "./user.entity";
-import NurseStaff from "./nurseStaff.entity";
 import Customer from "./customer.entity";
 import HealtSheet from "./healtSheet.entity";
 /**
@@ -52,19 +50,19 @@ export default class Booking extends Model {
     @BelongsTo(() => Vaccine)
     vaccine: Vaccine;
 
-    @BelongsTo(() => User)
+    @BelongsTo(() => User, "userId")
     user: User;
 
     @ForeignKey(() => User)
     @Column({ type: DataType.BIGINT })
     userId: number;
 
-    @ForeignKey(() => NurseStaff)
+    @ForeignKey(() => User)
     @Column({ type: DataType.BIGINT })
     nurseStaffId: number;
 
-    @BelongsTo(() => NurseStaff)
-    nurseStaff: NurseStaff;
+    @BelongsTo(() => User, "nurseStaffId")
+    nurseStaff: User;
 
     @ForeignKey(() => Customer)
     customerId: number;

@@ -10,7 +10,7 @@ const Booking: React.FC = () => {
      const [iscustomer, setIsCustomer] = useState<true | false | undefined>(
           undefined
      );
-     const [customer, setCustomer] = useState<ICustomer>();
+     const [customer, setCustomer] = useState<ICustomer>({});
      const [openModal, setOpenModal] = useState<boolean>(true);
      const [email, setEmail] = useState<string | undefined>();
      const [name, setName] = useState<string | undefined>();
@@ -31,7 +31,7 @@ const Booking: React.FC = () => {
                               hỗ trợ đặt lịch hẹn chính xác theo giờ.
                          </div>
                     </div>
-                    {iscustomer === undefined ? (
+                    {iscustomer === undefined || !customer ? (
                          <></>
                     ) : iscustomer ? (
                          <CustomerBookingForm

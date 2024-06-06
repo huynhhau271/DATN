@@ -25,8 +25,14 @@ class BookingService {
      }
 
      async payment(bookingId: number) {
-          return await baseRequest.get(this.BasseUrl + "/payment", {
-               params: { bookingId },
+          return await baseRequest.put(this.BasseUrl + "/payment", {
+               bookingId,
+          });
+     }
+     async inject(bookingId: number, nuffId: number) {
+          return await baseRequest.put(this.BasseUrl + "/inject", {
+               bookingId,
+               nuffId,
           });
      }
 }
