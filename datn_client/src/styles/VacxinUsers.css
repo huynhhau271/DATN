@@ -1,0 +1,45 @@
+.home{
+    margin-left: -1150px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.gt-title{
+    margin-left: -1000px;
+    font-size: 30px;
+    font-weight: bold;
+}
+.title {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 20px;
+}
+
+.title p {
+    margin: 0 30px; 
+    text-align: justify;
+    font-size: 16px;
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.product-card {
+    width: calc(25% - 10px); 
+    margin-bottom: 20px;
+}
+
+.product-card .card-body {
+    text-align: justify;
+}
+
+.product-card .card-title {
+    color: #2a388f;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 15px 0;
+}

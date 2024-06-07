@@ -53,11 +53,6 @@ class StaffService {
           });
           return response.data;
      }
-
-     async getStaff() {
-          const response = await baseRequest.get(this.BasseUrl + "/staffs");
-          return response.data;
-     }
 }
 
 export const staffService = new StaffService();

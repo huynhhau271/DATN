@@ -28,7 +28,7 @@ function HeaderUserComponent() {
                                    allowClear
                               />
                          </div>
-                         <div className="flex gap-9 flex-wrap">
+                         <div className="flex gap-10">
                               <Link to="/dang-ky-tiem-chung">
                                    <div className="flex justify-center items-center text-[#102A83] font-bold gap-2 hover:text-white hover:cursor-pointer">
                                         <FaCalendarAlt
@@ -38,15 +38,13 @@ function HeaderUserComponent() {
                                         <span>Đặt Lịch Tiêm</span>
                                    </div>
                               </Link>
-                              <Link to="/so-theo-gioi">
-                                   <div className="flex justify-center items-center text-[#102A83] font-bold gap-2 hover:text-white">
-                                        <BiSolidMessageRoundedDetail
-                                             size={20}
-                                             color="#102A83"
-                                        />
-                                        <span>Sổ Theo dõi</span>
-                                   </div>
-                              </Link>
+                              <div className="flex justify-center items-center text-[#102A83] font-bold gap-2 hover:text-white">
+                                   <BiSolidMessageRoundedDetail
+                                        size={20}
+                                        color="#102A83"
+                                   />
+                                   <span>Tư Vấn</span>
+                              </div>
                               <div className="flex justify-center items-center  gap-2">
                                    <div className="bg-[#E3EBFD] rounded-full h-9 w-9 flex items-center justify-center">
                                         <MdPhoneInTalk
@@ -54,10 +52,10 @@ function HeaderUserComponent() {
                                              color="#102A83"
                                         />
                                    </div>
-                                   <div className="flex flex-col justify-center items-start gap- leading-6">
-                                        <p>HotLine 24/7</p>
-                                        <p className="text-[#102A83] font-bold">
-                                             0918341155 - (024) 3 2444 086
+                                   <div className="text-[#102A83] font-bold backdrop:flex flex-col justify-center items-start gap- leading-6">
+                                        <p>Liên hệ với chúng tôi 24/7</p>
+                                        <p className="text-[#e73b3b] font-bold">
+                                             0905.470.207 - 0795.194.082
                                         </p>
                                    </div>
                               </div>
