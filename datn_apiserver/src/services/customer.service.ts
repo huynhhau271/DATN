@@ -8,6 +8,7 @@ import userRepository from "../repositories/userRepository";
 import { StatusBooking } from "../domain/enum/statusBooking";
 import { booking } from "../controllers/booking.controller";
 import User from "../domain/user.entity";
+import { Op } from "sequelize";
 
 class CustomerService {
     async getCustomerByInfo(name: string, dob: string, email: string) {
@@ -63,7 +64,7 @@ class CustomerService {
             where: {
                 email: email,
                 customerDoB: dob,
-                customerName: fullName,
+                customerName: {[Op.like]: `%${fullName}%`,},
             },
         });
 
