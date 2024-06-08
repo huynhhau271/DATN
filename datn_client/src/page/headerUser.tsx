@@ -38,13 +38,15 @@ function HeaderUserComponent() {
                                         <span>Đặt Lịch Tiêm</span>
                                    </div>
                               </Link>
-                              <div className="flex justify-center items-center text-[#102A83] font-bold gap-2 hover:text-white">
-                                   <BiSolidMessageRoundedDetail
-                                        size={20}
-                                        color="#102A83"
-                                   />
-                                   <span>Tư Vấn</span>
-                              </div>
+                              <Link to="/so-theo-gioi">
+                                   <div className="flex justify-center items-center text-[#102A83] font-bold gap-2 hover:text-white">
+                                        <BiSolidMessageRoundedDetail
+                                             size={20}
+                                             color="#102A83"
+                                        />
+                                        <span>Sổ Theo dõi</span>
+                                   </div>
+                              </Link>
                               <div className="flex justify-center items-center  gap-2">
                                    <div className="bg-[#E3EBFD] rounded-full h-9 w-9 flex items-center justify-center">
                                         <MdPhoneInTalk

@@ -211,21 +211,24 @@ export const TrackingBook = ({ tracking }: Props) => {
                          <Page size="A5" style={styles.page}>
                               <View
                                    style={{
-                                        backgroundColor: "#A1DD70",
+                                        // backgroundColor: "#A1DD70",
+                                        marginTop: 40,
                                    }}
                               >
                                    <Text
                                         style={{
-                                             marginLeft: 5,
+                                             marginLeft: 35,
                                         }}
                                    >
-                                        {index + 1} Vắc-xin {bk.vaccine}
+                                        {index + 1}. Vắc-xin {bk.vaccine}
                                    </Text>
                               </View>
                               <View style={styles.section}>
                                    <Table
                                         style={{
                                              textAlign: "center",
+                                             marginLeft: 20,
+                                             width: "95%",
                                         }}
                                    >
                                         <TH>

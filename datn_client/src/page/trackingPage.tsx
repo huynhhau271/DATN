@@ -97,7 +97,9 @@ export const TrackingPage = () => {
                          </Form.Item>
                     </Form>
 
-                    {tracking && <TrackingBook tracking={tracking} />}
+                    <div className="h-full w-full flex justify-center">
+                         {tracking && <TrackingBook tracking={tracking} />}
+                    </div>
                </div>
           </>
      );
