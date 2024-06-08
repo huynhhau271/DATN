@@ -11,10 +11,12 @@ const UserLayout = () => {
                <Header className=" !h-fit top-0 z-10 !bg-blue-300 border-solid border-[#8f8b8b] border-b-2 flex flex-col items-center w-full">
                     <HeaderUserComponent />
                </Header>
-               <Content className="overflow-x-auto site-layout-sub-header-background bg-[#f0f2f5]">
-                    <Outlet />
+               <Content className="overflow-x-auto site-layout-sub-header-background h-full bg-[#f0f2f5]">
+                    <div className="h-full">
+                         <Outlet />
+                    </div>
                     <div className=" z-10 !bg-white pb-7 w-full">
-                         <FooterUser />
+                         {/* <FooterUser /> */}
                     </div>
                </Content>
           </Layout>

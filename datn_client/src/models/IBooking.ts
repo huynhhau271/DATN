@@ -34,6 +34,7 @@ export interface IBookingPayload {
      customer?: ICustomer;
 }
 export interface Booking {
+     id:number;
      statused: string;
      vaccineId: number;
      vaccine: IVaccine;

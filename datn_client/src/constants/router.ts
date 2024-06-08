@@ -14,7 +14,7 @@ import VacxinUsers from "../page/vacxinUsers";
 import VaccinationSchedule from "../page/vaccinationSchedule";
 import HandBook from "../page/handBook";
 import Procedure from "../page/procedure";
-
+import { TrackingPage } from "../page/trackingPage";
 
 const routers: RouteObject[] = [
      {
@@ -59,11 +59,11 @@ const routers: RouteObject[] = [
                     id: "tiem-chung",
                     Component: Booking,
                },
-               // {
-               //      path: "/so-theo-gioi",
-               //      id: "tracking",
-               //      Component: TrackingPage,
-               // },
+               {
+                    path: "/so-theo-gioi",
+                    id: "tracking",
+                    Component: TrackingPage,
+               },
                {
                     path: "/",
                     id: "trang-chu",

@@ -127,12 +127,12 @@ class VaccineService {
                 {
                     ...vaccine,
                     quantity: 0,
-                    boosterNoses: vaccine.boosterNoses.map((bn) => {
+                    boosterNoses:vaccine.boosterNoses? vaccine.boosterNoses.map((bn) => {
                         return {
                             noseNumber: bn.noseNumber,
                             distance: bn.distance, // * moth
                         } as BoosterNose;
-                    }),
+                    }):null
                 },
                 {
                     include: [boosterNoseRepository],

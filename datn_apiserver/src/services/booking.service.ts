@@ -243,7 +243,6 @@ class BookingService {
                     )
                 )
                 .then(() => t.commit().then())
-                .catch(() => t.rollback().then());
         });
     }
     async payment(user: User, bookingId: number) {

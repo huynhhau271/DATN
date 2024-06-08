@@ -12,7 +12,7 @@ export const TrackingPage = () => {
      const [tracking, setTracking] = useState<ICustomer | undefined>(undefined);
      const handleSubmit = ({ fullName, dob, email }: any) => {
           customerService
-               .getCustomerTracking({ email, fullName, dob })
+               .getCustomerTracking({ email:email.trim(), fullName:fullName.trim(), dob })
                .then((res) => setTracking(res))
                .catch((error) => {
                     if (error.response)
@@ -97,7 +97,9 @@ export const TrackingPage = () => {
                          </Form.Item>
                     </Form>
 
-                    {tracking && <TrackingBook tracking={tracking} />}
+                    <div className="h-full w-full flex justify-center">
+                         {tracking && <TrackingBook tracking={tracking} />}
+                    </div>
                </div>
           </>
      );
