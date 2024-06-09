@@ -78,6 +78,35 @@ class userService {
         return newUser;
     }
 
+
+    async register(user: IUser) {
+
+        if (!user.email || !user.password) {
+            throw new BadRequestError("Thiếu email hoặc password");
+        }
+        const checkEmail = await userRepository.findOne({
+            where: {
+                email: user.email,
+            },
+        });
+        if (checkEmail) throw new BadRequestError("Email Đã Tồn Tại");
+
+        const roleUser = await authorityRepository.findOne({
+            where: {
+                name: user.roleName || UserRoles.CUSTOMER,
+            },
+            raw: true,
+        });
+
+        const newUser = await userRepository.create({
+            email: user.email,
+            password: user.password,
+            activated: true,
+            roleId: roleUser.id,
+        });
+        return newUser;
+    }
+
     async login(login: Login) {
         const user = await userRepository.findOne({
             where: {

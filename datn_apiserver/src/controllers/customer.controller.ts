@@ -3,6 +3,16 @@ import customerService from "../services/customer.service";
 import AuthenticatedRequest from "../types/request";
 import { Response } from "express";
 
+export const createCustomer = async (
+    req: AuthenticatedRequest,
+    res: Response
+) => {
+    const customer = req.body;
+    console.log(customer)
+    const result = await customerService.create(customer);
+    return res.status(httpStatus.OK).send(result);
+};
+
 export const getAllCustomerByInfor = async (
     req: AuthenticatedRequest,
     res: Response

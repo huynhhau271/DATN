@@ -11,7 +11,7 @@ import { ICustomer } from "../models/ICustomer";
 import { bookingService } from "../services/bookingService";
 import { toast } from "react-toastify";
 import Table, { ColumnsType } from "antd/es/table";
-interface DataTable {
+export interface DataTable {
      vaccineName: string;
      noseNumber: number;
      date: Date;

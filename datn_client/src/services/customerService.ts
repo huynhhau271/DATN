@@ -1,7 +1,14 @@
+import { ICustomer } from "../models/ICustomer";
 import baseRequest from "./baseRequest";
 
 class CustomerService {
      private BasseUrl = import.meta.env.FE_BASE_API_URL;
+
+     async create(customer: ICustomer) {
+          const response = await baseRequest.post( this.BasseUrl + 'customer/createCustomer', customer)
+          return  response.data;
+     }
+     
      async getCustomerByInfo({ email, name, dob }: any) {
           const response = await baseRequest.post(
                this.BasseUrl + "customer/info",

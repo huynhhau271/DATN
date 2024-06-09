@@ -3,6 +3,12 @@ import AuthenticatedRequest from "../types/request";
 import userService from "../services/user.service";
 import httpStatus from "http-status";
 
+export const register = async (req: Request, res: Response) => {
+    const user = req.body;
+    const result = await userService.register(user);
+    return res.status(httpStatus.OK).send(result);
+};
+
 export const login = async (req: Request, res: Response) => {
     const login = req.body;
     const result = await userService.login(login);
