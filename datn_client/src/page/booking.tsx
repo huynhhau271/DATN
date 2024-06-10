@@ -5,6 +5,7 @@ import CustomerBookingForm from "../forms/customerBookingForm";
 import ConfirmBookingModal from "../modals/confirmBookingModal";
 import GetInfoBookingModal from "../modals/getInfoCustomerModal";
 import { ICustomer } from "../models/ICustomer";
+import useGetCustomerByEmail from "../hook/useGetCustomerByEmail";
 
 const Booking: React.FC = () => {
      const [iscustomer, setIsCustomer] = useState<true | false | undefined>(
@@ -18,7 +19,7 @@ const Booking: React.FC = () => {
      const [openModalCofirm, setOpenModalConfirm] = useState(false);
      const [openGetInfo, setOpenInfo] = useState(false);
 
-     
+     const { customerInfo } = useGetCustomerByEmail();
      return (
           <>
                <div className="py-10 flex items-center flex-col gap-6 mt-10 w-full">
@@ -46,6 +47,7 @@ const Booking: React.FC = () => {
                               setName={setName}
                               setEmail={setEmail}
                               setOpenModalConfirm={setOpenModalConfirm}
+                              customerInfo={customerInfo}
                          />
                     )}
                </div>

@@ -7,6 +7,7 @@ import {
     getCustomerByEmail,
     trackingCustomer,
 } from "../controllers/customer.controller";
+import { veryfyToken } from "../middleware/verifyToken";
 
 /**
  * @description AuthLoginRouter
@@ -22,9 +23,10 @@ class CustomerRouter extends BaseRouter {
      */
     protected init() {
         this.router.post("/info", catchAsync(getAllCustomerByInfor));
-        this.router.get("/getCustomerByEmail", catchAsync(getCustomerByEmail));
         this.router.post("/createCustomer", catchAsync(createCustomer));
         this.router.post("/tracking", catchAsync(trackingCustomer));
+        this.router.use(veryfyToken);
+        this.router.get("/getCustomerByEmail", catchAsync(getCustomerByEmail));
     }
 }
 

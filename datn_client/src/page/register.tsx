@@ -153,7 +153,7 @@ export default function Register() {
                               <Form.Item
                                    className="flex-1"
                                    label="Mã Định Danh"
-                                   name="cccd"
+                                   name="CCCD"
                                    rules={[
                                         {
                                              required: true,

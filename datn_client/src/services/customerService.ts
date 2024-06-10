@@ -33,12 +33,9 @@ class CustomerService {
           return response.data;
      }
 
-     async getCustomerByEmail({ email }: any) {
-          const response = await baseRequest.post(
-               this.BasseUrl + "customer/getCustomerByEmail",
-               {
-                    email
-               }
+     async getCustomerByEmail() {
+          const response = await baseRequest.get(
+               this.BasseUrl + "customer/getCustomerByEmail"
           );
           return response.data;
      }
