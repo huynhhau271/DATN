@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import AuthenticatedRequest from "../types/request";
 import userService from "../services/user.service";
 import httpStatus from "http-status";
+import customerService from "../services/customer.service";
 
 export const register = async (req: Request, res: Response) => {
     const user = req.body;
@@ -12,6 +13,12 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
     const login = req.body;
     const result = await userService.login(login);
+    return res.status(httpStatus.OK).send(result);
+};
+
+export const loginCustomer = async (req: Request, res: Response) => {
+    const login = req.body;
+    const result = await customerService.loginCustomer(login);
     return res.status(httpStatus.OK).send(result);
 };
 

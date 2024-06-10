@@ -10,6 +10,14 @@ class AuthService {
                payLoad
           );
           return login.data;
+     } 
+     
+     async loginCustomer(payLoad: LoginPayLoad) {
+          const login = await baseRequest.post<LoginResponse>(
+               `${baseUrl}authenticate/loginCustomer`,
+               payLoad
+          );
+          return login.data;
      }
 
      async register(payLoad: LoginPayLoad) {

@@ -16,6 +16,7 @@ import HandBook from "../page/handBook";
 import Procedure from "../page/procedure";
 import { TrackingPage } from "../page/trackingPage";
 import Register from "../page/register";
+import { LoginCustomerPage } from "../page/loginCustomer";
 
 const routers: RouteObject[] = [
      {
@@ -100,6 +101,11 @@ const routers: RouteObject[] = [
                     path: "/cam-nang",
                     id: "cam-nang",
                     Component: HandBook,
+               }, 
+               {
+                    path: "/dang-nhap",
+                    id: "dang-nhap",
+                    Component: LoginCustomerPage,
                },
           ],
           Component: UserLayout,

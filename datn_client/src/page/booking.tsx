@@ -17,6 +17,8 @@ const Booking: React.FC = () => {
      const [dob, setDob] = useState<string | undefined | Date>();
      const [openModalCofirm, setOpenModalConfirm] = useState(false);
      const [openGetInfo, setOpenInfo] = useState(false);
+
+     
      return (
           <>
                <div className="py-10 flex items-center flex-col gap-6 mt-10 w-full">

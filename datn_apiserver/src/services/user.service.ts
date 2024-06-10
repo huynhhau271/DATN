@@ -14,7 +14,7 @@ import wardRepository from "../repositories/wardRepository";
 import districtsRepository from "../repositories/districtsRepository";
 import provinceRepository from "../repositories/provinceRepository";
 import { getAllStaff } from "../controllers/user.controller";
-interface Login {
+export interface Login {
     email: string;
     password: string;
 }
