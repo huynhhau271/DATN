@@ -32,7 +32,7 @@ const BookingManagerPage = () => {
      const columns: ColumnsType<Booking> = [
           {
                title: "Họ Và Tên",
-               width: 100,
+               width: 150,
                key: "fullName",
                fixed: "left",
                render: (_, record) => {
@@ -45,7 +45,7 @@ const BookingManagerPage = () => {
                title: "Email",
                dataIndex: "email",
                key: "email",
-               fixed: "left",
+               width: 200,
                render: (_, record) => {
                     return record.customer.email
                          ? record.customer.email
@@ -56,6 +56,7 @@ const BookingManagerPage = () => {
                title: "Số Điện Thoại",
                dataIndex: "phone",
                key: "2",
+               width: 120,
                render: (_, record) => {
                     return record.customer.phone
                          ? record.customer.phone
@@ -65,6 +66,7 @@ const BookingManagerPage = () => {
           {
                title: "Giới Tính",
                dataIndex: "gender",
+               width: 100,
                key: "gender",
                render: (_, record) => {
                     return record.customer?.gender == null
@@ -91,6 +93,7 @@ const BookingManagerPage = () => {
                title: "Ngày Sinh",
                dataIndex: "dob",
                key: "dob",
+               width: 150,
                render: (_, record) => {
                     return record.customer.customerDoB
                          ? formatDate(record.customer.customerDoB).toString()
@@ -98,8 +101,18 @@ const BookingManagerPage = () => {
                },
           },
           {
+               title: "Mã Định Danh",
+               dataIndex: "CCCD",
+               key: "CCCD",
+               width: 130,
+               render: (_, record) => {
+                    return record.customer.CCCD ? record.customer.CCCD : "N/A";
+               },
+          },
+          {
                title: "Vaccine",
                key: "vaccine",
+               width: 150,
                render: (_, record) => {
                     return record.vaccine.vaccineName
                          ? record.vaccine.vaccineName
@@ -109,6 +122,7 @@ const BookingManagerPage = () => {
           {
                title: "Ngày Tiêm",
                key: "expectedDate",
+               width: 150,
                render: (_, record) => {
                     return record.expectedDate
                          ? formatDate(record.expectedDate).toString()
@@ -119,6 +133,7 @@ const BookingManagerPage = () => {
                title: "Trạng Thái",
                dataIndex: "activated",
                key: "activated",
+               width: 170,
                fixed: "right",
                filters: statusBooking.map((status) => {
                     return {
@@ -193,6 +208,7 @@ const BookingManagerPage = () => {
                               className="h-full w-full mt-6"
                               columns={columns}
                               dataSource={bookings?.bookings}
+                              scroll={{ x: 1300 }}
                               pagination={false}
                          />
                          <Pagination
@@ -200,7 +216,7 @@ const BookingManagerPage = () => {
                               showSizeChanger
                               defaultCurrent={page}
                               pageSize={limit}
-                              total={bookings.totalPage+1}
+                              total={bookings.totalPage + 1}
                               onChange={(current, pageSize) => {
                                    setPage(current);
                                    setLimit(pageSize);

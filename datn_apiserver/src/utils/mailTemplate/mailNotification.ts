@@ -3,7 +3,8 @@ export const mailNotification = (
     phone: String,
     dob: string,
     vaccine: string,
-    date: string
+    date: string,
+    CCCD: string
 ) => {
     return `
         <h1 style="text-align: center;">THÔNG BÁO NHẮC NHỞ LỊCH TIÊM</h1> 
@@ -15,6 +16,7 @@ export const mailNotification = (
         <h2>Thông tin lịch hẹn:</h2>
         <p>Họ và tên người tiêm: <strong>${customerName}</strong></p>
         <p>Ngày Sinh: <strong>${dob}</strong></p>
+         <p>Mã Định Danh: <strong>${CCCD}</strong></p>
         <p>Số Điện Thoại: <strong>${phone}</strong></p>
         <p>Loại Vaccine: <strong>${vaccine}</strong></p>
         <p>Ngày Tiêm: <strong>${date}</strong></p>

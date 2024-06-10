@@ -65,7 +65,8 @@ class BookingService {
                         moment(bookingPayload[0].expectedDate).format(
                             "DD-MM-YYYY"
                         ),
-                        keyConfirm
+                        keyConfirm,
+                        checkCustomer.toJSON().CCCD
                     )
                 ),
             ])
@@ -118,7 +119,8 @@ class BookingService {
                         moment(bookingPayload[0].expectedDate).format(
                             "DD-MM-YYYY"
                         ),
-                        keyConfirm
+                        keyConfirm,
+                        customer.toJSON().CCCD
                     )
                 ),
             ])
@@ -185,6 +187,7 @@ class BookingService {
                     model: customerRepository,
                 },
             ],
+            order: ["createdDate", "DESC"],
         });
 
         let bookings = tranformModel(rows);
@@ -239,10 +242,11 @@ class BookingService {
                         vaccine.vaccineName,
                         moment(booking.toJSON().expectedDate).format(
                             "DD-MM-YYYY"
-                        )
+                        ),
+                        customer.CCCD
                     )
                 )
-                .then(() => t.commit().then())
+                .then(() => t.commit().then());
         });
     }
     async payment(user: User, bookingId: number) {

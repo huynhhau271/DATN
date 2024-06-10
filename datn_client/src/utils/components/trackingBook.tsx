@@ -53,6 +53,7 @@ export const TrackingBook = ({ tracking }: Props) => {
           );
           const bookings = [];
           let iterator = vacines.entries();
+
           for (let [key, value] of iterator) {
                const booking = {
                     vaccine: value,
