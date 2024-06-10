@@ -15,6 +15,7 @@ import VaccinationSchedule from "../page/vaccinationSchedule";
 import HandBook from "../page/handBook";
 import Procedure from "../page/procedure";
 import { TrackingPage } from "../page/trackingPage";
+import Register from "../page/register";
 
 const routers: RouteObject[] = [
      {
@@ -54,6 +55,11 @@ const routers: RouteObject[] = [
           path: "/",
           id: "user",
           children: [
+               {
+                    path: "/dang-ky",
+                    id: "dang-ky",
+                    Component: Register,
+               },
                {
                     path: "/dang-ky-tiem-chung",
                     id: "tiem-chung",

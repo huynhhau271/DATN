@@ -9,8 +9,15 @@ import { StatusBooking } from "../domain/enum/statusBooking";
 import { booking } from "../controllers/booking.controller";
 import User from "../domain/user.entity";
 import { Op } from "sequelize";
+import { ICustomer } from "../interface/ICustomer";
 
 class CustomerService {
+
+    async create(customer: ICustomer) {
+        const newCustomer = await customerRepository.create(customer)
+        return newCustomer
+    }
+
     async getCustomerByInfo(name: string, dob: string, email: string) {
         const customer = await customerRepository.findOne({
             where: {

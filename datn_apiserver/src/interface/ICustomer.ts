@@ -13,6 +13,8 @@ export interface ICustomer {
 
     email: string;
 
+    passWord?: string;
+
     wardId: string;
 
     address: string;

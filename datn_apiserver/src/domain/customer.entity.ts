@@ -60,6 +60,9 @@ export default class Customer extends Model {
     email?: string;
 
     @Column({ type: DataType.STRING })
+    password?: string;
+
+    @Column({ type: DataType.STRING })
     address?: string;
 
     @ForeignKey(() => Wards)
