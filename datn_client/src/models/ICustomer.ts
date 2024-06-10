@@ -1,4 +1,5 @@
 import { Booking } from "./IBooking";
+import { IWard } from "./province.model";
 
 export interface ICustomer {
      customerName?: string;
@@ -16,6 +17,7 @@ export interface ICustomer {
      email?: string;
 
      wardId?: string;
+     ward: IWard;
      address?: string;
      bookings?: Booking[];
      CCCD: string;

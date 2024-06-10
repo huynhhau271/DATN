@@ -218,9 +218,10 @@ export const TrackingBook = ({ tracking }: Props) => {
                                    <Text
                                         style={{
                                              marginLeft: 35,
+                                             fontWeight: "bold",
                                         }}
                                    >
-                                        {index + 1}. Vắc-xin {bk.vaccine}
+                                        {index + 1}. {bk.vaccine}
                                    </Text>
                               </View>
                               <View style={styles.section}>

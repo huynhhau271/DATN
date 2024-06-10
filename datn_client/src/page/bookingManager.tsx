@@ -8,7 +8,10 @@ import { toast } from "react-toastify";
 import { Loading } from "../utils/components/sprin";
 import { Booking } from "../models/IBooking";
 import useGetAllBooking from "../hook/useGetAllBooking";
-import { statusBooking } from "../utils/statusBooking";
+import { StatusBooking, statusBooking } from "../utils/statusBooking";
+import PaymentModal from "../modals/paymentModal";
+import HealtCheckModal from "../modals/healtCheckModal";
+import InjectModal from "../modals/injectModal";
 const BookingManagerPage = () => {
      const { Search } = Input;
      const [page, setPage] = useState(1);
@@ -135,6 +138,38 @@ const BookingManagerPage = () => {
                key: "operation",
                fixed: "right",
                width: 100,
+               render: (_, record) => {
+                    if (record.statused === StatusBooking.NOTIFICATION_SENT)
+                         return (
+                              <HealtCheckModal
+                                   refetch={refetch}
+                                   idBooking={record.id}
+                                   fullName={record.customer.customerName}
+                                   dob={record.customer.customerDoB}
+                                   gender={record.customer.gender}
+                              />
+                         );
+                    if (
+                         record.statused === StatusBooking.BE_INJECTED &&
+                         !record.paymentSatus
+                    )
+                         return (
+                              <PaymentModal
+                                   bookingId={record.id}
+                                   refetch={refetch}
+                              />
+                         );
+                    if (
+                         record.statused === StatusBooking.BE_INJECTED &&
+                         record.paymentSatus
+                    )
+                         return (
+                              <InjectModal
+                                   bookingId={record.id}
+                                   refetch={refetch}
+                              />
+                         );
+               },
           },
      ];
      if (!bookings || isLoading) return <Loading />;
@@ -165,7 +200,7 @@ const BookingManagerPage = () => {
                               showSizeChanger
                               defaultCurrent={page}
                               pageSize={limit}
-                              total={bookings.totalPage}
+                              total={bookings.totalPage+1}
                               onChange={(current, pageSize) => {
                                    setPage(current);
                                    setLimit(pageSize);
