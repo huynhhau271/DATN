@@ -1,21 +1,16 @@
-import { ChangeEvent, useMemo, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
-import authService from "../services/authService";
-import { LoginPayLoad } from "../models/user.model";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input, Select, Typography } from "antd";
 import { formatDate } from "../utils/formatDate";
 import moment from "moment";
 import { useGetProvince } from "../hook/useGetProvince";
 import { IDistrict, IWard } from "../models/province.model";
-import { DataTable } from "../forms/bookingForm";
 import { rotations } from "../utils/rotation";
 import { customerService } from "../services/customerService";
 
 export default function Register() {
-     const navigate = useNavigate();
 
-     const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");
      const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -27,15 +22,8 @@ export default function Register() {
      const [wardId, setWardId] = useState<string>("");
      const [form] = Form.useForm();
 
-     //  const [dataTable, setDataTable] = useState<DataTable[] | undefined>(
-     //       undefined
-     //  );
-     //  const [vaccineId, setVaccineId] = useState();
-     //  const [dateinject, setDateInject] = useState(
-     //       formatDate(moment().add(7, "days").toString())
-     //  );
 
-     const [name, setName] = useState("");
+
      const handleProvinceChange = (value: string) => {
           setDistricts(
                provinces?.find((data) => data.id === value)?.districts ?? []
@@ -61,9 +49,7 @@ export default function Register() {
      const handleSubmit = async (value: any) => {
         try {
             delete value.rePassword;
-            console.log(value)
             await customerService.create(value);
-            toast.success('Đăng ký tài khoản')
         } catch (error) {
             toast.error('Bug nha má')
         }
@@ -167,7 +153,7 @@ export default function Register() {
                               <Form.Item
                                    className="flex-1"
                                    label="Mã Định Danh"
-                                   name="cccd"
+                                   name="CCCD"
                                    rules={[
                                         {
                                              required: true,
@@ -350,9 +336,6 @@ export default function Register() {
                               >
                                    <Input
                                         placeholder="Nguyễn Văn A"
-                                        onChange={(e) =>
-                                             setName(e.target.value)
-                                        }
                                    />
                               </Form.Item>
                               <Form.Item
@@ -391,9 +374,9 @@ export default function Register() {
                                    ]}
                               >
                                    <Input
-                                        onChange={(e) =>
-                                             setEmail(e.target.value)
-                                        }
+                                        // onChange={(e) =>
+                                        //      setEmail(e.target.value)
+                                        // }
                                    />
                               </Form.Item>
                               <Form.Item

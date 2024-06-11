@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
     AutoIncrement,
+    BeforeCreate,
+    BeforeUpdate,
     BelongsTo,
     Column,
     CreatedAt,
@@ -15,6 +17,7 @@ import {
 } from "sequelize-typescript";
 import Wards from "./wards.entity";
 import Booking from "./booking.entity";
+import getHashPassword from "../utils/getHashPassword";
 /**
  * A Booking.
  */
@@ -56,6 +59,7 @@ export default class Customer extends Model {
     phone?: string;
 
     @PrimaryKey
+    @Unique
     @Column({ type: DataType.STRING })
     email?: string;
 
@@ -80,4 +84,15 @@ export default class Customer extends Model {
 
     @UpdatedAt
     lastModifiedDate?: Date;
+
+    @BeforeUpdate
+    @BeforeCreate
+    static async hashPassword(instance: Customer | Customer[]) {
+        if (Array.isArray(instance)) {
+            instance.map(async (i) => {
+                return (i.password = await getHashPassword(i.password));
+            });
+        } else 
+            instance.password = await getHashPassword(instance.password);
+    }
 }

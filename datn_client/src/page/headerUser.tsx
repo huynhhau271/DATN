@@ -71,6 +71,15 @@ function HeaderUserComponent() {
                                         <span>Đăng nhập</span>
                                    </div>
                               </Link>
+                              <Link to="/dang-nhap">
+                                   <div className="flex justify-center items-center text-[#102A83] font-bold gap-2 hover:text-white">
+                                        <BiSolidMessageRoundedDetail
+                                             size={20}
+                                             color="#102A83"
+                                        />
+                                        <span>Đăng nhập KH</span>
+                                   </div>
+                              </Link>
                               <Link to="/dang-ky">
                                    <div className="flex justify-center items-center text-[#102A83] font-bold gap-2 hover:text-white">
                                         <BiSolidMessageRoundedDetail

@@ -4,8 +4,10 @@ import { booking, confirmBooking } from "../controllers/booking.controller";
 import {
     createCustomer,
     getAllCustomerByInfor,
+    getCustomerByEmail,
     trackingCustomer,
 } from "../controllers/customer.controller";
+import { veryfyToken } from "../middleware/verifyToken";
 
 /**
  * @description AuthLoginRouter
@@ -23,6 +25,8 @@ class CustomerRouter extends BaseRouter {
         this.router.post("/info", catchAsync(getAllCustomerByInfor));
         this.router.post("/createCustomer", catchAsync(createCustomer));
         this.router.post("/tracking", catchAsync(trackingCustomer));
+        this.router.use(veryfyToken);
+        this.router.get("/getCustomerByEmail", catchAsync(getCustomerByEmail));
     }
 }
 
