@@ -10,7 +10,6 @@ import { rotations } from "../utils/rotation";
 import { customerService } from "../services/customerService";
 
 export default function Register() {
-
      const [password, setPassword] = useState("");
      const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -21,8 +20,6 @@ export default function Register() {
      const [wards, setWards] = useState<IWard[] | undefined>([]);
      const [wardId, setWardId] = useState<string>("");
      const [form] = Form.useForm();
-
-
 
      const handleProvinceChange = (value: string) => {
           setDistricts(
@@ -45,14 +42,13 @@ export default function Register() {
           else return Promise.resolve();
      };
 
-
      const handleSubmit = async (value: any) => {
-        try {
-            delete value.rePassword;
-            await customerService.create(value);
-        } catch (error) {
-            toast.error('Bug nha má')
-        }
+          try {
+               delete value.rePassword;
+               await customerService.create(value);
+          } catch (error) {
+               toast.error("Bug nha má");
+          }
      };
 
      return (
@@ -293,9 +289,10 @@ export default function Register() {
                                         },
                                    ]}
                               >
-                                   <Input
+                                   <Input.Password
                                         placeholder="Mật khẩu"
                                         value={password}
+                                        type="password"
                                         onChange={(e) =>
                                              setPassword(e.target.value)
                                         }
@@ -310,10 +307,20 @@ export default function Register() {
                                              required: true,
                                              message: "Vui Lòng xác nhận mật khẩu!",
                                         },
+                                        {
+                                             validator: (_, e) => {
+                                                  if (e != password)
+                                                       return Promise.reject(
+                                                            "Mật Khẩu Không Trùng Khớp"
+                                                       );
+                                                  else return Promise.resolve();
+                                             },
+                                        },
                                    ]}
                               >
-                                   <Input
+                                   <Input.Password
                                         placeholder="********"
+                                        type="password"
                                         value={confirmPassword}
                                         onChange={(e) =>
                                              setConfirmPassword(e.target.value)
@@ -334,9 +341,7 @@ export default function Register() {
                                         },
                                    ]}
                               >
-                                   <Input
-                                        placeholder="Nguyễn Văn A"
-                                   />
+                                   <Input placeholder="Nguyễn Văn A" />
                               </Form.Item>
                               <Form.Item
                                    label="Số điện thoại liên hệ"
@@ -374,9 +379,9 @@ export default function Register() {
                                    ]}
                               >
                                    <Input
-                                        // onChange={(e) =>
-                                        //      setEmail(e.target.value)
-                                        // }
+                                   // onChange={(e) =>
+                                   //      setEmail(e.target.value)
+                                   // }
                                    />
                               </Form.Item>
                               <Form.Item
@@ -416,4 +421,3 @@ export default function Register() {
           </>
      );
 }
-
