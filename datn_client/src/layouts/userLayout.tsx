@@ -1,23 +1,33 @@
-import { Layout } from "antd";
-import { Footer } from "antd/es/layout/layout";
 import { Outlet } from "react-router-dom";
 import HeaderUserComponent from "../page/headerUser";
 import FooterUser from "./../page/footerUser";
-
-const { Header, Content } = Layout;
+import { MdPhoneInTalk } from "react-icons/md";
 const UserLayout = () => {
      return (
-          <Layout className="fixed top-0 left-0 right-0 bottom-0">
-               <Header className=" !h-fit top-0 z-10 !bg-blue-300 border-solid border-[#8f8b8b] border-b-2 flex flex-col items-center w-full">
+          <div className="h-full w-full absolute top-0 bottom-0 left-0 right-0">
+               <div>
                     <HeaderUserComponent />
-               </Header>
-               <Content className="overflow-x-auto site-layout-sub-header-background bg-[#f0f2f5]">
-                    <Outlet />
-                    <div className=" z-10 !bg-white pb-7 w-full">
+               </div>
+               <div className="flex justify-between flex-col h-full ">
+                    <div className="h-full mb-5 overflow-x-auto ">
+                         <Outlet />
+                    </div>
+                    <div className="flex justify-center items-center gap-2 absolute z-50 right-12 bg-yellow-300 bottom-24 p-2 rounded-2xl">
+                         <div className="bg-[#E3EBFD] rounded-full h-9 w-9 flex items-center justify-center">
+                              <MdPhoneInTalk size={20} color="#102A83" />
+                         </div>
+                         <div className="text-[#102A83] font-bold backdrop:flex flex-col justify-center items-start gap- leading-6">
+                              <p>Liên hệ ngay</p>
+                              <p className="text-[#e73b3b] font-bold">
+                                   0905.470.207
+                              </p>
+                         </div>
+                    </div>
+                    <div className="w-full mb-5">
                          <FooterUser />
                     </div>
-               </Content>
-          </Layout>
+               </div>
+          </div>
      );
 };
 

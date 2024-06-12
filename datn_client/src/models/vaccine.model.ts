@@ -4,7 +4,7 @@ export interface IVaccine {
      id?: number;
      vaccineName?: string;
      quantity?: number;
-     price?: number;
+     price: number;
      description?: string;
      picture?: string;
      source?: string;

@@ -7,6 +7,7 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { vaccineService } from "../services/vaccineService";
 import Uploader from "../utils/components/uploadImage/Uploader";
 import { useForm } from "antd/es/form/Form";
+import useGetAllDisease from "../hook/useDisease";
 interface Props {
      setOpen: React.Dispatch<React.SetStateAction<boolean>>;
      data?: IVaccine;

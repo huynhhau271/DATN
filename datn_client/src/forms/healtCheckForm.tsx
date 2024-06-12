@@ -12,7 +12,7 @@ const HealtCheckForm = ({ setOpen, refetch, bookingId }: Props) => {
      const [form] = Form.useForm();
      const onFinish = (value: any) => {
           let status: string;
-          if (Object.values(value).includes(false))
+          if (Object.values(value).includes(true))
                status = StatusBooking.NO_INJECTIONS;
           else status = StatusBooking.BE_INJECTED;
           healtSheetService

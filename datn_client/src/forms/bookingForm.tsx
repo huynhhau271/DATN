@@ -11,7 +11,7 @@ import { ICustomer } from "../models/ICustomer";
 import { bookingService } from "../services/bookingService";
 import { toast } from "react-toastify";
 import Table, { ColumnsType } from "antd/es/table";
-interface DataTable {
+export interface DataTable {
      vaccineName: string;
      noseNumber: number;
      date: Date;
@@ -21,12 +21,14 @@ interface IProps {
      setName: (vl: string) => void;
      setDob: (vl: string) => void;
      setOpenModalConfirm: (vl: boolean) => void;
+     customerInfo?: ICustomer;
 }
 function BookingForm({
      setEmail,
      setDob,
      setName,
      setOpenModalConfirm,
+     customerInfo,
 }: IProps) {
      const [mothOld, setMothOld] = useState(0);
      const { provinces } = useGetProvince();
@@ -189,6 +191,7 @@ function BookingForm({
      return (
           <>
                <Form
+                    initialValues={customerInfo}
                     style={{
                          width: 600,
                     }}
@@ -280,7 +283,7 @@ function BookingForm({
                          <Form.Item
                               className="flex-1"
                               label="Mã Định Danh"
-                              name="cccd"
+                              name="CCCD"
                               rules={[
                                    {
                                         required: true,
@@ -559,3 +562,4 @@ function BookingForm({
 }
 
 export default BookingForm;
+

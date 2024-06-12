@@ -6,9 +6,10 @@ import React, {
 } from "react";
 import { IUser } from "../models/user.model";
 import cookiesService from "../services/cookiesService";
+import { ICustomer } from "../models/ICustomer";
 
 interface AuthContextType {
-     userLogin?: IUser;
+     userLogin?: IUser | ICustomer;
      setUserLogin: React.Dispatch<React.SetStateAction<IUser | undefined>>;
 }
 

@@ -6,7 +6,7 @@ import { formatDate } from "../utils/formatDate";
 import moment from "moment";
 import { Dispatch } from "react";
 interface IProps {
-     setCustomer: React.Dispatch<React.SetStateAction<ICustomer>>;
+     setCustomer: React.Dispatch<React.SetStateAction<ICustomer | undefined>>;
      setIsCustomer: Dispatch<React.SetStateAction<boolean | undefined>>;
      setOpen: Dispatch<React.SetStateAction<boolean>>;
      open: boolean;
