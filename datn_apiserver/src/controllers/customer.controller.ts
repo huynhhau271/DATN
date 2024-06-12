@@ -12,12 +12,9 @@ export const createCustomer = async (
     return res.status(httpStatus.OK).send(result);
 };
 
-export const getAllCustomerByInfor = async (
-    req: AuthenticatedRequest,
-    res: Response
-) => {
-    const { email, name, dob } = req.body;
-    const result = await customerService.getCustomerByInfo(name, dob , email);
+export const getCustomer = async (req: AuthenticatedRequest, res: Response) => {
+    const user = req.user;
+    const result = await customerService.getCustomer(user);
     return res.status(httpStatus.OK).send(result);
 };
 
@@ -34,11 +31,7 @@ export const trackingCustomer = async (
     req: AuthenticatedRequest,
     res: Response
 ) => {
-    const { email, fullName, dob } = req.body;
-    const result = await customerService.getTrackingCustomer({
-        fullName,
-        dob,
-        email,
-    });
+    const user = req.user;
+    const result = await customerService.getTrackingCustomer(user);
     return res.status(httpStatus.OK).send(result);
 };

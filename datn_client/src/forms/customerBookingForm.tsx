@@ -1,19 +1,31 @@
-import { Button, Form, Input, Select, Typography, notification } from "antd";
+import {
+     Button,
+     Empty,
+     Form,
+     Input,
+     Select,
+     Typography,
+     notification,
+} from "antd";
 import { formatDate } from "../utils/formatDate";
 import Table, { ColumnsType } from "antd/es/table";
 import { ICustomer } from "../models/ICustomer";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import useGetAllVaccineByMothOld from "../hook/useGetAllVaccineByMoth";
+import { IBookingPayload } from "../models/IBooking";
+import { bookingService } from "../services/bookingService";
+import { toast } from "react-toastify";
 interface IProps {
      customer: ICustomer;
+     refetch: () => void;
      setOpenModalConfirm: (vl: boolean) => void;
 }
 interface DataTable {
      customerName?: string;
      customerDob?: Date;
      vaccineName?: string;
-     expectedDate?: Date;
+     expectedDate: Date;
      status?: string;
 }
 interface DataTableInfoBooking {
@@ -21,7 +33,11 @@ interface DataTableInfoBooking {
      noseNumber: number;
      date: Date;
 }
-function CustomerBookingForm({ customer, setOpenModalConfirm }: IProps) {
+function CustomerBookingForm({
+     customer,
+     setOpenModalConfirm,
+     refetch,
+}: IProps) {
      const [form] = Form.useForm();
      const today = moment();
      const monthsDifference = today.diff(moment(customer.customerDoB), "month");
@@ -32,22 +48,18 @@ function CustomerBookingForm({ customer, setOpenModalConfirm }: IProps) {
      const [dateinject, setDateInject] = useState(
           formatDate(moment().add(7, "days").toString())
      );
-     const [disabled, setDisabled] = useState(false);
-     const [api, contextHolder] = notification.useNotification();
-     const openNotificationWithIcon = () => {
-          api["error"]({
-               duration: 300,
-               message: "Thông Báo",
-               description:
-                    "Bạn Còn Vaccine Chưa Tiêm Không Thể Tiếp Tục Đăng Ký.",
-          });
-     };
      const columnsHistory: ColumnsType<DataTable> = [
           {
                title: "Họ Và Tên Trẻ",
                width: 100,
                dataIndex: "customerName",
                key: "customerName",
+          },
+          {
+               title: "Mã Định Danh",
+               width: 100,
+               dataIndex: "CCCD",
+               key: "CCCD",
           },
           {
                title: "Ngày Sinh",
@@ -157,27 +169,59 @@ function CustomerBookingForm({ customer, setOpenModalConfirm }: IProps) {
                return {
                     customerName: customer.customerName,
                     customerDob: customer.customerDoB,
+                    CCCD: customer.CCCD,
                     vaccineName: book.vaccine?.vaccineName,
                     expectedDate: book.expectedDate,
                     status: book.statused,
                } as DataTable;
           });
-          const disabled = data?.filter((data) => data.status != "Đã Tiêm");
-          if (disabled && disabled?.length > 0) {
-               setDisabled(true);
-               openNotificationWithIcon();
-          }
           setDataTable(data);
      }, [customer]);
 
-     const onSubmit = () => {};
+     const onSubmit = (value: any) => {
+          const booking: IBookingPayload = {
+               vaccineId: value.vaccineId,
+               expectedDate: value.expectedDate,
+               customerId: customer.id,
+          };
+          const payload =
+               infoBooking && infoBooking.length > 0
+                    ? infoBooking?.map((data) => {
+                           return {
+                                ...booking,
+                                expectedDate: data.date,
+                           };
+                      })
+                    : [booking];
+          console.log({ payload, dataTable });
+
+          bookingService
+               .Booking(payload)
+               .then(() => {
+                    setOpenModalConfirm(true);
+                    toast.success("Vui Lòng Kiểm Tra Email");
+                    setVaccineId(undefined);
+                    setDataTable(undefined);
+                    setOpenModalConfirm(true);
+                    form.resetFields();
+                    refetch();
+               })
+               .catch((error) => {
+                    if (error.response)
+                         toast.error(error.response.data.message);
+                    else toast.error("Đăng Ký Tiêm Chủng Thất Bại");
+               });
+     };
      return (
           <>
-               {contextHolder}
                <div className="flex flex-col items-center gap-2 w-2/4 ml-3">
                     <span className="flex  justify-between w-4/5">
                          <strong>Họ Và Tên Trẻ:</strong>
                          <p>{customer.customerName}</p>
+                    </span>
+                    <span className="flex  justify-between w-4/5">
+                         <strong>CCCD:</strong>
+                         <p>{customer.CCCD}</p>
                     </span>
                     <span className="flex  justify-between w-4/5">
                          <strong>Ngày Sinh:</strong>
@@ -222,10 +266,7 @@ function CustomerBookingForm({ customer, setOpenModalConfirm }: IProps) {
                                         },
                                    ]}
                               >
-                                   <Select
-                                        onChange={setVaccineId}
-                                        disabled={disabled}
-                                   >
+                                   <Select onChange={setVaccineId}>
                                         {vaccines?.map((vaccine) => {
                                              return (
                                                   <Select.Option
@@ -253,7 +294,6 @@ function CustomerBookingForm({ customer, setOpenModalConfirm }: IProps) {
                                    )}
                               >
                                    <Input
-                                        disabled={disabled}
                                         type="date"
                                         defaultValue={formatDate(
                                              moment().add(7, "days").toString()
@@ -272,7 +312,6 @@ function CustomerBookingForm({ customer, setOpenModalConfirm }: IProps) {
                                    type="primary"
                                    htmlType="submit"
                                    className="login-form-button"
-                                   disabled={disabled}
                               >
                                    Đặt Lịch Tiêm
                               </Button>
@@ -298,13 +337,27 @@ function CustomerBookingForm({ customer, setOpenModalConfirm }: IProps) {
                     <Typography.Title editable={false} level={5}>
                          Lịch Sử Tiêm Chủng Của Trẻ
                     </Typography.Title>
-                    {dataTable && dataTable.length > 0 && (
+                    {dataTable && dataTable.length > 0 ? (
                          <Table
                               className="h-full w-full"
                               columns={columnsHistory}
                               dataSource={dataTable}
                               pagination={false}
                          />
+                    ) : (
+                         <Empty
+                              className="flex justify-center flex-col items-center"
+                              image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                              imageStyle={{
+                                   height: 60,
+                              }}
+                              description={
+                                   <span className="text-center">
+                                        Quý Khách Hàng Chưa Thực Hiện Tiêm Chủng
+                                        Tại Trung Tâm
+                                   </span>
+                              }
+                         ></Empty>
                     )}
                </div>
           </>

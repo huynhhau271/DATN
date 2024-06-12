@@ -48,6 +48,7 @@ class VaccineService {
         const vaccines = await vaccineRepository.findAll({
             where: {
                 mothOld: { [Op.lte]: mothOld },
+                status: true,
             },
             include: [
                 {
@@ -127,14 +128,16 @@ class VaccineService {
                 {
                     ...vaccine,
                     quantity: 0,
-                    boosterNoses:vaccine.boosterNoses? vaccine.boosterNoses.map((bn) => {
-                        return {
-                            noseNumber: bn.noseNumber,
-                            distance: bn.distance, // * moth
-                        } as BoosterNose;
-                    }):null
+                    boosterNoses: vaccine.boosterNoses
+                        ? vaccine.boosterNoses.map((bn) => {
+                              return {
+                                  noseNumber: bn.noseNumber,
+                                  distance: bn.distance, // * moth
+                              } as BoosterNose;
+                          })
+                        : null,
                 },
-                {
+                vaccine.boosterNoses && {
                     include: [boosterNoseRepository],
                 }
             );

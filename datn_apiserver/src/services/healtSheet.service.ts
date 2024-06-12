@@ -6,6 +6,8 @@ import { BadRequestError } from "../utils/httpErrors";
 
 class HealtSheetService {
     async physicalExamination(value: HealtSheetPayload) {
+        console.log({ value });
+
         const t = await database.transaction();
         try {
             await bookingRepository.update(

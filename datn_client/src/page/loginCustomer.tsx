@@ -18,7 +18,7 @@ export const LoginCustomerPage = () => {
                     cookiesService.setCookie("refrestToken", data.refreshToken);
                     cookiesService.setCookie("userAuth", data.user);
                     setUserLogin(data.user);
-                    toast.success("Login success");
+                    toast.success("Đăng Nhập Thành Công!");
                     navigate("/");
                })
                .catch((error) => {

@@ -2,31 +2,27 @@ import bookingRepository from "../repositories/bookingRepository";
 import customerRepository from "../repositories/customerRepository";
 import vaccineRepository from "../repositories/vaccineRepository";
 import { BadRequestError, NotFoundError } from "../utils/httpErrors";
-import exportDetail from "../domain/exportDetail.entity";
 import wardRepository from "../repositories/wardRepository";
 import userRepository from "../repositories/userRepository";
 import { StatusBooking } from "../domain/enum/statusBooking";
-import { booking } from "../controllers/booking.controller";
-import User from "../domain/user.entity";
-import { Op } from "sequelize";
 import { ICustomer } from "../interface/ICustomer";
 import { signToken } from "../utils/auth/jwt";
 import { compare } from "bcryptjs";
 import { Login } from "./user.service";
+import { User } from "../utils/user";
 
 class CustomerService {
-
     async create(customer: ICustomer) {
         const checkEmailExists = await customerRepository.findOne({
             where: {
                 email: customer.email,
             },
-        })
+        });
         if (checkEmailExists) {
-            throw new BadRequestError('Email đã tồn tại');
+            throw new BadRequestError("Email đã tồn tại");
         }
-        const newCustomer = await customerRepository.create(customer)
-        return newCustomer
+        const newCustomer = await customerRepository.create(customer);
+        return newCustomer;
     }
 
     async loginCustomer(login: Login) {
@@ -37,8 +33,12 @@ class CustomerService {
             nest: true,
         });
 
-        if (!customer) throw new NotFoundError("Email hoặc mật khẩu không đúng");
-        const checkPassword = await compare(login.password, customer["password"]);
+        if (!customer)
+            throw new NotFoundError("Email hoặc mật khẩu không đúng");
+        const checkPassword = await compare(
+            login.password,
+            customer["password"]
+        );
         if (!checkPassword)
             throw new NotFoundError("Email hoặc mật khẩu không đúng");
         const token = signToken({
@@ -57,7 +57,7 @@ class CustomerService {
         const customer = await customerRepository.findOne({
             where: {
                 email: email,
-            }
+            },
         });
 
         if (!customer)
@@ -65,15 +65,11 @@ class CustomerService {
         else return customer;
     }
 
-    async getCustomerByInfo(name: string, dob: string, email: string) {
+    async getCustomer(user: User) {
         const customer = await customerRepository.findOne({
             where: {
-                customerName: name,
-                customerDoB: new Date(dob)
-                    .toISOString()
-                    .slice(0, 19)
-                    .replace("T", " "),
-                email: email,
+                id: user.userId,
+                email: user.email,
             },
             include: [
                 {
@@ -92,7 +88,9 @@ class CustomerService {
         else return customer;
     }
 
-    async getTrackingCustomer({ fullName, dob, email }) {
+    async getTrackingCustomer(user: User) {
+        console.log({ user });
+
         const tracking = await customerRepository.findOne({
             include: [
                 {
@@ -116,15 +114,12 @@ class CustomerService {
                 wardRepository,
             ],
             where: {
-                email: email,
-                customerDoB: dob,
-                customerName: {[Op.like]: `%${fullName}%`,},
+                email: user.email,
+                id: user.userId,
             },
         });
 
-        if (!tracking)
-            throw new BadRequestError("Thông Tin Khách Hàng Không Tồn Tại");
-        else return tracking;
+        return tracking || null;
     }
 }
 export default new CustomerService();

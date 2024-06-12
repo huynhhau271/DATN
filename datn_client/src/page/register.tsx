@@ -10,10 +10,10 @@ import { rotations } from "../utils/rotation";
 import { customerService } from "../services/customerService";
 
 export default function Register() {
+     const navigate = useNavigate();
      const [password, setPassword] = useState("");
      const [confirmPassword, setConfirmPassword] = useState("");
 
-     const [mothOld, setMothOld] = useState(0);
      const { provinces } = useGetProvince();
      // const { vaccines, refetch } = useGetAllVaccineByMothOld(mothOld);
      const [districts, setDistricts] = useState<IDistrict[] | undefined>([]);
@@ -45,9 +45,13 @@ export default function Register() {
      const handleSubmit = async (value: any) => {
           try {
                delete value.rePassword;
-               await customerService.create(value);
+               await customerService.create(value).then(() => {
+                    form.resetFields();
+                    navigate("/dang-nhap");
+                    toast.success("Đăng Ký Tài Khoản Khách Hàng Thành Công!");
+               });
           } catch (error) {
-               toast.error("Bug nha má");
+               toast.error("Có lỗi hệ thống vui lòng thử lại sau!");
           }
      };
 
@@ -99,24 +103,14 @@ export default function Register() {
                               >
                                    <Input
                                         type="date"
-                                        onChange={(e) => {
-                                             {
-                                                  const today = moment();
-                                                  const monthsDifference =
-                                                       today.diff(
-                                                            moment(
-                                                                 e.target.value
-                                                            ),
-                                                            "month"
-                                                       );
-                                                  setMothOld(monthsDifference);
-                                                  //  setDob(e.target.value);
-                                             }
-                                        }}
                                         defaultValue={formatDate(
-                                             moment().toString()
+                                             moment().toString(),
+                                             "yyyy-mm-dd"
                                         )}
-                                        max={formatDate(moment().toString())}
+                                        max={formatDate(
+                                             moment().toString(),
+                                             "yyyy-mm-dd"
+                                        )}
                                    />
                               </Form.Item>
                          </div>
@@ -378,11 +372,7 @@ export default function Register() {
                                         },
                                    ]}
                               >
-                                   <Input
-                                   // onChange={(e) =>
-                                   //      setEmail(e.target.value)
-                                   // }
-                                   />
+                                   <Input />
                               </Form.Item>
                               <Form.Item
                                    label="Mối quan hệ với người tiêm"

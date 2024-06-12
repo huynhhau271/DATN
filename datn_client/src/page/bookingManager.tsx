@@ -42,6 +42,16 @@ const BookingManagerPage = () => {
                },
           },
           {
+               title: "Mã Định Danh",
+               dataIndex: "CCCD",
+               key: "CCCD",
+               fixed: "left",
+               width: 130,
+               render: (_, record) => {
+                    return record.customer.CCCD ? record.customer.CCCD : "N/A";
+               },
+          },
+          {
                title: "Email",
                dataIndex: "email",
                key: "email",
@@ -98,15 +108,6 @@ const BookingManagerPage = () => {
                     return record.customer.customerDoB
                          ? formatDate(record.customer.customerDoB).toString()
                          : "N/A";
-               },
-          },
-          {
-               title: "Mã Định Danh",
-               dataIndex: "CCCD",
-               key: "CCCD",
-               width: 130,
-               render: (_, record) => {
-                    return record.customer.CCCD ? record.customer.CCCD : "N/A";
                },
           },
           {
@@ -172,6 +173,7 @@ const BookingManagerPage = () => {
                               <PaymentModal
                                    bookingId={record.id}
                                    refetch={refetch}
+                                   vaccine={record.vaccine}
                               />
                          );
                     if (

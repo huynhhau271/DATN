@@ -8,8 +8,11 @@ class CustomerService {
 
      async create(customer: ICustomer) {
           try {
-               const response = await baseRequest.post(this.BasseUrl + 'customer/createCustomer', customer);
-               toast.success('Đăng ký tài khoản thành công');
+               const response = await baseRequest.post(
+                    this.BasseUrl + "customer/createCustomer",
+                    customer
+               );
+               toast.success("Đăng ký tài khoản thành công");
                return response.data;
           } catch (error: AxiosError | any) {
                if (error.response) {
@@ -18,17 +21,11 @@ class CustomerService {
                     toast.error("Đăng Ký Tiêm Chủng Thất Bại");
                }
           }
-
      }
 
-     async getCustomerByInfo({ email, name, dob }: any) {
-          const response = await baseRequest.post(
-               this.BasseUrl + "customer/info",
-               {
-                    email,
-                    name,
-                    dob,
-               }
+     async getCustomer() {
+          const response = await baseRequest.get(
+               this.BasseUrl + "customer/info"
           );
           return response.data;
      }
@@ -40,18 +37,12 @@ class CustomerService {
           return response.data;
      }
 
-     async getCustomerTracking({ email, fullName, dob }: any) {
-          const response = await baseRequest.post(
-               `${this.BasseUrl}customer/tracking`,
-               {
-                    email,
-                    fullName,
-                    dob,
-               }
+     async getCustomerTracking() {
+          const response = await baseRequest.get(
+               `${this.BasseUrl}customer/tracking`
           );
           return response.data;
      }
-          
 }
 
 export const customerService = new CustomerService();
