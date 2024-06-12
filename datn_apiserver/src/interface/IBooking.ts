@@ -23,6 +23,4 @@ export interface BookingPayload {
     vaccineId: number;
 
     customerId?: number;
-
-    customer: ICustomer;
 }

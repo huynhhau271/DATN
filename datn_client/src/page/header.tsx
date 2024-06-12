@@ -9,6 +9,7 @@ import {
 
 import cookiesService from "../services/cookiesService";
 import { useNavigate } from "react-router-dom";
+import { IUser } from "../models/user.model";
 const HeaderComponent = () => {
      const { userLogin } = useAuthContext();
      const navigate = useNavigate();
@@ -51,7 +52,7 @@ const HeaderComponent = () => {
                          />
                          <div className="flex gap-1 items-center">
                               <strong>Xin Chào</strong>
-                              <p>{userLogin.fullName}</p>
+                              <p>{(userLogin as IUser).fullName}</p>
                               <CaretDownOutlined />
                          </div>
                     </div>

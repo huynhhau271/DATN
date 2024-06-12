@@ -8,7 +8,10 @@ import { toast } from "react-toastify";
 import { Loading } from "../utils/components/sprin";
 import { Booking } from "../models/IBooking";
 import useGetAllBooking from "../hook/useGetAllBooking";
-import { statusBooking } from "../utils/statusBooking";
+import { StatusBooking, statusBooking } from "../utils/statusBooking";
+import PaymentModal from "../modals/paymentModal";
+import HealtCheckModal from "../modals/healtCheckModal";
+import InjectModal from "../modals/injectModal";
 const BookingManagerPage = () => {
      const { Search } = Input;
      const [page, setPage] = useState(1);
@@ -29,7 +32,7 @@ const BookingManagerPage = () => {
      const columns: ColumnsType<Booking> = [
           {
                title: "Họ Và Tên",
-               width: 100,
+               width: 150,
                key: "fullName",
                fixed: "left",
                render: (_, record) => {
@@ -39,10 +42,20 @@ const BookingManagerPage = () => {
                },
           },
           {
+               title: "Mã Định Danh",
+               dataIndex: "CCCD",
+               key: "CCCD",
+               fixed: "left",
+               width: 130,
+               render: (_, record) => {
+                    return record.customer.CCCD ? record.customer.CCCD : "N/A";
+               },
+          },
+          {
                title: "Email",
                dataIndex: "email",
                key: "email",
-               fixed: "left",
+               width: 200,
                render: (_, record) => {
                     return record.customer.email
                          ? record.customer.email
@@ -53,6 +66,7 @@ const BookingManagerPage = () => {
                title: "Số Điện Thoại",
                dataIndex: "phone",
                key: "2",
+               width: 120,
                render: (_, record) => {
                     return record.customer.phone
                          ? record.customer.phone
@@ -62,6 +76,7 @@ const BookingManagerPage = () => {
           {
                title: "Giới Tính",
                dataIndex: "gender",
+               width: 100,
                key: "gender",
                render: (_, record) => {
                     return record.customer?.gender == null
@@ -88,6 +103,7 @@ const BookingManagerPage = () => {
                title: "Ngày Sinh",
                dataIndex: "dob",
                key: "dob",
+               width: 150,
                render: (_, record) => {
                     return record.customer.customerDoB
                          ? formatDate(record.customer.customerDoB).toString()
@@ -97,6 +113,7 @@ const BookingManagerPage = () => {
           {
                title: "Vaccine",
                key: "vaccine",
+               width: 150,
                render: (_, record) => {
                     return record.vaccine.vaccineName
                          ? record.vaccine.vaccineName
@@ -106,6 +123,7 @@ const BookingManagerPage = () => {
           {
                title: "Ngày Tiêm",
                key: "expectedDate",
+               width: 150,
                render: (_, record) => {
                     return record.expectedDate
                          ? formatDate(record.expectedDate).toString()
@@ -116,6 +134,7 @@ const BookingManagerPage = () => {
                title: "Trạng Thái",
                dataIndex: "activated",
                key: "activated",
+               width: 170,
                fixed: "right",
                filters: statusBooking.map((status) => {
                     return {
@@ -135,6 +154,39 @@ const BookingManagerPage = () => {
                key: "operation",
                fixed: "right",
                width: 100,
+               render: (_, record) => {
+                    if (record.statused === StatusBooking.NOTIFICATION_SENT)
+                         return (
+                              <HealtCheckModal
+                                   refetch={refetch}
+                                   idBooking={record.id}
+                                   fullName={record.customer.customerName}
+                                   dob={record.customer.customerDoB}
+                                   gender={record.customer.gender}
+                              />
+                         );
+                    if (
+                         record.statused === StatusBooking.BE_INJECTED &&
+                         !record.paymentSatus
+                    )
+                         return (
+                              <PaymentModal
+                                   bookingId={record.id}
+                                   refetch={refetch}
+                                   vaccine={record.vaccine}
+                              />
+                         );
+                    if (
+                         record.statused === StatusBooking.BE_INJECTED &&
+                         record.paymentSatus
+                    )
+                         return (
+                              <InjectModal
+                                   bookingId={record.id}
+                                   refetch={refetch}
+                              />
+                         );
+               },
           },
      ];
      if (!bookings || isLoading) return <Loading />;
@@ -158,6 +210,7 @@ const BookingManagerPage = () => {
                               className="h-full w-full mt-6"
                               columns={columns}
                               dataSource={bookings?.bookings}
+                              scroll={{ x: 1300 }}
                               pagination={false}
                          />
                          <Pagination
@@ -165,7 +218,7 @@ const BookingManagerPage = () => {
                               showSizeChanger
                               defaultCurrent={page}
                               pageSize={limit}
-                              total={bookings.totalPage}
+                              total={bookings.totalPage + 1}
                               onChange={(current, pageSize) => {
                                    setPage(current);
                                    setLimit(pageSize);

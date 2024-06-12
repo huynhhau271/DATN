@@ -8,12 +8,14 @@ interface Props {
      dob: string | undefined | Date;
      setOpen: (value: boolean) => void;
      open: boolean;
+     refetch: () => void;
 }
 const ConfirmBookingModal = ({
      email,
      setOpen,
      open = false,
      name,
+     refetch,
      dob,
 }: Props) => {
      const { Title } = Typography;
@@ -26,6 +28,7 @@ const ConfirmBookingModal = ({
                .then(() => {
                     toast.success("Xác Nhận Thông Tin Thành Công");
                     setOpen(false);
+                    refetch();
                     form.resetFields();
                })
                .catch((error) => {

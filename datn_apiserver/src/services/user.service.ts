@@ -14,7 +14,7 @@ import wardRepository from "../repositories/wardRepository";
 import districtsRepository from "../repositories/districtsRepository";
 import provinceRepository from "../repositories/provinceRepository";
 import { getAllStaff } from "../controllers/user.controller";
-interface Login {
+export interface Login {
     email: string;
     password: string;
 }
@@ -74,6 +74,35 @@ class userService {
             activated: true,
             roleId: roleUser.id,
             createdBy: user.userId,
+        });
+        return newUser;
+    }
+
+
+    async register(user: IUser) {
+
+        if (!user.email || !user.password) {
+            throw new BadRequestError("Thiếu email hoặc password");
+        }
+        const checkEmail = await userRepository.findOne({
+            where: {
+                email: user.email,
+            },
+        });
+        if (checkEmail) throw new BadRequestError("Email Đã Tồn Tại");
+
+        const roleUser = await authorityRepository.findOne({
+            where: {
+                name: user.roleName || UserRoles.CUSTOMER,
+            },
+            raw: true,
+        });
+
+        const newUser = await userRepository.create({
+            email: user.email,
+            password: user.password,
+            activated: true,
+            roleId: roleUser.id,
         });
         return newUser;
     }

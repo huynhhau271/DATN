@@ -35,7 +35,7 @@ const VaccineManagerPage = () => {
           active?: boolean
      ) => {
           idVaccine &&
-               active &&
+               active != undefined &&
                vaccineService
                     .blockOrActiveVaccine(idVaccine, active)
                     .then(() => {
@@ -115,12 +115,13 @@ const VaccineManagerPage = () => {
                                                                       : "!bg-green-600"
                                                             } text-white flex items-center gap-2 text-xl justify-center`}
                                                             onClick={() => {
-                                                                 vaccine.status !=
-                                                                      undefined &&
-                                                                      handleBlockOrActiveVaccine(
-                                                                           vaccine?.id,
-                                                                           vaccine?.status
-                                                                      );
+                                                                 console.log(
+                                                                      "abc"
+                                                                 );
+                                                                 handleBlockOrActiveVaccine(
+                                                                      vaccine?.id,
+                                                                      vaccine?.status
+                                                                 );
                                                             }}
                                                        >
                                                             <span>

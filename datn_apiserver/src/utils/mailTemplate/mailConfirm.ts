@@ -4,7 +4,8 @@ export const mailConfirm = (
     dob: string,
     vaccine: string,
     date: string,
-    key: string
+    key: string,
+    CCCD: string
 ) => {
     return `
         <h1 style="text-align: center;">THƯ XÁC NHẬN ĐĂNG KÝ TIÊM CHỦNG</h1> 
@@ -13,6 +14,7 @@ export const mailConfirm = (
         <h2>Thông tin đăng ký:</h2>
         <p>Họ và tên người tiêm: <strong>${customerName}</strong></p>
         <p>Ngày Sinh: <strong>${dob}</strong></p>
+        <p>Mã Định Danh: <strong>${CCCD}</strong></p>
         <p>Số Điện Thoại: <strong>${phone}</strong></p>
         <p>Tên Vaccine: <strong>${vaccine}</strong></p>
         <p>Ngày Tiêm: <strong>${date}</strong></p>

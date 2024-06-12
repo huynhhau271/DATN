@@ -6,9 +6,9 @@ import { formatDate } from "../utils/formatDate";
 interface Props {
      idBooking: number;
      refetch: () => void;
-     fullName: string;
-     dob: string | Date;
-     gender: boolean;
+     fullName?: string;
+     dob?: string | Date;
+     gender?: boolean;
 }
 const HealtCheckModal = ({
      refetch,

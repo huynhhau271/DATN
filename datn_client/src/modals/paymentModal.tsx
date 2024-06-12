@@ -2,12 +2,14 @@ import { Button, Modal } from "antd";
 import { useState } from "react";
 import { bookingService } from "../services/bookingService";
 import { toast } from "react-toastify";
+import { IVaccine } from "../models/vaccine.model";
 
 interface Props {
      bookingId: number;
      refetch: () => void;
+     vaccine: IVaccine;
 }
-const PaymentModal = ({ bookingId, refetch }: Props) => {
+const PaymentModal = ({ bookingId, refetch, vaccine }: Props) => {
      const [open, setOpen] = useState(false);
      const handleOk = () => {
           bookingService
@@ -48,7 +50,20 @@ const PaymentModal = ({ bookingId, refetch }: Props) => {
                     okType="primary"
                     onOk={handleOk}
                     okText="Thanh Toán"
-               ></Modal>
+               >
+                    <span className="flex justify-between">
+                         <p> Vaccine:</p> <p>{vaccine.vaccineName}</p>
+                    </span>
+                    <span className="flex  justify-between  ">
+                         <p> Số tiền:</p>
+                         <p>
+                              {vaccine.price.toLocaleString("vi-VN", {
+                                   currency: "VND",
+                              })}{" "}
+                              VNĐ
+                         </p>
+                    </span>
+               </Modal>
           </>
      );
 };
