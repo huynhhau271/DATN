@@ -7,20 +7,11 @@ class CustomerService {
      private BasseUrl = import.meta.env.FE_BASE_API_URL;
 
      async create(customer: ICustomer) {
-          try {
-               const response = await baseRequest.post(
-                    this.BasseUrl + "customer/createCustomer",
-                    customer
-               );
-               toast.success("Đăng ký tài khoản thành công");
-               return response.data;
-          } catch (error: AxiosError | any) {
-               if (error.response) {
-                    toast.error(error.response.data.message);
-               } else {
-                    toast.error("Đăng Ký Tiêm Chủng Thất Bại");
-               }
-          }
+          const response = await baseRequest.post(
+               this.BasseUrl + "customer/createCustomer",
+               customer
+          );
+          return response.data;
      }
 
      async getCustomer() {
