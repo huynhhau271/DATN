@@ -28,7 +28,6 @@ const ConfirmBookingModal = ({
                .then(() => {
                     toast.success("Xác Nhận Thông Tin Thành Công");
                     setOpen(false);
-                    refetch();
                     form.resetFields();
                })
                .catch((error) => {
@@ -36,6 +35,7 @@ const ConfirmBookingModal = ({
                          toast.error(error.response.data.message);
                     else toast.error("Xác Nhận Thông Tin Thất Bại");
                });
+               refetch();
      };
      return (
           <>

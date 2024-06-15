@@ -37,7 +37,7 @@ const BookingManagerPage = () => {
                key: "fullName",
                fixed: "left",
                render: (_, record) => {
-                    return record.customer.customerName
+                    return record.customer&&record.customer.customerName
                          ? record.customer.customerName
                          : "N/A";
                },
@@ -49,7 +49,7 @@ const BookingManagerPage = () => {
                fixed: "left",
                width: 130,
                render: (_, record) => {
-                    return record.customer.CCCD ? record.customer.CCCD : "N/A";
+                    return record.customer&&record.customer.CCCD ? record.customer.CCCD : "N/A";
                },
           },
           {
@@ -58,7 +58,7 @@ const BookingManagerPage = () => {
                key: "email",
                width: 200,
                render: (_, record) => {
-                    return record.customer.email
+                    return record.customer&&record.customer.email
                          ? record.customer.email
                          : "N/A";
                },
@@ -69,7 +69,7 @@ const BookingManagerPage = () => {
                key: "2",
                width: 120,
                render: (_, record) => {
-                    return record.customer.phone
+                    return record.customer&&record.customer.phone
                          ? record.customer.phone
                          : "N/A";
                },
@@ -106,7 +106,7 @@ const BookingManagerPage = () => {
                key: "dob",
                width: 150,
                render: (_, record) => {
-                    return record.customer.customerDoB
+                    return record.customer&&record.customer.customerDoB
                          ? formatDate(record.customer.customerDoB).toString()
                          : "N/A";
                },

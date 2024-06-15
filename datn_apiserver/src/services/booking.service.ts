@@ -193,8 +193,6 @@ class BookingService {
                 statused: StatusBooking.BE_INJECTED,
             },
         });
-        console.log({ booking });
-
         if (!booking) throw new BadRequestError("Đơn hàng không tồn tại");
         else
             await bookingRepository.update(
