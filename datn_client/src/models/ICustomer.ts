@@ -3,25 +3,25 @@ import { IWard } from "./province.model";
 
 export interface ICustomer {
      id: number;
-     customerName?: string;
+     customerName: string;
 
-     customerDoB?: string | Date;
+     customerDoB: string | Date;
 
-     gender?: boolean;
+     gender: boolean;
 
      dob?: Date;
 
-     parentsName?: string;
+     parentsName: string;
 
-     phone?: string;
+     phone: string;
 
-     email?: string;
+     email: string;
 
      wardId?: string;
      provinceId: string;
      districtId: string;
      ward: IWard;
-     address?: string;
-     bookings?: Booking[];
+     address: string;
+     bookings: Booking[];
      CCCD: string;
 }

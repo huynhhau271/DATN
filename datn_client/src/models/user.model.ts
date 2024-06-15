@@ -6,7 +6,7 @@ export interface IUser {
      dob?: string;
      activated?: boolean;
      gender?: boolean;
-     imageUrl?: string;
+     avatar?: string;
      wardId?: string;
      districtId?: string;
      provinceId?: string;

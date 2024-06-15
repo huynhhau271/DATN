@@ -47,6 +47,7 @@ class userService {
                         email: payload.email,
                         phone: payload.phone,
                         roleId: roleUser.id,
+                        avatar: payload.avatar,
                     },
                     {
                         where: {

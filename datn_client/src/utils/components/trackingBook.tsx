@@ -16,15 +16,7 @@ import { useMemo } from "react";
 Font.register({
      family: "Roboto",
      format: "truetype",
-     fonts: [
-          {
-               src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-light-webfont.ttf",
-          },
-          {
-               src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-bold-webfont.ttf",
-               fontStyle: "bold",
-          },
-     ],
+     src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-light-webfont.ttf",
 });
 // Create styles
 const styles = StyleSheet.create({

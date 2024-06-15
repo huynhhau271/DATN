@@ -15,6 +15,7 @@ import { staffService } from "../services/staffService";
 import { toast } from "react-toastify";
 import useGetAllStaff from "../hook/useGetStaff";
 import { Loading } from "../utils/components/sprin";
+import { Image } from "antd";
 import { UserRoles } from "../utils/userRole";
 const UserManagerPage = () => {
      const { Search } = Input;
@@ -152,6 +153,18 @@ const UserManagerPage = () => {
                     return record.activated === value;
                },
           },
+          {
+               title: "Hình Ảnh",
+               key: "image",
+               fixed: "right",
+               width: 200,
+               render: (_, record) => (
+                    
+                         <div>
+                             <Image src={record.avatar}/>    
+                         </div>)
+                        
+               },
           {
                title: "Tính năng",
                key: "operation",

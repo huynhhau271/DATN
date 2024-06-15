@@ -42,17 +42,17 @@ export default function Register() {
           else return Promise.resolve();
      };
 
-     const handleSubmit = async (value: any) => {
-          try {
+     const handleSubmit =  (value: any) => {
                delete value.rePassword;
-               await customerService.create(value).then(() => {
+               customerService.create(value).then(() => {
                     form.resetFields();
                     navigate("/dang-nhap");
                     toast.success("Đăng Ký Tài Khoản Khách Hàng Thành Công!");
-               });
-          } catch (error) {
-               toast.error("Có lỗi hệ thống vui lòng thử lại sau!");
-          }
+               }).catch((error) => {
+                    if (error.response)
+                         toast.error(error.response.data.message);
+                    else toast.error("Có lỗi hệ thống vui lòng thử lại");
+               });;
      };
 
      return (
