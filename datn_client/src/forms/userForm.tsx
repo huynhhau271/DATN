@@ -30,7 +30,10 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
      const defaultValues = useMemo(
           () =>
                isEdit
-                    ? { ...userData, dob: formatDate(userData.dob) }
+                    ? {
+                           ...userData,
+                           dob: formatDate(userData.dob, "YYYY-MM-DD"),
+                      }
                     : undefined,
           [isEdit, userData]
      );

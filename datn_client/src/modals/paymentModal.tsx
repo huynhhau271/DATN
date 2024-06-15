@@ -38,7 +38,7 @@ const PaymentModal = ({ bookingId, refetch, vaccine }: Props) => {
                <Button
                     type="primary"
                     onClick={showModal}
-                    className={`flex  items-center justify-center gap-4 `}
+                    className={`flex items-center justify-center gap-4 `}
                >
                     Thanh Toán
                </Button>

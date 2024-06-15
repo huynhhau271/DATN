@@ -43,6 +43,24 @@ class CustomerService {
           );
           return response.data;
      }
+
+     async getCustomerById(id: number) {
+          const response = await baseRequest.get(
+               `${this.BasseUrl}customer/byId`,
+               {
+                    params: { id },
+               }
+          );
+          return response.data;
+     }
+
+     async updateCustomer(customer: ICustomer) {
+          const response = await baseRequest.put(
+               `${this.BasseUrl}customer/`,
+               customer
+          );
+          return response.data;
+     }
 }
 
 export const customerService = new CustomerService();

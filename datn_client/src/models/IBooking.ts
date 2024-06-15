@@ -38,7 +38,7 @@ export interface Booking {
      vaccineId: number;
      vaccine: IVaccine;
      expectedDate: Date;
-     customerId?: number;
+     customerId: number;
      customer: ICustomer;
      paymentSatus: boolean;
      nurseStaff: IUser;

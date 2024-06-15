@@ -18,6 +18,8 @@ export interface ICustomer {
      email?: string;
 
      wardId?: string;
+     provinceId: string;
+     districtId: string;
      ward: IWard;
      address?: string;
      bookings?: Booking[];

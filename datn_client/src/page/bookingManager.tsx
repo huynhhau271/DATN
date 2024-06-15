@@ -12,6 +12,7 @@ import { StatusBooking, statusBooking } from "../utils/statusBooking";
 import PaymentModal from "../modals/paymentModal";
 import HealtCheckModal from "../modals/healtCheckModal";
 import InjectModal from "../modals/injectModal";
+import ChangeCustomerInfoModal from "../modals/changeCustomerInfoModal";
 const BookingManagerPage = () => {
      const { Search } = Input;
      const [page, setPage] = useState(1);
@@ -157,35 +158,59 @@ const BookingManagerPage = () => {
                render: (_, record) => {
                     if (record.statused === StatusBooking.NOTIFICATION_SENT)
                          return (
-                              <HealtCheckModal
-                                   refetch={refetch}
-                                   idBooking={record.id}
-                                   fullName={record.customer.customerName}
-                                   dob={record.customer.customerDoB}
-                                   gender={record.customer.gender}
-                              />
+                              <div className="flex gap-1 ">
+                                   <HealtCheckModal
+                                        refetch={refetch}
+                                        idBooking={record.id}
+                                        fullName={record.customer.customerName}
+                                        dob={record.customer.customerDoB}
+                                        gender={record.customer.gender}
+                                   />
+                                   <ChangeCustomerInfoModal
+                                        idCus={record.customerId}
+                                        refetch={refetch}
+                                   />
+                              </div>
                          );
                     if (
                          record.statused === StatusBooking.BE_INJECTED &&
                          !record.paymentSatus
                     )
                          return (
-                              <PaymentModal
-                                   bookingId={record.id}
-                                   refetch={refetch}
-                                   vaccine={record.vaccine}
-                              />
+                              <div className="flex gap-1 ">
+                                   <PaymentModal
+                                        bookingId={record.id}
+                                        refetch={refetch}
+                                        vaccine={record.vaccine}
+                                   />
+                                   <ChangeCustomerInfoModal
+                                        idCus={record.customerId}
+                                        refetch={refetch}
+                                   />
+                              </div>
                          );
                     if (
                          record.statused === StatusBooking.BE_INJECTED &&
                          record.paymentSatus
                     )
                          return (
-                              <InjectModal
-                                   bookingId={record.id}
-                                   refetch={refetch}
-                              />
+                              <div className="flex gap-1 ">
+                                   <InjectModal
+                                        bookingId={record.id}
+                                        refetch={refetch}
+                                   />
+                                   <ChangeCustomerInfoModal
+                                        idCus={record.customerId}
+                                        refetch={refetch}
+                                   />
+                              </div>
                          );
+                    return (
+                         <ChangeCustomerInfoModal
+                              idCus={record.customerId}
+                              refetch={refetch}
+                         />
+                    );
                },
           },
      ];

@@ -10,6 +10,9 @@ import { signToken } from "../utils/auth/jwt";
 import { compare } from "bcryptjs";
 import { Login } from "./user.service";
 import { User } from "../utils/user";
+import { getCustomer } from "../controllers/customer.controller";
+import districtsRepository from "../repositories/districtsRepository";
+import provinceRepository from "../repositories/provinceRepository";
 
 class CustomerService {
     async create(customer: ICustomer) {
@@ -89,8 +92,6 @@ class CustomerService {
     }
 
     async getTrackingCustomer(user: User) {
-        console.log({ user });
-
         const tracking = await customerRepository.findOne({
             include: [
                 {
@@ -120,6 +121,52 @@ class CustomerService {
         });
 
         return tracking || null;
+    }
+
+    async getCustomerById(id: number) {
+        const cus = await customerRepository.findOne({
+            where: {
+                id: id,
+            },
+            include: [
+                {
+                    model: wardRepository,
+                    include: [
+                        {
+                            model: districtsRepository,
+                            include: [
+                                {
+                                    model: provinceRepository,
+                                },
+                            ],
+                        },
+                    ],
+                    attributes: ["id", "districtId"],
+                },
+            ],
+        });
+        if (!cus) throw new BadRequestError("Khách Hàng Không Tồn Tại");
+
+        const customer = {
+            ...cus.toJSON(),
+            districtId: cus.toJSON()["ward"]["districtId"],
+            provinceId: cus.toJSON()["ward"]["district"]["provinceId"],
+        };
+        return customer;
+    }
+
+    async updateCustomer(customer: ICustomer) {
+        const customerForUpdate = await customerRepository.findByPk(
+            customer.id
+        );
+        if (!customerForUpdate)
+            throw new BadRequestError("Có Lỗi Hệ Thống Vui Lòng Thử Lại");
+        else
+            await customerRepository.update(customer, {
+                where: {
+                    id: customer.id,
+                },
+            });
     }
 }
 export default new CustomerService();
