@@ -63,7 +63,7 @@ const VacxinUsers = () => {
                         <Card.Body>
                             <Card.Title>Các loại vắc xin cho trẻ em</Card.Title>
                             <Card.Text>
-                                VNVC có đủ các loại vắc xin cho trẻ em, được nhập khẩu từ nước ngoài của các hãng sản xuất uy tín, nổi tiếng Thế giới, và số ít các vắc xin được sản xuất tại Việt Nam.
+                            Phòng tiêm chủng vắc xin huyện Đại Lộc có đủ các loại vắc xin cho trẻ em, được nhập khẩu từ nước ngoài của các hãng sản xuất uy tín, nổi tiếng Thế giới, và số ít các vắc xin được sản xuất tại Việt Nam.
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -97,9 +97,9 @@ const VacxinUsers = () => {
                     <Card style={{ width: '18rem' }}>
                         <Card.Img variant="top" src="https://vnvc.vn/wp-content/uploads/2020/04/7-1.jpg" />
                         <Card.Body>
-                            <Card.Title>Quy trình tiêm chủng tại VNVC</Card.Title>
+                            <Card.Title>Quy trình tiêm chủng tại Phòng tiêm chủng vắc xin huyện Đại Lộc</Card.Title>
                             <Card.Text>
-                                Quy trình tiêm chủng tại VNVC khoa học, khép kín gồm 5 bước, giúp khách hàng tiêm chủng an toàn, thuận tiện, nhanh chóng, tiết kiệm thời gian, không lo chờ đợi.
+                                Quy trình tiêm chủng tại Phòng tiêm chủng vắc xin huyện Đại Lộc vừa khoa học vừa khép kín gồm 5 bước, giúp khách hàng tiêm chủng an toàn, thuận tiện, nhanh chóng, tiết kiệm thời gian, không lo chờ đợi.
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -111,7 +111,7 @@ const VacxinUsers = () => {
                         <Card.Body>
                             <Card.Title>Bảng giá vắc xin</Card.Title>
                             <Card.Text>
-                                Cập nhật bảng giá vắc xin mới và đầy đủ nhất tại Hệ thống trung tâm tiêm chủng VNVC, giá vắc xin cạnh tranh, cam kết bình ổn giá ngay trong thời điểm khan hiếm.
+                                Cập nhật bảng giá vắc xin mới và đầy đủ nhất tại Phòng tiêm chủng vắc xin huyện Đại Lộc, giá vắc xin cạnh tranh, cam kết bình ổn giá ngay trong thời điểm khan hiếm.
                             </Card.Text>
                         </Card.Body>
                     </Card>

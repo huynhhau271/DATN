@@ -2,7 +2,6 @@ import { Button, Form, Input, Select, Typography } from "antd";
 import { useGetProvince } from "../hook/useGetProvince";
 import { useEffect, useState } from "react";
 import { IDistrict, IProvince, IWard } from "../models/province.model";
-import { IBookingForm } from "../models/IBooking";
 import moment from "moment";
 import { formatDate } from "../utils/formatDate";
 import { rotations } from "../utils/rotation";
@@ -11,12 +10,15 @@ import { ICustomer } from "../models/ICustomer";
 import { customerService } from "../services/customerService";
 import { toast } from "react-toastify";
 import { Loading } from "../utils/components/sprin";
+import { on } from "events";
 
 interface IProps {
      idCus: number;
      isBooking?: boolean;
+     setOpen: any;
 }
-function ChangecustomerForm({ idCus, isBooking = false }: IProps) {
+
+function ChangecustomerForm({ idCus, setOpen, isBooking = false }: IProps) {
      const { customer, isLoading } = useGetCustomerById(idCus);
      const { provinces: provinceData } = useGetProvince();
      const [provinces, setProvinces] = useState<IProvince[] | undefined>([]);
@@ -77,6 +79,7 @@ function ChangecustomerForm({ idCus, isBooking = false }: IProps) {
      const handleSubmit = (value: ICustomer) => {
           customerService.updateCustomer({ ...value, id: idCus }).then(() => {
                toast.success("success");
+               setOpen(false);
           });
      };
 

@@ -35,7 +35,18 @@ const BookingManagerPage = () => {
      const searchbutton = <SearchOutlined type="default" />;
      const columns: ColumnsType<Booking> = [
           {
-               title: "Họ Và Tên",
+               title: "Họ Và Tên Ba(Mẹ)",
+               width: 150,
+               key: "fullName",
+               fixed: "left",
+               render: (_, record) => {
+                    return record.customer&&record.customer.parentsName
+                         ? record.customer.parentsName
+                         : "N/A";
+               },
+          },
+          {
+               title: "Họ Và Tên Trẻ",
                width: 150,
                key: "fullName",
                fixed: "left",

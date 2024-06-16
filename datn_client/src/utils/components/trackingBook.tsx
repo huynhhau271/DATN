@@ -146,7 +146,7 @@ export const TrackingBook = ({ tracking }: Props) => {
                                              top: -10,
                                         }}
                                    >
-                                        Họ và tên: {tracking.customerName}
+                                        Họ và tên trẻ: {tracking.customerName}
                                    </Text>
                                    <Text
                                         style={{
@@ -193,6 +193,18 @@ export const TrackingBook = ({ tracking }: Props) => {
                                              position: "absolute",
                                              left: 115,
                                              top: 140,
+                                        }}
+                                   >
+                                        Họ và tên ba(mẹ): {tracking.parentsName}
+                                   </Text>
+                                   <Text
+                                        style={{
+                                             textAlign: "center",
+                                             marginLeft: -30,
+                                             fontSize: 14,
+                                             position: "absolute",
+                                             left: 115,
+                                             top: 170,
                                         }}
                                    >
                                         Điện thoại: {tracking.phone}
