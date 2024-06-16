@@ -107,7 +107,7 @@ function HeaderUserComponent() {
                                                             {
                                                                  (
                                                                       userLogin as ICustomer
-                                                                 ).customerName
+                                                                 ).parentsName
                                                             }
                                                        </Popconfirm>
                                                   </span>

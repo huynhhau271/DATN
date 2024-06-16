@@ -29,6 +29,7 @@ const ChangeCustomerInfoModal = ({ idCus, refetch }: Props) => {
                >
                     <ChangeCustomerInfoForm
                          idCus={idCus}
+                         setOpen={setOpen}
                          refetchBooking={refetch}
                     />
                </Modal>

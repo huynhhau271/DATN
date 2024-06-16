@@ -2,7 +2,6 @@ import { Button, Form, Input, Select, Typography } from "antd";
 import { useGetProvince } from "../hook/useGetProvince";
 import { useEffect, useState } from "react";
 import { IDistrict, IProvince, IWard } from "../models/province.model";
-import { IBookingForm } from "../models/IBooking";
 import moment from "moment";
 import { formatDate } from "../utils/formatDate";
 import { rotations } from "../utils/rotation";
@@ -11,12 +10,14 @@ import { ICustomer } from "../models/ICustomer";
 import { customerService } from "../services/customerService";
 import { toast } from "react-toastify";
 import { Loading } from "../utils/components/sprin";
+import { on } from "events";
 
 interface IProps {
      idCus: number;
      refetchBooking: any;
+     setOpen: any;
 }
-function ChangecustomerForm({ idCus }: IProps) {
+function ChangecustomerForm({ idCus, setOpen }: IProps) {
      const { customer, isLoading } = useGetCustomerById(idCus);
      const { provinces: provinceData } = useGetProvince();
      const [provinces, setProvinces] = useState<IProvince[] | undefined>([]);
@@ -77,6 +78,7 @@ function ChangecustomerForm({ idCus }: IProps) {
      const handleSubmit = (value: ICustomer) => {
           customerService.updateCustomer({ ...value, id: idCus }).then(() => {
                toast.success("success");
+               setOpen(false);
           });
      };
 
@@ -382,7 +384,7 @@ function ChangecustomerForm({ idCus }: IProps) {
                                              htmlType="submit"
                                              className="login-form-button"
                                         >
-                                             Đăng ký tiêm
+                                             Cập nhật
                                         </Button>
                                    </Form.Item>
                               </div>
