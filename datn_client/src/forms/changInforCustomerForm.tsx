@@ -14,9 +14,9 @@ import { Loading } from "../utils/components/sprin";
 
 interface IProps {
      idCus: number;
-     refetchBooking: any;
+     isBooking?: boolean;
 }
-function ChangecustomerForm({ idCus }: IProps) {
+function ChangecustomerForm({ idCus, isBooking = false }: IProps) {
      const { customer, isLoading } = useGetCustomerById(idCus);
      const { provinces: provinceData } = useGetProvince();
      const [provinces, setProvinces] = useState<IProvince[] | undefined>([]);
@@ -121,7 +121,7 @@ function ChangecustomerForm({ idCus }: IProps) {
                                         ]}
                                         className="flex-1"
                                    >
-                                        <Input />
+                                        <Input disabled={isBooking} />
                                    </Form.Item>
 
                                    <Form.Item
@@ -147,6 +147,7 @@ function ChangecustomerForm({ idCus }: IProps) {
                                              max={formatDate(
                                                   moment().toString()
                                              )}
+                                             disabled={isBooking}
                                         />
                                    </Form.Item>
                               </div>
@@ -163,6 +164,7 @@ function ChangecustomerForm({ idCus }: IProps) {
                                         ]}
                                    >
                                         <Select
+                                             disabled={isBooking}
                                              placeholder="Giới Tính"
                                              options={[
                                                   {
@@ -191,7 +193,7 @@ function ChangecustomerForm({ idCus }: IProps) {
                                              },
                                         ]}
                                    >
-                                        <Input />
+                                        <Input disabled={isBooking} />
                                    </Form.Item>
                               </div>
 
@@ -202,6 +204,7 @@ function ChangecustomerForm({ idCus }: IProps) {
                                         className="flex-1"
                                    >
                                         <Select
+                                             disabled={isBooking}
                                              defaultValue={provinceId}
                                              value={provinceId}
                                              onChange={(value) => {
@@ -225,12 +228,7 @@ function ChangecustomerForm({ idCus }: IProps) {
                                         <Select
                                              defaultValue={districtId}
                                              value={districtId}
-                                             disabled={
-                                                  districts &&
-                                                  districts.length > 0
-                                                       ? false
-                                                       : true
-                                             }
+                                             disabled={isBooking}
                                              onChange={(value) =>
                                                   handleDistrictChange(value)
                                              }
@@ -258,11 +256,7 @@ function ChangecustomerForm({ idCus }: IProps) {
                                         <Select
                                              defaultValue={wardId}
                                              value={wardId}
-                                             disabled={
-                                                  wards && wards?.length > 0
-                                                       ? false
-                                                       : true
-                                             }
+                                             disabled={isBooking}
                                              onChange={(value) =>
                                                   handleWardChange(value)
                                              }
@@ -290,7 +284,7 @@ function ChangecustomerForm({ idCus }: IProps) {
                                         ]}
                                         className="flex-1"
                                    >
-                                        <Input />
+                                        <Input disabled={isBooking} />
                                    </Form.Item>
                               </div>
 
@@ -314,7 +308,10 @@ function ChangecustomerForm({ idCus }: IProps) {
                                              },
                                         ]}
                                    >
-                                        <Input placeholder="Nguyễn Văn A" />
+                                        <Input
+                                             placeholder="Nguyễn Văn A"
+                                             disabled={isBooking}
+                                        />
                                    </Form.Item>
                                    <Form.Item
                                         label="Số điện thoại liên hệ"
@@ -331,7 +328,10 @@ function ChangecustomerForm({ idCus }: IProps) {
                                              },
                                         ]}
                                    >
-                                        <Input placeholder="0123456789" />
+                                        <Input
+                                             placeholder="0123456789"
+                                             disabled={isBooking}
+                                        />
                                    </Form.Item>
                               </div>
 
@@ -351,7 +351,10 @@ function ChangecustomerForm({ idCus }: IProps) {
                                              },
                                         ]}
                                    >
-                                        <Input type="email" />
+                                        <Input
+                                             type="email"
+                                             disabled={isBooking}
+                                        />
                                    </Form.Item>
                                    <Form.Item
                                         label="Mối quan hệ với người tiêm"
@@ -364,7 +367,7 @@ function ChangecustomerForm({ idCus }: IProps) {
                                              },
                                         ]}
                                    >
-                                        <Select>
+                                        <Select disabled={isBooking}>
                                              {rotations.map((rotation) => (
                                                   <Select.Option
                                                        value={rotation.value}
@@ -375,17 +378,19 @@ function ChangecustomerForm({ idCus }: IProps) {
                                         </Select>
                                    </Form.Item>
                               </div>
-                              <div className="flex justify-end">
-                                   <Form.Item>
-                                        <Button
-                                             type="primary"
-                                             htmlType="submit"
-                                             className="login-form-button"
-                                        >
-                                             Đăng ký tiêm
-                                        </Button>
-                                   </Form.Item>
-                              </div>
+                              {!isBooking && (
+                                   <div className="flex justify-center">
+                                        <Form.Item>
+                                             <Button
+                                                  type="primary"
+                                                  htmlType="submit"
+                                                  className="login-form-button"
+                                             >
+                                                  Đăng ký tiêm
+                                             </Button>
+                                        </Form.Item>
+                                   </div>
+                              )}
                          </Form>
                     </div>
                )}

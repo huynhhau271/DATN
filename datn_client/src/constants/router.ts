@@ -17,6 +17,7 @@ import Procedure from "../page/procedure";
 import { TrackingPage } from "../page/trackingPage";
 import Register from "../page/register";
 import { LoginCustomerPage } from "../page/loginCustomer";
+import { CustomerUpdateInfo } from "../page/customerUpdateInfor";
 
 const routers: RouteObject[] = [
      {
@@ -106,6 +107,11 @@ const routers: RouteObject[] = [
                     path: "/dang-nhap",
                     id: "dang-nhap",
                     Component: LoginCustomerPage,
+               },
+               {
+                    path: "/cap-nhat-thong-tin",
+                    id: "cap-nhat-thong-tin",
+                    Component: CustomerUpdateInfo,
                },
           ],
           Component: UserLayout,

@@ -9,8 +9,11 @@ const UserLayout = () => {
                     <HeaderUserComponent />
                </div>
                <div className="flex justify-between flex-col h-full ">
-                    <div className="h-full mb-5 overflow-x-auto ">
+                    <div className="h-full flex flex-col items-center">
                          <Outlet />
+                         <div className="w-full mb-5">
+                              <FooterUser />
+                         </div>
                     </div>
                     <div className="flex justify-center items-center gap-2 absolute z-50 right-12 bg-yellow-300 bottom-24 p-2 rounded-2xl">
                          <div className="bg-[#E3EBFD] rounded-full h-9 w-9 flex items-center justify-center">
@@ -22,9 +25,6 @@ const UserLayout = () => {
                                    0905.470.207
                               </p>
                          </div>
-                    </div>
-                    <div className="w-full mb-5">
-                         <FooterUser />
                     </div>
                </div>
           </div>

@@ -1,12 +1,4 @@
-import {
-     Button,
-     Empty,
-     Form,
-     Input,
-     Select,
-     Typography,
-     notification,
-} from "antd";
+import { Button, Empty, Form, Input, Select, Typography } from "antd";
 import { formatDate } from "../utils/formatDate";
 import Table, { ColumnsType } from "antd/es/table";
 import { ICustomer } from "../models/ICustomer";
@@ -16,6 +8,8 @@ import useGetAllVaccineByMothOld from "../hook/useGetAllVaccineByMoth";
 import { IBookingPayload } from "../models/IBooking";
 import { bookingService } from "../services/bookingService";
 import { toast } from "react-toastify";
+import ChangecustomerForm from "./changInforCustomerForm";
+import { useAuthContext } from "../contexts/authContext";
 interface IProps {
      customer: ICustomer;
      refetch: () => void;
@@ -48,6 +42,7 @@ function CustomerBookingForm({
      const [dateinject, setDateInject] = useState(
           formatDate(moment().add(7, "days").toString())
      );
+     const { userLogin } = useAuthContext();
      const columnsHistory: ColumnsType<DataTable> = [
           {
                title: "Họ Và Tên Trẻ",
@@ -214,32 +209,10 @@ function CustomerBookingForm({
      };
      return (
           <>
-               <div className="flex flex-col items-center gap-2 w-2/4 ml-3">
-                    <span className="flex  justify-between w-4/5">
-                         <strong>Họ Và Tên Trẻ:</strong>
-                         <p>{customer.customerName}</p>
-                    </span>
-                    <span className="flex  justify-between w-4/5">
-                         <strong>CCCD:</strong>
-                         <p>{customer.CCCD}</p>
-                    </span>
-                    <span className="flex  justify-between w-4/5">
-                         <strong>Ngày Sinh:</strong>
-                         <p>{formatDate(customer.customerDoB)}</p>
-                    </span>
-                    <span className="flex  justify-between w-4/5">
-                         <strong>Họ Và Tên Bố Mẹ:</strong>
-                         <p>{customer.parentsName}</p>
-                    </span>
-                    <span className="flex  justify-between w-4/5">
-                         <strong>Số Điện Thoại Bố Mẹ:</strong>
-                         <p>{customer.phone}</p>
-                    </span>
-                    <span className="flex  justify-between w-4/5">
-                         <strong>Email Bố Mẹ:</strong>
-                         <p>{customer.email}</p>
-                    </span>
-               </div>
+               <ChangecustomerForm
+                    isBooking={true}
+                    idCus={(userLogin as ICustomer).id}
+               />
                <div>
                     <Form
                          style={{

@@ -79,9 +79,7 @@ class userService {
         return newUser;
     }
 
-
     async register(user: IUser) {
-
         if (!user.email || !user.password) {
             throw new BadRequestError("Thiếu email hoặc password");
         }
@@ -113,6 +111,7 @@ class userService {
             where: {
                 email: login.email,
             },
+            include: [authorityRepository],
             nest: true,
         });
 
@@ -128,7 +127,7 @@ class userService {
         });
         return {
             token: token,
-            user: user,
+            user: { ...user.toJSON(), roleName: user.toJSON().role.name },
         };
     }
 

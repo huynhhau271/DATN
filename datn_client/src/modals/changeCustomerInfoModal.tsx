@@ -27,10 +27,7 @@ const ChangeCustomerInfoModal = ({ idCus, refetch }: Props) => {
                     footer={null}
                     width={800}
                >
-                    <ChangeCustomerInfoForm
-                         idCus={idCus}
-                         refetchBooking={refetch}
-                    />
+                    <ChangeCustomerInfoForm idCus={idCus} />
                </Modal>
           </>
      );

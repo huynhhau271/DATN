@@ -17,7 +17,7 @@ export const TrackingPage = () => {
                {isLoading ? (
                     <Loading />
                ) : (
-                    <div className="w-full flex justify-center mt-6 flex-col items-center">
+                    <div className="w-full flex justify-center mt-6 flex-col items-center h-full">
                          <div className="h-full w-full flex justify-center">
                               {tracking ? (
                                    <TrackingBook tracking={tracking} />
