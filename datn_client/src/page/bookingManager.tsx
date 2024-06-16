@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Table, { ColumnsType } from "antd/es/table";
-import { Pagination } from "antd";
+import { Button, Pagination } from "antd";
 import { formatDate } from "../utils/formatDate";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input } from "antd";
@@ -13,11 +13,14 @@ import PaymentModal from "../modals/paymentModal";
 import HealtCheckModal from "../modals/healtCheckModal";
 import InjectModal from "../modals/injectModal";
 import ChangeCustomerInfoModal from "../modals/changeCustomerInfoModal";
+import PDFPreview from "./previewBookingPDF";
 const BookingManagerPage = () => {
      const { Search } = Input;
      const [page, setPage] = useState(1);
      const [limit, setLimit] = useState(10);
      const [search, setSearch] = useState("");
+     const [infoPreview, setInfoPreview] = useState<Booking | null>(null);
+     const [isOpenPDFPreview, setIsOpenPDFPreview] = useState(false);
      const { bookings, isLoading, refetch } = useGetAllBooking(
           page,
           limit,
@@ -37,7 +40,7 @@ const BookingManagerPage = () => {
                key: "fullName",
                fixed: "left",
                render: (_, record) => {
-                    return record.customer&&record.customer.customerName
+                    return record.customer && record.customer.customerName
                          ? record.customer.customerName
                          : "N/A";
                },
@@ -49,7 +52,9 @@ const BookingManagerPage = () => {
                fixed: "left",
                width: 130,
                render: (_, record) => {
-                    return record.customer&&record.customer.CCCD ? record.customer.CCCD : "N/A";
+                    return record.customer && record.customer.CCCD
+                         ? record.customer.CCCD
+                         : "N/A";
                },
           },
           {
@@ -58,7 +63,7 @@ const BookingManagerPage = () => {
                key: "email",
                width: 200,
                render: (_, record) => {
-                    return record.customer&&record.customer.email
+                    return record.customer && record.customer.email
                          ? record.customer.email
                          : "N/A";
                },
@@ -69,7 +74,7 @@ const BookingManagerPage = () => {
                key: "2",
                width: 120,
                render: (_, record) => {
-                    return record.customer&&record.customer.phone
+                    return record.customer && record.customer.phone
                          ? record.customer.phone
                          : "N/A";
                },
@@ -106,7 +111,7 @@ const BookingManagerPage = () => {
                key: "dob",
                width: 150,
                render: (_, record) => {
-                    return record.customer&&record.customer.customerDoB
+                    return record.customer && record.customer.customerDoB
                          ? formatDate(record.customer.customerDoB).toString()
                          : "N/A";
                },
@@ -206,10 +211,23 @@ const BookingManagerPage = () => {
                               </div>
                          );
                     return (
-                         <ChangeCustomerInfoModal
-                              idCus={record.customerId}
-                              refetch={refetch}
-                         />
+                         <div className="">
+                              <ChangeCustomerInfoModal
+                                   idCus={record.customerId}
+                                   refetch={refetch}
+                              />
+                              <Button
+                                   type="dashed"
+                                   block
+                                   className={`flex mt-1 items-center justify-center gap-4 !mr-5 flex-1`}
+                                   onClick={() => {
+                                        setIsOpenPDFPreview(true);
+                                        setInfoPreview(record);
+                                   }}
+                              >
+                                   <span className="">PDF</span>
+                              </Button>
+                         </div>
                     );
                },
           },
@@ -218,7 +236,7 @@ const BookingManagerPage = () => {
 
      return (
           <>
-               <div className="flex flex-col h-full mt-4 ml-1">
+               <div className="relative flex flex-col h-full mt-4 ml-1">
                     <div className="flex items-end justify-between">
                          <h1 className="text-5xl  ml-4">Danh Sách Đăng Ký</h1>
                     </div>
@@ -251,7 +269,22 @@ const BookingManagerPage = () => {
                          />
                     </div>
                </div>
+
+               {isOpenPDFPreview && (
+                    <>
+                         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+                         <div className="fixed inset-0 flex items-center justify-center z-50">
+                              <div className="bg-white p-6 rounded-lg shadow-lg min-h-[600px]">
+                                   <button className="absolute top-4 right-4">
+                                        Close
+                                   </button>
+                                   <PDFPreview data={infoPreview} />
+                              </div>
+                         </div>
+                    </>
+               )}
           </>
      );
 };
 export default BookingManagerPage;
+
