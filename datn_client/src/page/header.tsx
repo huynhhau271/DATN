@@ -25,7 +25,7 @@ const HeaderComponent = () => {
                label: (
                     <p className="flex items-center gap-2">
                          {" "}
-                         <ProfileOutlined /> Profile
+                         <ProfileOutlined /> Thông Tin Cá Nhân
                     </p>
                ),
           },
@@ -36,7 +36,7 @@ const HeaderComponent = () => {
                          className="flex gap-2 text-red-600"
                          onClick={handleLogout}
                     >
-                         <PoweroffOutlined /> Logout
+                         <PoweroffOutlined /> Đăng Xuất
                     </p>
                ),
           },

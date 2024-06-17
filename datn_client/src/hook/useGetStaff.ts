@@ -6,7 +6,7 @@ export interface Staffs {
      staffs: IUser[];
      limit: number;
      page: number;
-     totalPage: number;
+     total: number;
 }
 
 export const useGetAllStaff = (page: number, limit: number, search: string) => {

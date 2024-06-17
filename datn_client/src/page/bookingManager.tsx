@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Table, { ColumnsType } from "antd/es/table";
-import { Pagination } from "antd";
+import { Button, Pagination } from "antd";
 import { formatDate } from "../utils/formatDate";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input } from "antd";
@@ -12,11 +12,16 @@ import { StatusBooking, statusBooking } from "../utils/statusBooking";
 import PaymentModal from "../modals/paymentModal";
 import HealtCheckModal from "../modals/healtCheckModal";
 import InjectModal from "../modals/injectModal";
+import ChangeCustomerInfoModal from "../modals/changeCustomerInfoModal";
+import PDFPreview from "./previewBookingPDF";
+import { FaFileInvoiceDollar } from "react-icons/fa6";
 const BookingManagerPage = () => {
      const { Search } = Input;
      const [page, setPage] = useState(1);
-     const [limit, setLimit] = useState(10);
+     const [limit, setLimit] = useState(5);
      const [search, setSearch] = useState("");
+     const [infoPreview, setInfoPreview] = useState<Booking | null>(null);
+     const [isOpenPDFPreview, setIsOpenPDFPreview] = useState(false);
      const { bookings, isLoading, refetch } = useGetAllBooking(
           page,
           limit,
@@ -31,12 +36,23 @@ const BookingManagerPage = () => {
      const searchbutton = <SearchOutlined type="default" />;
      const columns: ColumnsType<Booking> = [
           {
-               title: "Họ Và Tên",
+               title: "Họ Và Tên Ba(Mẹ)",
                width: 150,
                key: "fullName",
                fixed: "left",
                render: (_, record) => {
-                    return record.customer&&record.customer.customerName
+                    return record.customer && record.customer.parentsName
+                         ? record.customer.parentsName
+                         : "N/A";
+               },
+          },
+          {
+               title: "Họ Và Tên Trẻ",
+               width: 150,
+               key: "fullName",
+               fixed: "left",
+               render: (_, record) => {
+                    return record.customer && record.customer.customerName
                          ? record.customer.customerName
                          : "N/A";
                },
@@ -48,7 +64,9 @@ const BookingManagerPage = () => {
                fixed: "left",
                width: 130,
                render: (_, record) => {
-                    return record.customer&&record.customer.CCCD ? record.customer.CCCD : "N/A";
+                    return record.customer && record.customer.CCCD
+                         ? record.customer.CCCD
+                         : "N/A";
                },
           },
           {
@@ -57,7 +75,7 @@ const BookingManagerPage = () => {
                key: "email",
                width: 200,
                render: (_, record) => {
-                    return record.customer&&record.customer.email
+                    return record.customer && record.customer.email
                          ? record.customer.email
                          : "N/A";
                },
@@ -68,7 +86,7 @@ const BookingManagerPage = () => {
                key: "2",
                width: 120,
                render: (_, record) => {
-                    return record.customer&&record.customer.phone
+                    return record.customer && record.customer.phone
                          ? record.customer.phone
                          : "N/A";
                },
@@ -105,7 +123,7 @@ const BookingManagerPage = () => {
                key: "dob",
                width: 150,
                render: (_, record) => {
-                    return record.customer&&record.customer.customerDoB
+                    return record.customer && record.customer.customerDoB
                          ? formatDate(record.customer.customerDoB).toString()
                          : "N/A";
                },
@@ -134,7 +152,7 @@ const BookingManagerPage = () => {
                title: "Trạng Thái",
                dataIndex: "activated",
                key: "activated",
-               width: 170,
+               width: 160,
                fixed: "right",
                filters: statusBooking.map((status) => {
                     return {
@@ -157,35 +175,109 @@ const BookingManagerPage = () => {
                render: (_, record) => {
                     if (record.statused === StatusBooking.NOTIFICATION_SENT)
                          return (
-                              <HealtCheckModal
-                                   refetch={refetch}
-                                   idBooking={record.id}
-                                   fullName={record.customer.customerName}
-                                   dob={record.customer.customerDoB}
-                                   gender={record.customer.gender}
-                              />
+                              <div className="flex gap-1 flex-wrap  ">
+                                   <HealtCheckModal
+                                        refetch={refetch}
+                                        idBooking={record.id}
+                                        fullName={record.customer.customerName}
+                                        dob={record.customer.customerDoB}
+                                        gender={record.customer.gender}
+                                   />
+                                   <ChangeCustomerInfoModal
+                                        idCus={record.customerId}
+                                        refetch={refetch}
+                                   />
+                              </div>
                          );
                     if (
                          record.statused === StatusBooking.BE_INJECTED &&
                          !record.paymentSatus
                     )
                          return (
-                              <PaymentModal
-                                   bookingId={record.id}
-                                   refetch={refetch}
-                                   vaccine={record.vaccine}
-                              />
+                              <div className="flex gap-1 flex-wrap ">
+                                   <PaymentModal
+                                        bookingId={record.id}
+                                        refetch={refetch}
+                                        vaccine={record.vaccine}
+                                   />
+                                   <ChangeCustomerInfoModal
+                                        idCus={record.customerId}
+                                        refetch={refetch}
+                                   />
+                                   <Button
+                                        type="primary"
+                                        block
+                                        className={`flex mt-1 items-center justify-center gap-4 !mr-5 flex-1 !bg-[#219C90]`}
+                                        onClick={() => {
+                                             setIsOpenPDFPreview(true);
+                                             setInfoPreview(record);
+                                        }}
+                                   >
+                                        <span className="">
+                                             <FaFileInvoiceDollar />
+                                        </span>
+                                   </Button>
+                              </div>
                          );
                     if (
                          record.statused === StatusBooking.BE_INJECTED &&
                          record.paymentSatus
                     )
                          return (
-                              <InjectModal
-                                   bookingId={record.id}
+                              <div className="flex gap-1 flex-wrap ">
+                                   <InjectModal
+                                        bookingId={record.id}
+                                        refetch={refetch}
+                                   />
+                                   <ChangeCustomerInfoModal
+                                        idCus={record.customerId}
+                                        refetch={refetch}
+                                   />
+                                   <Button
+                                        type="primary"
+                                        block
+                                        className={`flex mt-1 items-center justify-center gap-4 !mr-5 flex-1 !bg-[#219C90]`}
+                                        onClick={() => {
+                                             setIsOpenPDFPreview(true);
+                                             setInfoPreview(record);
+                                        }}
+                                   >
+                                        <span className="">
+                                             <FaFileInvoiceDollar />
+                                        </span>
+                                   </Button>
+                              </div>
+                         );
+                    if (record.statused === StatusBooking.INJECTED)
+                         return (
+                              <div className="flex gap-1 flex-wrap ">
+                                   <ChangeCustomerInfoModal
+                                        idCus={record.customerId}
+                                        refetch={refetch}
+                                   />
+                                   <Button
+                                        type="primary"
+                                        block
+                                        className={`flex mt-1 items-center justify-center gap-4 !mr-5 flex-1 !bg-[#219C90]`}
+                                        onClick={() => {
+                                             setIsOpenPDFPreview(true);
+                                             setInfoPreview(record);
+                                        }}
+                                   >
+                                        <span className="">
+                                             <FaFileInvoiceDollar />
+                                        </span>
+                                   </Button>
+                              </div>
+                         );
+                    return (
+                         <div className="flex gap-1 flex-wrap ">
+                              <ChangeCustomerInfoModal
+                                   idCus={record.customerId}
                                    refetch={refetch}
                               />
-                         );
+                         </div>
+                    );
                },
           },
      ];
@@ -193,7 +285,7 @@ const BookingManagerPage = () => {
 
      return (
           <>
-               <div className="flex flex-col h-full mt-4 ml-1">
+               <div className="relative flex flex-col h-full mt-4 ml-1">
                     <div className="flex items-end justify-between">
                          <h1 className="text-5xl  ml-4">Danh Sách Đăng Ký</h1>
                     </div>
@@ -216,9 +308,10 @@ const BookingManagerPage = () => {
                          <Pagination
                               className="!mr-5 !mt-10"
                               showSizeChanger
-                              defaultCurrent={page}
+                              defaultCurrent={1}
+                              pageSizeOptions={[5, 10, 15, 20, 50, 100]}
                               pageSize={limit}
-                              total={bookings.totalPage + 1}
+                              total={bookings.total}
                               onChange={(current, pageSize) => {
                                    setPage(current);
                                    setLimit(pageSize);
@@ -226,6 +319,20 @@ const BookingManagerPage = () => {
                          />
                     </div>
                </div>
+
+               {isOpenPDFPreview && (
+                    <>
+                         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+                         <div className="fixed inset-0 flex items-center justify-center z-50">
+                              <div className="bg-white p-6 rounded-lg shadow-lg min-h-[600px]">
+                                   <button className="absolute top-4 right-4">
+                                        Close
+                                   </button>
+                                   <PDFPreview data={infoPreview} />
+                              </div>
+                         </div>
+                    </>
+               )}
           </>
      );
 };

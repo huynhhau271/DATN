@@ -1,4 +1,4 @@
-import { Anchor, ConfigProvider, Image, Popconfirm } from "antd";
+import { Anchor, Avatar, Dropdown, Image, MenuProps } from "antd";
 import { MenuUser } from "../constants/menuItems";
 import { BiSolidMessageRoundedDetail } from "react-icons/bi";
 import { FaCalendarAlt } from "react-icons/fa";
@@ -6,12 +6,45 @@ import Search from "antd/es/input/Search";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/authContext";
 import { ICustomer } from "../models/ICustomer";
-import { FaUser } from "react-icons/fa";
 import cookiesService from "../services/cookiesService";
+import {
+     UserOutlined,
+     CaretDownOutlined,
+     PoweroffOutlined,
+     ProfileOutlined,
+} from "@ant-design/icons";
 function HeaderUserComponent() {
-     const { userLogin, setUserLogin } = useAuthContext();
+     const { userLogin } = useAuthContext();
      const navigate = useNavigate();
-     console.log({ userLogin });
+     const handleLogout = () => {
+          cookiesService.removeCookie("token");
+          cookiesService.removeCookie("userAuth");
+          navigate("/login");
+     };
+     const items: MenuProps["items"] = [
+          {
+               key: "1",
+               label: (
+                    <Link
+                         to={"/cap-nhat-thong-tin"}
+                         className="flex items-center gap-2"
+                    >
+                         <ProfileOutlined /> Cập Nhật Thông Tin
+                    </Link>
+               ),
+          },
+          {
+               key: "2",
+               label: (
+                    <p
+                         className="flex gap-2 text-red-600"
+                         onClick={handleLogout}
+                    >
+                         <PoweroffOutlined /> Đăng Xuất
+                    </p>
+               ),
+          },
+     ];
 
      return (
           <>
@@ -77,41 +110,34 @@ function HeaderUserComponent() {
                                         </>
                                    ) : (
                                         <>
-                                             <div className="flex justify-center items-center text-[#102A83] font-bold gap-2 hover:text-red-500 text-lg">
-                                                  <FaUser
-                                                       size={20}
-                                                       color="#102A83"
-                                                  />
-                                                  <span>
-                                                       <Popconfirm
-                                                            placement="bottomRight"
-                                                            title="Đăng xuất"
-                                                            description="Bạn có muốn đăng xuất không?"
-                                                            okText="Có"
-                                                            onConfirm={() => {
-                                                                 cookiesService.removeCookie(
-                                                                      "token"
-                                                                 );
-                                                                 cookiesService.removeCookie(
-                                                                      "userAuth"
-                                                                 );
-                                                                 setUserLogin(
-                                                                      undefined
-                                                                 );
-                                                                 navigate(
-                                                                      "/dang-nhap"
-                                                                 );
-                                                            }}
-                                                            cancelText="Không"
-                                                       >
-                                                            {
-                                                                 (
-                                                                      userLogin as ICustomer
-                                                                 ).customerName
+                                             <Dropdown
+                                                  menu={{ items }}
+                                                  className="mr-4"
+                                             >
+                                                  <div className="flex justify-center items-center text-[#102A83]  gap-2 hover:text-red-500 text-lg">
+                                                       <Avatar
+                                                            src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg"
+                                                            size="large"
+                                                            icon={
+                                                                 <UserOutlined />
                                                             }
-                                                       </Popconfirm>
-                                                  </span>
-                                             </div>
+                                                       />
+                                                       <div className="flex gap-1 items-center">
+                                                            <p className="font-bold">
+                                                                 Xin Chào
+                                                            </p>
+                                                            <p>
+                                                                 {
+                                                                      (
+                                                                           userLogin as ICustomer
+                                                                      )
+                                                                           .parentsName
+                                                                 }
+                                                            </p>
+                                                            <CaretDownOutlined />
+                                                       </div>
+                                                  </div>
+                                             </Dropdown>
                                         </>
                                    )}
                               </div>

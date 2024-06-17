@@ -17,7 +17,7 @@ export interface IUser {
 
     avatar?: string;
 
-    wardId?: number;
+    wardId?: string;
 
     districtId?: string;
 

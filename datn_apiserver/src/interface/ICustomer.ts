@@ -1,4 +1,5 @@
 export interface ICustomer {
+    id: number;
     customerName: string;
 
     customerDoB: Date;

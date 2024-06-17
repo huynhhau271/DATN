@@ -5,7 +5,6 @@ import type { MenuProps } from "antd";
 import { PiListDashesFill } from "react-icons/pi";
 import { TbVaccineBottle } from "react-icons/tb";
 import { FaShieldVirus } from "react-icons/fa6";
-import { LiaUserNurseSolid } from "react-icons/lia";
 type MenuItems = {
      title: string;
      icon?: IconType;
@@ -81,5 +80,4 @@ export const MenuUser: MenuUser[] = [
           href: "/cam-nang",
           title: "Cẩm nang",
      },
-     
 ];

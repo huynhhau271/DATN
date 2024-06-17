@@ -5,7 +5,9 @@ import {
     createCustomer,
     getCustomer,
     getCustomerByEmail,
+    getCustomerById,
     trackingCustomer,
+    updateCustomer,
 } from "../controllers/customer.controller";
 import { veryfyToken } from "../middleware/verifyToken";
 
@@ -26,7 +28,9 @@ class CustomerRouter extends BaseRouter {
         this.router.use(veryfyToken);
         this.router.get("/tracking", catchAsync(trackingCustomer));
         this.router.get("/info", catchAsync(getCustomer));
+        this.router.get("/byId", catchAsync(getCustomerById));
         this.router.get("/getCustomerByEmail", catchAsync(getCustomerByEmail));
+        this.router.put("/", catchAsync(updateCustomer));
     }
 }
 

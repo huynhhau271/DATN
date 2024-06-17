@@ -4,11 +4,14 @@ import { useAuthContext } from "../contexts/authContext";
 import { MenuItems } from "../constants/menuItems";
 import HeaderComponent from "../page/header";
 import { DownOutlined } from "@ant-design/icons";
+import { IUser } from "../models/user.model";
+import { UserRoles } from "../utils/userRole";
 const { Header, Content, Sider } = Layout;
 
 const MainLayout = () => {
      const { userLogin } = useAuthContext();
      if (!userLogin) return <Navigate to="/login" />;
+     console.log({ userLogin });
 
      return (
           <Layout className="fixed top-0 left-0 right-0 bottom-0">
@@ -67,7 +70,15 @@ const MainLayout = () => {
                                         return (
                                              <NavLink
                                                   to={menu.link ?? ""}
-                                                  className="flex justify-start items-center gap-3 "
+                                                  className={`flex justify-start items-center gap-3 ${
+                                                       (userLogin as IUser)
+                                                            .roleName ===
+                                                            UserRoles.STAFF &&
+                                                       menu.id === "QLNV"
+                                                            ? "hidden"
+                                                            : ""
+                                                  } `}
+                                                  key={menu.id}
                                              >
                                                   {menu.icon ? (
                                                        <span>

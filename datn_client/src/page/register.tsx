@@ -6,7 +6,7 @@ import { formatDate } from "../utils/formatDate";
 import moment from "moment";
 import { useGetProvince } from "../hook/useGetProvince";
 import { IDistrict, IWard } from "../models/province.model";
-import { rotations } from "../utils/rotation";
+import { retations } from "../utils/retation";
 import { customerService } from "../services/customerService";
 
 export default function Register() {
@@ -42,17 +42,20 @@ export default function Register() {
           else return Promise.resolve();
      };
 
-     const handleSubmit =  (value: any) => {
-               delete value.rePassword;
-               customerService.create(value).then(() => {
+     const handleSubmit = (value: any) => {
+          delete value.rePassword;
+          customerService
+               .create(value)
+               .then(() => {
                     form.resetFields();
                     navigate("/dang-nhap");
                     toast.success("Đăng Ký Tài Khoản Khách Hàng Thành Công!");
-               }).catch((error) => {
+               })
+               .catch((error) => {
                     if (error.response)
                          toast.error(error.response.data.message);
                     else toast.error("Có lỗi hệ thống vui lòng thử lại");
-               });;
+               });
      };
 
      return (
@@ -386,7 +389,7 @@ export default function Register() {
                                    ]}
                               >
                                    <Select>
-                                        {rotations.map((rotation) => (
+                                        {retations.map((rotation) => (
                                              <Select.Option
                                                   value={rotation.value}
                                              >

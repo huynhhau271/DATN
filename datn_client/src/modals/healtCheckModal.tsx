@@ -2,6 +2,7 @@ import { Button, Modal } from "antd";
 import { useState } from "react";
 import HealtCheckForm from "../forms/healtCheckForm";
 import { formatDate } from "../utils/formatDate";
+import { FaUserDoctor } from "react-icons/fa6";
 
 interface Props {
      idBooking: number;
@@ -32,9 +33,9 @@ const HealtCheckModal = ({
                <Button
                     type="primary"
                     onClick={showModal}
-                    className="!bg-yellow-500 flex items-center"
+                    className={`flex items-center justify-center !bg-yellow-500`}
                >
-                    Kiểm Tra Sức Khỏe Trước Tiêm
+                    <FaUserDoctor />
                </Button>
                <Modal
                     title="Kiểm Tra Sức Khỏe Trước Tiêm"

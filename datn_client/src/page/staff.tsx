@@ -159,12 +159,11 @@ const UserManagerPage = () => {
                fixed: "right",
                width: 200,
                render: (_, record) => (
-                    
-                         <div>
-                             <Image src={record.avatar}/>    
-                         </div>)
-                        
-               },
+                    <div>
+                         <Image src={record.avatar} />
+                    </div>
+               ),
+          },
           {
                title: "Tính năng",
                key: "operation",
@@ -240,11 +239,11 @@ const UserManagerPage = () => {
                               pagination={false}
                          />
                          <Pagination
-                              className="!mr-5 !mt-10"
+                              className="!mr-5 !mt-10 !mb-5"
                               showSizeChanger
                               defaultCurrent={page}
                               pageSize={limit}
-                              total={staffs.totalPage}
+                              total={staffs.total}
                               onChange={(current, pageSize) => {
                                    setPage(current);
                                    setLimit(pageSize);
