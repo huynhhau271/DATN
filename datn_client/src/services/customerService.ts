@@ -1,7 +1,5 @@
-import { toast } from "react-toastify";
 import { ICustomer } from "../models/ICustomer";
 import baseRequest from "./baseRequest";
-import { AxiosError } from "axios";
 
 class CustomerService {
      private BasseUrl = import.meta.env.FE_BASE_API_URL;

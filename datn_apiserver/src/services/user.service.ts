@@ -22,7 +22,7 @@ interface Staff {
     staffs: IUser[];
     limit: number;
     page: number;
-    totalPage: number;
+    total: number;
 }
 class userService {
     async saveStaff(user: User, payload: UserPayLoad) {
@@ -154,44 +154,46 @@ class userService {
             };
         query["limit"] = limit;
         query["offset"] = (page - 1) * limit;
-        const { rows, count } = await userRepository.findAndCountAll({
-            ...query,
-            include: [
-                {
-                    model: authorityRepository,
-                    attributes: ["name"],
-                },
-                {
-                    model: wardRepository,
-                    include: [
-                        {
-                            model: districtsRepository,
-                            include: [
-                                {
-                                    model: provinceRepository,
-                                },
-                            ],
-                        },
-                    ],
-                    attributes: ["id", "districtId"],
-                },
-            ],
-        });
-        let staffs = tranformModel(rows);
-        staffs = staffs.map((staff) => {
+        const [totalStaff, listStaff] = await Promise.all([
+            userRepository.findAll(),
+            userRepository.findAll({
+                ...query,
+                include: [
+                    {
+                        model: authorityRepository,
+                        attributes: ["name"],
+                    },
+                    {
+                        model: wardRepository,
+                        include: [
+                            {
+                                model: districtsRepository,
+                                include: [
+                                    {
+                                        model: provinceRepository,
+                                    },
+                                ],
+                            },
+                        ],
+                        attributes: ["id", "districtId"],
+                    },
+                ],
+            }),
+        ]);
+        const staffs = listStaff.map((staff) => {
             return {
-                ...staff,
-                roleName: staff?.role.name,
-                districtId: staff["ward"]["districtId"],
-                provinceId: staff["ward"]["district"]["provinceId"],
+                ...staff.toJSON(),
+                roleName: staff.toJSON().role.name,
+                districtId: staff.toJSON()["ward"]["districtId"],
+                provinceId: staff.toJSON()["ward"]["district"]["provinceId"],
             };
         });
 
         return {
-            staffs: staffs,
+            staffs,
             limit: limit,
             page: page,
-            totalPage: Math.ceil(count / limit),
+            total: totalStaff.length,
         };
     }
 

@@ -2,7 +2,7 @@ import { IBoosterNoses } from "./boosterNoses.model";
 
 export interface IVaccine {
      id?: number;
-     vaccineName?: string;
+     vaccineName: string;
      quantity?: number;
      price: number;
      description?: string;

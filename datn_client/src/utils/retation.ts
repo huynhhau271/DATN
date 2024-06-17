@@ -1,4 +1,4 @@
-export const rotations = [
+export const retations = [
      {
           lable: "Bố",
           value: "BO",

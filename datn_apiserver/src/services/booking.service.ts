@@ -9,7 +9,6 @@ import mailService from "./mail.service";
 import { mailConfirm } from "../utils/mailTemplate/mailConfirm";
 import { genKeyConfirm } from "../utils/genKeyActive";
 import { StatusBooking } from "../domain/enum/statusBooking";
-import Customer from "../domain/customer.entity";
 import moment from "moment";
 import { tranformModel } from "./helper/tranformModelToObject";
 import { mailNotification } from "../utils/mailTemplate/mailNotification";
@@ -19,7 +18,7 @@ interface Bookings {
     bookings: IBooking[];
     limit: number;
     page: number;
-    totalPage: number;
+    total: number;
 }
 class BookingService {
     async booking(bookingPayload: BookingPayload[]) {
@@ -113,26 +112,32 @@ class BookingService {
         page: number,
         search?: string
     ): Promise<Bookings> {
-        const { rows, count } = await bookingRepository.findAndCountAll({
-            limit: limit,
-            offset: (page - 1) * limit,
-            include: [
-                {
-                    model: vaccineRepository,
-                },
-                {
-                    model: customerRepository,
-                },
-            ],
-            order: [["createdDate", "DESC"]],
-        });
-
-        let bookings = tranformModel(rows);
+        const [totalBookings, listBooking] = await Promise.all([
+            bookingRepository.findAll(),
+            bookingRepository.findAll({
+                limit: limit,
+                offset: (page - 1) * limit,
+                include: [
+                    {
+                        model: vaccineRepository,
+                    },
+                    {
+                        model: customerRepository,
+                    },
+                    {
+                        model: userRepository,
+                        as: "nurseStaff",
+                    },
+                ],
+                order: [["createdDate", "DESC"]],
+            }),
+        ]);
+        const bookings = tranformModel(listBooking);
         return {
             bookings,
             limit: limit,
             page: page,
-            totalPage: Math.ceil(count / limit),
+            total: totalBookings.length,
         };
     }
     async notification() {

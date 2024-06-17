@@ -13,6 +13,7 @@ import { User } from "../utils/user";
 import { getCustomer } from "../controllers/customer.controller";
 import districtsRepository from "../repositories/districtsRepository";
 import provinceRepository from "../repositories/provinceRepository";
+import boosterNoseRepository from "../repositories/boosterNoseRepository";
 
 class CustomerService {
     async create(customer: ICustomer) {
@@ -80,6 +81,7 @@ class CustomerService {
                     include: [
                         {
                             model: vaccineRepository,
+                            include: [boosterNoseRepository],
                         },
                     ],
                 },

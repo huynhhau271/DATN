@@ -6,7 +6,7 @@ export interface Bookings {
      bookings: Booking[];
      limit: number;
      page: number;
-     totalPage: number;
+     total: number;
 }
 
 export const useGetAllBooking = (
@@ -44,5 +44,3 @@ export const useGetAllBooking = (
 export type StaffHook = ReturnType<typeof useGetAllBooking>;
 
 export default useGetAllBooking;
-
-

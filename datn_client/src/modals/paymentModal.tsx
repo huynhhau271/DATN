@@ -3,7 +3,7 @@ import { useState } from "react";
 import { bookingService } from "../services/bookingService";
 import { toast } from "react-toastify";
 import { IVaccine } from "../models/vaccine.model";
-
+import { FaMoneyBill1Wave } from "react-icons/fa6";
 interface Props {
      bookingId: number;
      refetch: () => void;
@@ -38,9 +38,9 @@ const PaymentModal = ({ bookingId, refetch, vaccine }: Props) => {
                <Button
                     type="primary"
                     onClick={showModal}
-                    className={`flex items-center justify-center gap-4 `}
+                    className={`flex items-center justify-center `}
                >
-                    Thanh Toán
+                    <FaMoneyBill1Wave />
                </Button>
                <Modal
                     title={"Xác Nhận Thanh Toán"}

@@ -33,8 +33,7 @@ const HealtCheckModal = ({
                <Button
                     type="primary"
                     onClick={showModal}
-                    block
-                    className={`flex  items-center justify-center gap-4  flex-1 !bg-yellow-500`}
+                    className={`flex items-center justify-center !bg-yellow-500`}
                >
                     <FaUserDoctor />
                </Button>

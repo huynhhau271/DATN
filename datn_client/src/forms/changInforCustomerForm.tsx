@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { IDistrict, IProvince, IWard } from "../models/province.model";
 import moment from "moment";
 import { formatDate } from "../utils/formatDate";
-import { rotations } from "../utils/rotation";
+import { retations } from "../utils/retation";
 import useGetCustomerById from "../hook/getCustomerById";
 import { ICustomer } from "../models/ICustomer";
 import { customerService } from "../services/customerService";
@@ -15,7 +15,7 @@ import { on } from "events";
 interface IProps {
      idCus: number;
      isBooking?: boolean;
-     setOpen: any;
+     setOpen?: any;
 }
 
 function ChangecustomerForm({ idCus, setOpen, isBooking = false }: IProps) {
@@ -371,7 +371,7 @@ function ChangecustomerForm({ idCus, setOpen, isBooking = false }: IProps) {
                                         ]}
                                    >
                                         <Select disabled={isBooking}>
-                                             {rotations.map((rotation) => (
+                                             {retations.map((rotation) => (
                                                   <Select.Option
                                                        value={rotation.value}
                                                   >

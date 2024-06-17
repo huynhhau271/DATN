@@ -15,7 +15,7 @@ const UserLayout = () => {
                               <FooterUser />
                          </div>
                     </div>
-                    <div className="flex justify-center items-center gap-2 absolute z-50 right-12 bg-yellow-300 bottom-24 p-2 rounded-2xl">
+                    <div className="flex justify-center items-center gap-2 fixed z-50 right-12 bg-yellow-300 bottom-24 p-2 rounded-2xl">
                          <div className="bg-[#E3EBFD] rounded-full h-9 w-9 flex items-center justify-center">
                               <MdPhoneInTalk size={20} color="#102A83" />
                          </div>

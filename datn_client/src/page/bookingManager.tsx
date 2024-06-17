@@ -14,10 +14,11 @@ import HealtCheckModal from "../modals/healtCheckModal";
 import InjectModal from "../modals/injectModal";
 import ChangeCustomerInfoModal from "../modals/changeCustomerInfoModal";
 import PDFPreview from "./previewBookingPDF";
+import { FaFileInvoiceDollar } from "react-icons/fa6";
 const BookingManagerPage = () => {
      const { Search } = Input;
      const [page, setPage] = useState(1);
-     const [limit, setLimit] = useState(10);
+     const [limit, setLimit] = useState(5);
      const [search, setSearch] = useState("");
      const [infoPreview, setInfoPreview] = useState<Booking | null>(null);
      const [isOpenPDFPreview, setIsOpenPDFPreview] = useState(false);
@@ -40,7 +41,7 @@ const BookingManagerPage = () => {
                key: "fullName",
                fixed: "left",
                render: (_, record) => {
-                    return record.customer&&record.customer.parentsName
+                    return record.customer && record.customer.parentsName
                          ? record.customer.parentsName
                          : "N/A";
                },
@@ -151,7 +152,7 @@ const BookingManagerPage = () => {
                title: "Trạng Thái",
                dataIndex: "activated",
                key: "activated",
-               width: 170,
+               width: 160,
                fixed: "right",
                filters: statusBooking.map((status) => {
                     return {
@@ -174,7 +175,7 @@ const BookingManagerPage = () => {
                render: (_, record) => {
                     if (record.statused === StatusBooking.NOTIFICATION_SENT)
                          return (
-                              <div className="flex gap-1 ">
+                              <div className="flex gap-1 flex-wrap  ">
                                    <HealtCheckModal
                                         refetch={refetch}
                                         idBooking={record.id}
@@ -193,7 +194,7 @@ const BookingManagerPage = () => {
                          !record.paymentSatus
                     )
                          return (
-                              <div className="flex gap-1 ">
+                              <div className="flex gap-1 flex-wrap ">
                                    <PaymentModal
                                         bookingId={record.id}
                                         refetch={refetch}
@@ -203,6 +204,19 @@ const BookingManagerPage = () => {
                                         idCus={record.customerId}
                                         refetch={refetch}
                                    />
+                                   <Button
+                                        type="primary"
+                                        block
+                                        className={`flex mt-1 items-center justify-center gap-4 !mr-5 flex-1 !bg-[#219C90]`}
+                                        onClick={() => {
+                                             setIsOpenPDFPreview(true);
+                                             setInfoPreview(record);
+                                        }}
+                                   >
+                                        <span className="">
+                                             <FaFileInvoiceDollar />
+                                        </span>
+                                   </Button>
                               </div>
                          );
                     if (
@@ -210,7 +224,7 @@ const BookingManagerPage = () => {
                          record.paymentSatus
                     )
                          return (
-                              <div className="flex gap-1 ">
+                              <div className="flex gap-1 flex-wrap ">
                                    <InjectModal
                                         bookingId={record.id}
                                         refetch={refetch}
@@ -219,25 +233,49 @@ const BookingManagerPage = () => {
                                         idCus={record.customerId}
                                         refetch={refetch}
                                    />
+                                   <Button
+                                        type="primary"
+                                        block
+                                        className={`flex mt-1 items-center justify-center gap-4 !mr-5 flex-1 !bg-[#219C90]`}
+                                        onClick={() => {
+                                             setIsOpenPDFPreview(true);
+                                             setInfoPreview(record);
+                                        }}
+                                   >
+                                        <span className="">
+                                             <FaFileInvoiceDollar />
+                                        </span>
+                                   </Button>
+                              </div>
+                         );
+                    if (record.statused === StatusBooking.INJECTED)
+                         return (
+                              <div className="flex gap-1 flex-wrap ">
+                                   <ChangeCustomerInfoModal
+                                        idCus={record.customerId}
+                                        refetch={refetch}
+                                   />
+                                   <Button
+                                        type="primary"
+                                        block
+                                        className={`flex mt-1 items-center justify-center gap-4 !mr-5 flex-1 !bg-[#219C90]`}
+                                        onClick={() => {
+                                             setIsOpenPDFPreview(true);
+                                             setInfoPreview(record);
+                                        }}
+                                   >
+                                        <span className="">
+                                             <FaFileInvoiceDollar />
+                                        </span>
+                                   </Button>
                               </div>
                          );
                     return (
-                         <div className="">
+                         <div className="flex gap-1 flex-wrap ">
                               <ChangeCustomerInfoModal
                                    idCus={record.customerId}
                                    refetch={refetch}
                               />
-                              <Button
-                                   type="dashed"
-                                   block
-                                   className={`flex mt-1 items-center justify-center gap-4 !mr-5 flex-1`}
-                                   onClick={() => {
-                                        setIsOpenPDFPreview(true);
-                                        setInfoPreview(record);
-                                   }}
-                              >
-                                   <span className="">PDF</span>
-                              </Button>
                          </div>
                     );
                },
@@ -270,9 +308,10 @@ const BookingManagerPage = () => {
                          <Pagination
                               className="!mr-5 !mt-10"
                               showSizeChanger
-                              defaultCurrent={page}
+                              defaultCurrent={1}
+                              pageSizeOptions={[5, 10, 15, 20, 50, 100]}
                               pageSize={limit}
-                              total={bookings.totalPage + 1}
+                              total={bookings.total}
                               onChange={(current, pageSize) => {
                                    setPage(current);
                                    setLimit(pageSize);
@@ -298,4 +337,3 @@ const BookingManagerPage = () => {
      );
 };
 export default BookingManagerPage;
-
