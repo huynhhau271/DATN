@@ -14,6 +14,9 @@ import { tranformModel } from "./helper/tranformModelToObject";
 import { mailNotification } from "../utils/mailTemplate/mailNotification";
 import { User } from "../utils/user";
 import userRepository from "../repositories/userRepository";
+import wardRepository from "../repositories/wardRepository";
+import districtsRepository from "../repositories/districtsRepository";
+import provinceRepository from "../repositories/provinceRepository";
 interface Bookings {
     bookings: IBooking[];
     limit: number;
@@ -123,6 +126,17 @@ class BookingService {
                     },
                     {
                         model: customerRepository,
+                        include: [
+                            {
+                                model: wardRepository,
+                                include: [
+                                    {
+                                        model: districtsRepository,
+                                        include: [provinceRepository],
+                                    },
+                                ],
+                            },
+                        ],
                     },
                     {
                         model: userRepository,
