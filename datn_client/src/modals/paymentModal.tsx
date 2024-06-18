@@ -59,7 +59,7 @@ const PaymentModal = ({ bookingId, refetch, vaccine }: Props) => {
                          <p>
                               {vaccine.price.toLocaleString("vi-VN", {
                                    currency: "VND",
-                              })}{" "}
+                              })}
                               VNĐ
                          </p>
                     </span>

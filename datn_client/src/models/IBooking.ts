@@ -42,4 +42,5 @@ export interface Booking {
      customer: ICustomer;
      paymentSatus: boolean;
      nurseStaff: IUser;
+     note: string;
 }
