@@ -3,7 +3,7 @@ export interface IWard {
      name: string;
      type: string;
      districtId: string;
-     districts: IDistrict[];
+     district: IDistrict;
 }
 
 export interface IDistrict {
@@ -12,6 +12,7 @@ export interface IDistrict {
      type: string;
      provinceId: string;
      wards?: IWard[];
+     province: IProvince;
 }
 export interface IProvince {
      id: string;

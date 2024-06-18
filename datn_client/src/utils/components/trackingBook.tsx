@@ -9,14 +9,18 @@ import {
      Image,
 } from "@react-pdf/renderer";
 import { Table, TR, TH, TD } from "@ag-media/react-pdf-table";
+import robotoRegular from "/fonts/Roboto-Regular.ttf";
+import robotoBold from "/fonts/Roboto-Bold.ttf";
 import { ICustomer } from "../../models/ICustomer";
 import { formatDate } from "../formatDate";
 import { useMemo } from "react";
 // Register Font
 Font.register({
      family: "Roboto",
-     format: "truetype",
-     src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-light-webfont.ttf",
+     fonts: [
+          { src: robotoRegular, fontWeight: "normal" },
+          { src: robotoBold, fontWeight: "bold" },
+     ],
 });
 // Create styles
 const styles = StyleSheet.create({

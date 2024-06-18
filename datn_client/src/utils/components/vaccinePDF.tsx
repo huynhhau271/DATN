@@ -4,13 +4,18 @@ import {
      View,
      Document,
      StyleSheet,
+     Image,
      Font,
 } from "@react-pdf/renderer";
 import robotoRegular from "/fonts/Roboto-Regular.ttf";
 import robotoBold from "/fonts/Roboto-Bold.ttf";
-import { retations } from "../retation";
-import { formatDate } from "../formatDate";
+import { Table, TR, TH, TD } from "@ag-media/react-pdf-table";
 
+import { formatDate } from "../formatDate";
+import logo from "../../assets/logo.png";
+import signature from "../../assets/chu-ky.png";
+import { Booking } from "../../models/IBooking";
+import { convertNumberToWords } from "../converNumberToText";
 Font.register({
      family: "Roboto",
      fonts: [
@@ -30,14 +35,16 @@ const styles = StyleSheet.create({
      },
      title: {
           fontFamily: "Roboto",
-          fontSize: 30,
+          fontSize: 25,
           fontWeight: "bold",
-          marginBottom: 10,
+          marginBottom: 5,
+          marginTop: 5,
           textAlign: "center",
-          color: "#4B70F5", // Light red color
+          color: "#000", // Light red color
      },
      section: {
           marginBottom: 10,
+          marginTop: 10,
      },
      table: {
           // display: 'table',
@@ -77,11 +84,11 @@ const styles = StyleSheet.create({
           fontSize: 18,
           fontWeight: "bold",
           marginBottom: 10,
-          color: "#4B70F5", // Light red color
+          color: "#000", // Light red color
      },
 });
 
-const VaccinePDF = ({ data }: { data: any }) => {
+const VaccinePDF = ({ data }: { data: Booking }) => {
      console.log({ data });
      if (!data) {
           console.log(3333);
@@ -98,172 +105,248 @@ const VaccinePDF = ({ data }: { data: any }) => {
      return (
           <Document>
                <Page size="A4" style={styles.page}>
-                    <Text style={styles.title}>Hóa Đơn Tiêm Chủng </Text>
-
+                    <View
+                         style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignItems: "center",
+                              borderBottom: "#000",
+                              borderBottomWidth: 1,
+                         }}
+                    >
+                         <Image
+                              src={logo}
+                              style={{
+                                   width: 100,
+                              }}
+                         />
+                         <View
+                              style={{
+                                   marginLeft: 10,
+                              }}
+                         >
+                              <Text
+                                   style={{
+                                        fontWeight: "bold",
+                                        fontSize: "18",
+                                   }}
+                              >
+                                   PHÒNG TIÊM CHỦNG VẮC-XIN HUYỆN ĐẠI LỘC
+                              </Text>
+                              <View
+                                   style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        fontSize: 16,
+                                   }}
+                              >
+                                   <Text
+                                        style={{
+                                             fontWeight: "bold",
+                                        }}
+                                   >
+                                        Địa chỉ:
+                                   </Text>
+                                   <Text>
+                                        18 Phạm Văn Đồng - TT. Ái Nghĩa - Đại
+                                        Lộc - Quảng Nam
+                                   </Text>
+                              </View>
+                              <View
+                                   style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        fontSize: 16,
+                                   }}
+                              >
+                                   <Text
+                                        style={{
+                                             fontWeight: "bold",
+                                        }}
+                                   >
+                                        Số điện thoại:{" "}
+                                   </Text>
+                                   <Text>0905.470.207</Text>
+                              </View>
+                         </View>
+                    </View>
+                    <Text style={styles.title}>HÓA ĐƠN THANH TOÁN </Text>
+                    <Text
+                         style={{
+                              textAlign: "center",
+                              fontSize: "12",
+                         }}
+                    >
+                         (Ngày
+                         {formatDate(new Date()).split("-")[0]} Tháng{" "}
+                         {formatDate(new Date()).split("-")[1]} Năm{" "}
+                         {formatDate(new Date()).split("-")[2]})
+                    </Text>
                     <View style={styles.section}>
                          <Text style={styles.header}>Thông Tin Khách Hàng</Text>
+                         <Text>
+                              Họ và tên khách hàng: {data.customer.parentsName}
+                         </Text>
+                         <Text>
+                              Địa chỉ:{" "}
+                              {`${data.customer.address} - ${data.customer.ward.name} - ${data.customer.ward.district.name} -  ${data.customer.ward.district.province.name}  `}
+                         </Text>
+
                          <View
                               style={{
-                                   display: "flex",
                                    flexDirection: "row",
-                                   justifyContent: "space-between",
-                              }}
-                         >
-                              <Text>
-                                   Họ và tên trẻ: {data.customer.customerName}
-                              </Text>
-                              <Text>
-                                   Ngày sinh:{" "}
-                                   {new Date(
-                                        data.customer.customerDoB
-                                   ).toLocaleDateString()}
-                              </Text>
-                              <Text>
-                                   Giới tính:{" "}
-                                   {data.customer.gender ? "Nam" : "Nữ"}
-                              </Text>
-                         </View>
-                         <Text>Mã định danh: {data.customer.CCCD}</Text>
-                         <View
-                              style={{
-                                   display: "flex",
-                                   flexDirection: "row",
-                                   justifyContent: "space-between",
-                              }}
-                         >
-                              <Text>
-                                   Họ và tên ba (mẹ):{" "}
-                                   {data.customer.parentsName}
-                              </Text>
-                              <Text>
-                                   Mối quan hệ:{" "}
-                                   {
-                                        retations.find(
-                                             (re) =>
-                                                  re.value ===
-                                                  data.customer.relation
-                                        )?.lable
-                                   }
-                              </Text>
-                         </View>
-                         <View
-                              style={{
-                                   display: "flex",
-                                   flexDirection: "row",
-                                   justifyContent: "space-between",
+                                   gap: 40,
                               }}
                          >
                               <Text>Số điện thoại: {data.customer.phone}</Text>
                               <Text>Email: {data.customer.email}</Text>
                          </View>
-                         <Text>Địa chỉ: {data.customer.address}</Text>
                     </View>
-
-                    <View style={styles.section}>
-                         <Text style={styles.header}>Thông Tin Vắc Xin</Text>
-                         <Text>Tên vắc xin: {data.vaccine.vaccineName}</Text>
-                         <Text>Giá: {data.vaccine.price} VND</Text>
-                         <Text>Nguồn gốc: {data.vaccine.source}</Text>
-                         <Text>Đường tiêm: {data.vaccine.injectionRoute}</Text>
-                         <Text>Cảnh báo: {data.vaccine.warning}</Text>
-                         <Text>
-                              Tác dụng phụ: {data.vaccine.unwantedEffects}
+                    <Table>
+                         <TH>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        justifyContent: "center",
+                                   }}
+                              >
+                                   Loại vắc xin
+                              </TD>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        justifyContent: "center",
+                                   }}
+                              >
+                                   Đơn vị tính
+                              </TD>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        justifyContent: "center",
+                                   }}
+                              >
+                                   Số lượng
+                              </TD>
+                              <TD>Đơn giá</TD>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        justifyContent: "center",
+                                   }}
+                              >
+                                   Thành tiền
+                              </TD>
+                         </TH>
+                         <TR>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        justifyContent: "flex-end",
+                                   }}
+                              >
+                                   {data.vaccine.vaccineName}
+                              </TD>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        justifyContent: "center",
+                                   }}
+                              >
+                                   lọ
+                              </TD>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        justifyContent: "center",
+                                   }}
+                              >
+                                   1
+                              </TD>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        justifyContent: "flex-end",
+                                   }}
+                              >
+                                   {data.vaccine.price.toLocaleString("vi-VN", {
+                                        currency: "VND",
+                                   })}
+                              </TD>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        justifyContent: "flex-end",
+                                   }}
+                              >
+                                   {data.vaccine.price.toLocaleString("vi-VN", {
+                                        currency: "VND",
+                                   })}
+                              </TD>
+                         </TR>
+                         <TR style={{ height: 40 }}>
+                              <TD></TD>
+                              <TD></TD>
+                              <TD></TD>
+                              <TD></TD>
+                              <TD></TD>
+                         </TR>
+                         <TR style={{ height: 40 }}>
+                              <TD></TD>
+                              <TD></TD>
+                              <TD></TD>
+                              <TD></TD>
+                              <TD></TD>
+                         </TR>
+                         <TR style={{}}>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        height: 40,
+                                   }}
+                              >
+                                   Tổng tiền
+                              </TD>
+                              <TD></TD>
+                              <TD></TD>
+                              <TD></TD>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        justifyContent: "flex-end",
+                                   }}
+                              >
+                                   {data.vaccine.price.toLocaleString("vi-VN", {
+                                        currency: "VND",
+                                   })}
+                              </TD>
+                         </TR>
+                    </Table>
+                    <View style={{ flexDirection: "row", marginTop: 5 }}>
+                         <Text style={{ fontWeight: "bold" }}>
+                              Số tiền bằng chữ:{" "}
                          </Text>
+                         <Text>{convertNumberToWords(data.vaccine.price)}</Text>
                     </View>
-
-                    <View style={styles.section}>
-                         <Text style={styles.header}>Chi Tiết Hóa Đơn</Text>
-                         <View style={styles.table}>
-                              <View style={styles.tableRow}>
-                                   <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>
-                                             Mục
-                                        </Text>
-                                   </View>
-                                   <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>
-                                             Chi Tiết
-                                        </Text>
-                                   </View>
-                                   <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>
-                                             Số Lượng
-                                        </Text>
-                                   </View>
-                                   <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>
-                                             Giá
-                                        </Text>
-                                   </View>
-                              </View>
-                              <View style={styles.tableRow}>
-                                   <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>
-                                             Vắc Xin
-                                        </Text>
-                                   </View>
-                                   <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>
-                                             {data.vaccine.vaccineName}
-                                        </Text>
-                                   </View>
-                                   <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>1</Text>
-                                   </View>
-                                   <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>
-                                             {data.vaccine.price} VND
-                                        </Text>
-                                   </View>
-                              </View>
-                              <View style={styles.tableRow}>
-                                   <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>
-                                             Tổng
-                                        </Text>
-                                   </View>
-                                   <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}></Text>
-                                   </View>
-                                   <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}></Text>
-                                   </View>
-                                   <View style={styles.tableCol}>
-                                        <Text style={styles.tableCell}>
-                                             {data.vaccine.price} VND
-                                        </Text>
-                                   </View>
-                              </View>
-                         </View>
-                    </View>
-
                     <View
                          style={{
                               display: "flex",
                               flexDirection: "row",
-                              justifyContent: "space-between",
+                              justifyContent: "flex-end",
                          }}
                     >
-                         <View style={styles.section}>
-                              <Text style={styles.header}>Ghi Chú</Text>
-                              <Text>
-                                   {data.note
-                                        ? data.note
-                                        : "Đủ điểu kiện tiêm chủng"}
-                              </Text>
-                         </View>
                          <View
                               style={{
-                                   marginTop: 80,
+                                   marginTop: 50,
+                                   flexDirection: "column",
+                                   alignItems: "center",
                               }}
                          >
                               <Text>
-                                   Đại Lộc, Ngày{" "}
-                                   {formatDate(data.expectedDate).split("-")[0]}{" "}
-                                   Tháng{" "}
-                                   {formatDate(data.expectedDate).split("-")[1]}{" "}
-                                   Năm{" "}
-                                   {formatDate(data.expectedDate).split("-")[2]}
+                                   Đại Lộc , Ngày{" "}
+                                   {formatDate(new Date()).split("-")[0]} Tháng{" "}
+                                   {formatDate(new Date()).split("-")[1]} Năm{" "}
+                                   {formatDate(new Date()).split("-")[2]}
                               </Text>
                               <View
                                    style={{
@@ -271,7 +354,13 @@ const VaccinePDF = ({ data }: { data: any }) => {
                                         marginTop: 10,
                                    }}
                               >
-                                   <Text>Người Tiếp Nhận</Text>
+                                   <Text
+                                        style={{
+                                             fontWeight: "bold",
+                                        }}
+                                   >
+                                        Người Bán Hàng
+                                   </Text>
                                    <Text
                                         style={{
                                              fontSize: "12",
@@ -279,16 +368,23 @@ const VaccinePDF = ({ data }: { data: any }) => {
                                    >
                                         (Ký ghi rõ họ tên)
                                    </Text>
-
-                                   <Text
-                                        style={{
-                                             marginTop: 50,
-                                        }}
-                                   >
-                                        {data.nurseStaff
-                                             ? data.nurseStaff.fullName
-                                             : "Chưa Tiêm"}
-                                   </Text>
+                                   {data.nurseStaff && (
+                                        <>
+                                             <Image
+                                                  src={signature}
+                                                  style={{
+                                                       width: 160,
+                                                  }}
+                                             />
+                                             <Text
+                                                  style={{
+                                                       fontWeight: "bold",
+                                                  }}
+                                             >
+                                                  {data.nurseStaff.fullName}
+                                             </Text>
+                                        </>
+                                   )}
                               </View>
                          </View>
                     </View>

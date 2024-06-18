@@ -24,4 +24,5 @@ export interface ICustomer {
      address: string;
      bookings: Booking[];
      CCCD: string;
+     relation: string;
 }
