@@ -287,7 +287,9 @@ const BookingManagerPage = () => {
           <>
                <div className="relative flex flex-col h-full mt-4 ml-1">
                     <div className="flex items-end justify-between">
-                         <h1 className="text-5xl  ml-4">Danh Sách Đăng Ký</h1>
+                         <h1 className="text-5xl  ml-4">
+                              Danh Sách Tiêm Chủng
+                         </h1>
                     </div>
                     <div className="flex flex-col items-end w-full">
                          <Search

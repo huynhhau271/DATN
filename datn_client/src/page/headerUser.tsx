@@ -116,7 +116,7 @@ function HeaderUserComponent() {
                                              >
                                                   <div className="flex justify-center items-center text-[#102A83]  gap-2 hover:text-red-500 text-lg">
                                                        <Avatar
-                                                            src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg"
+                                                            src="https://firebasestorage.googleapis.com/v0/b/datn-44ee0.appspot.com/o/user_icon_img.png?alt=media&token=33f924fd-3bcf-4635-8eba-a612f4d86f16"
                                                             size="large"
                                                             icon={
                                                                  <UserOutlined />

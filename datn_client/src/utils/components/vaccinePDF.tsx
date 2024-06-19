@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
      },
      title: {
           fontFamily: "Roboto",
-          fontSize: 25,
+          fontSize: 20,
           fontWeight: "bold",
           marginBottom: 5,
           marginTop: 5,
@@ -154,19 +154,42 @@ const VaccinePDF = ({ data }: { data: Booking }) => {
                               </View>
                               <View
                                    style={{
-                                        display: "flex",
                                         flexDirection: "row",
-                                        fontSize: 16,
+                                        justifyContent: "space-between",
                                    }}
                               >
-                                   <Text
+                                   <View
                                         style={{
-                                             fontWeight: "bold",
+                                             display: "flex",
+                                             flexDirection: "row",
+                                             fontSize: 16,
                                         }}
                                    >
-                                        Số điện thoại:{" "}
-                                   </Text>
-                                   <Text>0905.470.207</Text>
+                                        <Text
+                                             style={{
+                                                  fontWeight: "bold",
+                                             }}
+                                        >
+                                             Số điện thoại:{" "}
+                                        </Text>
+                                        <Text>0905.470.207</Text>
+                                   </View>
+                                   <View
+                                        style={{
+                                             display: "flex",
+                                             flexDirection: "row",
+                                             fontSize: 16,
+                                        }}
+                                   >
+                                        <Text
+                                             style={{
+                                                  fontWeight: "bold",
+                                             }}
+                                        >
+                                             Mã số thuế:{" "}
+                                        </Text>
+                                        <Text>8341024573-001</Text>
+                                   </View>
                               </View>
                          </View>
                     </View>
@@ -177,8 +200,7 @@ const VaccinePDF = ({ data }: { data: Booking }) => {
                               fontSize: "12",
                          }}
                     >
-                         (Ngày
-                         {formatDate(new Date()).split("-")[0]} Tháng{" "}
+                         (Ngày {formatDate(new Date()).split("-")[0]} Tháng{" "}
                          {formatDate(new Date()).split("-")[1]} Năm{" "}
                          {formatDate(new Date()).split("-")[2]})
                     </Text>
@@ -228,7 +250,14 @@ const VaccinePDF = ({ data }: { data: Booking }) => {
                               >
                                    Số lượng
                               </TD>
-                              <TD>Đơn giá</TD>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        justifyContent: "center",
+                                   }}
+                              >
+                                   Đơn giá
+                              </TD>
                               <TD
                                    style={{
                                         flexDirection: "row",
@@ -284,19 +313,49 @@ const VaccinePDF = ({ data }: { data: Booking }) => {
                                    })}
                               </TD>
                          </TR>
-                         <TR style={{ height: 40 }}>
+                         <TR style={{ height: 30 }}>
                               <TD></TD>
                               <TD></TD>
                               <TD></TD>
                               <TD></TD>
                               <TD></TD>
                          </TR>
-                         <TR style={{ height: 40 }}>
+                         <TR style={{ height: 30 }}>
                               <TD></TD>
                               <TD></TD>
                               <TD></TD>
                               <TD></TD>
                               <TD></TD>
+                         </TR>
+                         <TR>
+                              <TD>Cộng tiền hàng</TD>
+                              <TD></TD>
+                              <TD></TD>
+                              <TD></TD>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        justifyContent: "flex-end",
+                                   }}
+                              >
+                                   {data.vaccine.price.toLocaleString("vi-VN", {
+                                        currency: "VND",
+                                   })}
+                              </TD>
+                         </TR>
+                         <TR>
+                              <TD>Tiền thuế GTGT (VAT)</TD>
+                              <TD></TD>
+                              <TD></TD>
+                              <TD></TD>
+                              <TD
+                                   style={{
+                                        flexDirection: "row",
+                                        justifyContent: "flex-end",
+                                   }}
+                              >
+                                   0
+                              </TD>
                          </TR>
                          <TR style={{}}>
                               <TD
@@ -332,12 +391,54 @@ const VaccinePDF = ({ data }: { data: Booking }) => {
                          style={{
                               display: "flex",
                               flexDirection: "row",
-                              justifyContent: "flex-end",
+                              justifyContent: "space-between",
+                              marginLeft: 40,
                          }}
                     >
                          <View
                               style={{
-                                   marginTop: 50,
+                                   marginTop: 25,
+                                   flexDirection: "column",
+                                   alignItems: "center",
+                              }}
+                         >
+                              <View
+                                   style={{
+                                        alignItems: "center",
+                                        marginTop: 10,
+                                   }}
+                              >
+                                   <Text
+                                        style={{
+                                             fontWeight: "bold",
+                                        }}
+                                   >
+                                        Người Mua Hàng
+                                   </Text>
+                                   <Text
+                                        style={{
+                                             fontSize: "12",
+                                        }}
+                                   >
+                                        (Ký ghi rõ họ tên)
+                                   </Text>
+                                   {data.customer && (
+                                        <>
+                                             <Text
+                                                  style={{
+                                                       fontWeight: "bold",
+                                                       marginTop: 91,
+                                                  }}
+                                             >
+                                                  {data.customer.parentsName}
+                                             </Text>
+                                        </>
+                                   )}
+                              </View>
+                         </View>
+                         <View
+                              style={{
+                                   marginTop: 5,
                                    flexDirection: "column",
                                    alignItems: "center",
                               }}
