@@ -169,6 +169,7 @@ class CustomerService {
                     id: customer.id,
                 },
             });
+        return await customerRepository.findByPk(customer.id);
     }
 }
 export default new CustomerService();

@@ -10,9 +10,7 @@ const UserLayout = () => {
                </div>
                <div className="flex justify-between flex-col h-full ">
                     <div className="h-full flex flex-col items-stretch">
-                         <div>
                               <Outlet />
-                         </div>
                          <div className="w-full mb-5">
                               <FooterUser />
                          </div>

@@ -22,8 +22,9 @@ export const TrackingPage = () => {
                               {tracking ? (
                                    <TrackingBook tracking={tracking} />
                               ) : (
-                                   <Empty
-                                        className="flex justify-center flex-col items-center"
+                                  <div className="h-full">
+                                    <Empty
+                                        className="flex justify-between flex-col items-center"
                                         image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
                                         imageStyle={{
                                              height: 60,
@@ -35,6 +36,7 @@ export const TrackingPage = () => {
                                              </span>
                                         }
                                    ></Empty>
+                                  </div>
                               )}
                          </div>
                     </div>

@@ -8,18 +8,19 @@ import { useAuthContext } from "../contexts/authContext";
 import { ICustomer } from "../models/ICustomer";
 import cookiesService from "../services/cookiesService";
 import {
-     UserOutlined,
      CaretDownOutlined,
      PoweroffOutlined,
      ProfileOutlined,
 } from "@ant-design/icons";
+import { IUser } from "../models/user.model";
 function HeaderUserComponent() {
-     const { userLogin } = useAuthContext();
+     const { userLogin,setUserLogin} = useAuthContext();
      const navigate = useNavigate();
      const handleLogout = () => {
+          setUserLogin(undefined)
           cookiesService.removeCookie("token");
           cookiesService.removeCookie("userAuth");
-          navigate("/login");
+          navigate("/dang-nhap");
      };
      const items: MenuProps["items"] = [
           {
@@ -115,13 +116,10 @@ function HeaderUserComponent() {
                                                   className="mr-4"
                                              >
                                                   <div className="flex justify-center items-center text-[#102A83]  gap-2 hover:text-red-500 text-lg">
-                                                       <Avatar
-                                                            src="https://firebasestorage.googleapis.com/v0/b/datn-44ee0.appspot.com/o/user_icon_img.png?alt=media&token=33f924fd-3bcf-4635-8eba-a612f4d86f16"
-                                                            size="large"
-                                                            icon={
-                                                                 <UserOutlined />
-                                                            }
-                                                       />
+                                                        <Avatar
+                                                       src="https://firebasestorage.googleapis.com/v0/b/datn-44ee0.appspot.com/o/user_icon_img.png?alt=media&token=33f924fd-3bcf-4635-8eba-a612f4d86f16"
+                                                       size="large"
+                                                  />
                                                        <div className="flex gap-1 items-center">
                                                             <p className="font-bold">
                                                                  Xin Chào

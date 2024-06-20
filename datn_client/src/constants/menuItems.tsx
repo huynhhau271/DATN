@@ -63,7 +63,7 @@ export const MenuUser: MenuUser[] = [
      {
           key: "vaccine",
           href: "/vac-xin",
-          title: "Vắc xin cho trẻ em",
+          title: "Tiêm chủng cho trẻ em",
      },
      {
           key: "vaccination",

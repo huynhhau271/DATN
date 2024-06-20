@@ -15,10 +15,12 @@ const Booking: React.FC = () => {
      return (
           <>
                {isLoading || !customer ? (
-                    <Loading />
+                    <div className="h-full">
+                         <Loading />
+                    </div>
                ) : (
                     <div className="py-10 flex items-center flex-col gap-6 mt-10 w-full">
-                         <div className="w-2/4 items-start justify-center flex flex-col">
+                         <div className="w-1/2 mr-10 items-start justify-center flex flex-col ml-52">
                               <div className="text-4xl text-left ml-2 w-full text-[#102A83]">
                                    ĐĂNG KÝ TIÊM CHỦNG
                               </div>

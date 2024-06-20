@@ -10,7 +10,7 @@ import { ICustomer } from "../models/ICustomer";
 import { customerService } from "../services/customerService";
 import { toast } from "react-toastify";
 import { Loading } from "../utils/components/sprin";
-import { on } from "events";
+import { useAuthContext } from "../contexts/authContext";
 
 interface IProps {
      idCus: number;
@@ -20,6 +20,7 @@ interface IProps {
 
 function ChangecustomerForm({ idCus, setOpen, isBooking = false }: IProps) {
      const { customer, isLoading } = useGetCustomerById(idCus);
+     const {setUserLogin} = useAuthContext();
      const { provinces: provinceData } = useGetProvince();
      const [provinces, setProvinces] = useState<IProvince[] | undefined>([]);
      const [provinceId, setProvinceId] = useState<string | undefined>("");
@@ -77,9 +78,13 @@ function ChangecustomerForm({ idCus, setOpen, isBooking = false }: IProps) {
           else return Promise.resolve();
      };
      const handleSubmit = (value: ICustomer) => {
-          customerService.updateCustomer({ ...value, id: idCus }).then(() => {
-               toast.success("success");
-               setOpen(false);
+          customerService.updateCustomer({ ...value, id: idCus }).then((vl) => {
+               toast.success("Cập Nhật Thông Tin Thành Công");
+               !isBooking&& setOpen(false);
+               if(!isBooking)
+                    {
+                         setUserLogin(vl)
+                    }
           });
      };
 
@@ -389,7 +394,7 @@ function ChangecustomerForm({ idCus, setOpen, isBooking = false }: IProps) {
                                                   htmlType="submit"
                                                   className="login-form-button"
                                              >
-                                                  Đăng ký tiêm
+                                                  Cập nhật thông tin
                                              </Button>
                                         </Form.Item>
                                    </div>

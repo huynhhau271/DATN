@@ -335,7 +335,7 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                               />
                          </Form.Item>
                     </div>
-                    <div className="flex justify-center mb-5">
+                    <div className="flex justify-center mt-7">
                          <Uploader
                               setFileName={setFileName}
                               defaultValue={userData?.avatar || undefined}
@@ -343,22 +343,24 @@ const UserForm = ({ setOpen, refetch, userData }: Props) => {
                               uploadedImage={uploadedImage}
                          />
                     </div>
-                    <Form.Item className="flex justify-center">
-                         <Button
-                              type="primary"
-                              htmlType="submit"
-                              className="login-form-button"
-                         >
-                              OK
-                         </Button>
-                         <Button
-                              htmlType="button"
-                              onClick={onReset}
-                              className="ml-3"
-                         >
-                              Reset
-                         </Button>
-                    </Form.Item>
+                    <div className="mt-10">
+                         <Form.Item className="flex justify-center">
+                              <Button
+                                   type="primary"
+                                   htmlType="submit"
+                                   className="login-form-button"
+                              >
+                                   OK
+                              </Button>
+                              <Button
+                                   htmlType="button"
+                                   onClick={onReset}
+                                   className="ml-3"
+                              >
+                                   Reset
+                              </Button>
+                         </Form.Item>
+                    </div>
                </Form>
           </div>
      );
