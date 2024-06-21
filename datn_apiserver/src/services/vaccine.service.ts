@@ -127,7 +127,6 @@ class VaccineService {
             const newVaccine = await vaccineRepository.create(
                 {
                     ...vaccine,
-                    quantity: 0,
                     boosterNoses: vaccine.boosterNoses
                         ? vaccine.boosterNoses.map((bn) => {
                               return {
