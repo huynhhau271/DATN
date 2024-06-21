@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { IUser } from "../models/user.model";
 import { staffService } from "../services/staffService";
 
-export const getUserRoleStaff = () => {
+export const useGetUserRole = (role = "Nhân Viên") => {
      const {
           data: staffs,
           isLoading,
@@ -11,7 +11,7 @@ export const getUserRoleStaff = () => {
           isFetching,
      } = useQuery<IUser[], Error>({
           queryKey: ["getStaff"],
-          queryFn: async () => await staffService.getStaff(),
+          queryFn: async () => await staffService.getStaff(role),
           refetchOnWindowFocus: false,
      });
 

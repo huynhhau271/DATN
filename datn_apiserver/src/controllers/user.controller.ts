@@ -3,6 +3,7 @@ import AuthenticatedRequest from "../types/request";
 import userService from "../services/user.service";
 import httpStatus from "http-status";
 import customerService from "../services/customer.service";
+import { UserRoles } from "../types/userRoles";
 
 export const register = async (req: Request, res: Response) => {
     const user = req.body;
@@ -48,6 +49,7 @@ export const activeUser = async (req: AuthenticatedRequest, res: Response) => {
     return res.status(httpStatus.OK).send("OK");
 };
 export const getStaffs = async (req: AuthenticatedRequest, res: Response) => {
-    const staffs = await userService.getStaff();
+    const role = req.query.role as string;
+    const staffs = await userService.getStaff(role);
     return res.status(httpStatus.OK).send(staffs);
 };

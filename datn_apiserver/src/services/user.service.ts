@@ -219,10 +219,10 @@ class userService {
         );
     }
 
-    async getStaff() {
+    async getStaff(role = "Nhân Viên") {
         const authori = await authorityRepository.findOne({
             where: {
-                name: UserRoles.STAFF,
+                name: role,
             },
         });
 

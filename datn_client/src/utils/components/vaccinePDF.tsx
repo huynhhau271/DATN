@@ -16,6 +16,10 @@ import logo from "../../assets/logo.png";
 import signature from "../../assets/chu-ky.png";
 import { Booking } from "../../models/IBooking";
 import { convertNumberToWords } from "../converNumberToText";
+import { useGetUserRole } from "../../hook/useGetUserRole";
+import { UserRoles } from "../userRole";
+import { useEffect } from "react";
+import { IUser } from "../../models/user.model";
 Font.register({
      family: "Roboto",
      fonts: [
@@ -88,10 +92,8 @@ const styles = StyleSheet.create({
      },
 });
 
-const VaccinePDF = ({ data }: { data: Booking }) => {
-     console.log({ data });
-     if (!data) {
-          console.log(3333);
+const VaccinePDF = ({ data, staff }: { data: Booking; staff: IUser }) => {
+     if (!data || !staff) {
           return (
                <Document>
                     <Page size="A4" style={styles.page}>
@@ -469,7 +471,7 @@ const VaccinePDF = ({ data }: { data: Booking }) => {
                                    >
                                         (Ký ghi rõ họ tên)
                                    </Text>
-                                   {data.nurseStaff && (
+                                   {staff && (
                                         <>
                                              <Image
                                                   src={signature}
@@ -482,7 +484,7 @@ const VaccinePDF = ({ data }: { data: Booking }) => {
                                                        fontWeight: "bold",
                                                   }}
                                              >
-                                                  {data.nurseStaff.fullName}
+                                                  {staff.fullName}
                                              </Text>
                                         </>
                                    )}

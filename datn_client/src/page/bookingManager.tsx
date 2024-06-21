@@ -324,12 +324,8 @@ const BookingManagerPage = () => {
 
                {isOpenPDFPreview && (
                     <>
-                         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
                          <div className="fixed inset-0 flex items-center justify-center z-50">
                               <div className="bg-white p-6 rounded-lg shadow-lg min-h-[600px]">
-                                   <button className="absolute top-4 right-4">
-                                        Close
-                                   </button>
                                    <PDFPreview data={infoPreview} />
                               </div>
                          </div>

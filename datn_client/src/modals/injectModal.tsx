@@ -2,15 +2,15 @@ import { Button, Modal, Select } from "antd";
 import { useState } from "react";
 import { bookingService } from "../services/bookingService";
 import { toast } from "react-toastify";
-import { getUserRoleStaff } from "../hook/getUserRoleStaff";
-
+import { useGetUserRole } from "../hook/useGetUserRole";
+import { BiSolidInjection } from "react-icons/bi";
 interface Props {
      bookingId: number;
      refetch: () => void;
 }
 const InjectModal = ({ bookingId, refetch }: Props) => {
      const [open, setOpen] = useState(false);
-     const { staffs } = getUserRoleStaff();
+     const { staffs } = useGetUserRole("Nhân Viên");
      const [nuffId, setNuffId] = useState();
      const handleOk = () => {
           if (!nuffId) toast.error("Vui Lòng Chọn Nhân Viên Tiêm Chủng");
@@ -43,7 +43,7 @@ const InjectModal = ({ bookingId, refetch }: Props) => {
                     onClick={showModal}
                     className={`flex  items-center justify-center gap-4 !bg-green-500`}
                >
-                    Tiêm Chủng
+                    <BiSolidInjection />
                </Button>
                <Modal
                     title={"Tiêm Chủng"}

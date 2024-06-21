@@ -53,8 +53,10 @@ class StaffService {
           });
           return response.data;
      }
-     async getStaff() {
-          const response = await baseRequest.get(this.BasseUrl + "/staffs");
+     async getStaff(role = "Nhân Viên") {
+          const response = await baseRequest.get(this.BasseUrl + "/staffs", {
+               params: { role },
+          });
           return response.data;
      }
 }
