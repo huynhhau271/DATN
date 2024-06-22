@@ -80,19 +80,45 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
                     autoComplete="off"
                     style={{ maxWidth: 800 }}
                >
-                    <Form.Item
-                         label="Tên Vaccine"
-                         name="vaccineName"
-                         rules={[
-                              {
-                                   required: true,
-                                   message: "Vui Lòng Nhập Tên Vaccine!",
-                              },
-                         ]}
-                         className="flex-1"
-                    >
-                         <Input />
-                    </Form.Item>
+                    <div className="flex justify-between gap-10 items-center">
+                         <Form.Item
+                              label="Tên Vaccine"
+                              name="vaccineName"
+                              rules={[
+                                   {
+                                        required: true,
+                                        message: "Vui Lòng Nhập Tên Vaccine!",
+                                   },
+                              ]}
+                              className="flex-1"
+                         >
+                              <Input />
+                         </Form.Item>
+                         <Form.Item
+                              label="Số lượng"
+                              name="quantity"
+                              required
+                              // defaultValue={0}
+                              rules={[
+                                   {
+                                        validator: (_, value) => {
+                                             if (value < 0)
+                                                  return Promise.reject(
+                                                       "Số lượng không phù hợp"
+                                                  );
+                                             else return Promise.resolve();
+                                        },
+                                   },
+                              ]}
+                              className="flex-1"
+                         >
+                              <InputNumber<number>
+                                   defaultValue={0}
+                                   parser={(value) => (value ? +value : 0)}
+                                   className="!w-full"
+                              />
+                         </Form.Item>
+                    </div>
                     <div className="flex justify-between gap-10 items-center">
                          <Form.Item
                               label="Giá Tiền (Đồng)"
@@ -324,3 +350,4 @@ const VaccineForm = ({ setOpen, refetch, data }: Props) => {
      );
 };
 export default VaccineForm;
+
