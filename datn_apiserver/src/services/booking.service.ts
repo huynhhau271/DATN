@@ -70,8 +70,9 @@ class BookingService {
             ),
         ])
             .then(() => t.commit())
-            .catch(() => {
+            .catch((err) => {
                 t.rollback();
+                console.log({err});
                 throw new BadRequestError("Đăng Ký Tiêm Thất Bại");
             });
     }
@@ -206,15 +207,16 @@ class BookingService {
         });
     }
     async payment(user: User, bookingId: number) {
-        const booking = await bookingRepository.findAll({
+        const booking = await bookingRepository.findOne({
             where: {
                 id: bookingId,
                 statused: StatusBooking.BE_INJECTED,
             },
+            include: [vaccineRepository],
         });
         if (!booking) throw new BadRequestError("Đơn hàng không tồn tại");
-        else
-            await bookingRepository.update(
+        await Promise.all([
+            bookingRepository.update(
                 {
                     paymentSatus: true,
                     userId: user.userId,
@@ -226,7 +228,13 @@ class BookingService {
                         statused: StatusBooking.BE_INJECTED,
                     },
                 }
-            );
+            ),
+            vaccineRepository.decrement("quantity", {
+                where: {
+                    id: booking.dataValues.vaccine.id,
+                },
+            }),
+        ]);
     }
 
     async inject(bookingId: number, nuffId: number) {

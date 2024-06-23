@@ -42,6 +42,15 @@ function CustomerBookingForm({
      const [dateinject, setDateInject] = useState(
           formatDate(moment().add(7, "days").toString())
      );
+     const validateDate = (value: string | Date) => {
+          const today = moment();
+          const parsedDate = moment(value);
+          if (parsedDate.isBefore(today)) {
+               return Promise.reject("Ngày tiêm không hợp lệ");
+          } else {
+               return Promise.resolve();
+          }
+     };
      const { userLogin } = useAuthContext();
      const columnsHistory: ColumnsType<DataTable> = [
           {
@@ -260,6 +269,11 @@ function CustomerBookingForm({
                                         {
                                              required: true,
                                              message: "Vui Lòng Chọn Ngày Tiêm",
+                                        },
+                                        {
+                                             validator: (_, e) => {
+                                                  return validateDate(e);
+                                             },
                                         },
                                    ]}
                                    initialValue={formatDate(

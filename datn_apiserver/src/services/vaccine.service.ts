@@ -49,6 +49,7 @@ class VaccineService {
             where: {
                 mothOld: { [Op.lte]: mothOld },
                 status: true,
+                quantity: { [Op.gte]: 1 },
             },
             include: [
                 {
@@ -67,52 +68,23 @@ class VaccineService {
                 throw new BadRequestError("Vaccien Không Tồn Tại");
             const t = await database.transaction();
             try {
-                vaccineForUpdate.vaccineName = vaccine.vaccineName;
-                vaccineForUpdate.price = vaccine.price;
-
-                vaccineForUpdate.description = vaccine.description;
-
-                vaccineForUpdate.picture = vaccine.picture;
-
-                vaccineForUpdate.source = vaccine.source;
-
-                vaccineForUpdate.injectionRoute = vaccine.injectionRoute;
-
-                vaccineForUpdate.warning = vaccine.warning;
-
-                vaccineForUpdate.unwantedEffects = vaccine.unwantedEffects;
-
-                vaccineForUpdate.mothOld = vaccine.mothOld;
-
-                vaccineForUpdate.postInjectionReact =
-                    vaccine.postInjectionReact;
-                vaccineForUpdate.boosterNoses = vaccine.boosterNoses.map(
-                    (bn) => {
-                        return {
-                            noseNumber: bn.noseNumber,
-                            distance: bn.distance, // * moth
-                        } as BoosterNose;
+                await vaccineRepository.update(
+                    {
+                        vaccineName: vaccine.vaccineName,
+                        injectionRoute: vaccine.injectionRoute,
+                        mothOld: vaccine.mothOld,
+                        price: vaccine.price,
+                        quantity: vaccine.quantity,
+                        source: vaccine.source,
+                        unwantedEffects: vaccine.unwantedEffects,
+                        warning: vaccine.warning,
+                    },
+                    {
+                        where: {
+                            id: vaccine.id,
+                        },
                     }
                 );
-                await vaccineForUpdate.save();
-                // await vaccineRepository.update(
-                //     {
-                //         ...vaccine,
-                //         boosterNoses: vaccine.boosterNoses.map((bt) => {
-                //             return {
-                //                 id: bt?.id,
-                //                 noseNumber: bt.noseNumber,
-                //                 distance: bt.distance,
-                //                 vaccineId: vaccine.id,
-                //             } as BoosterNose;
-                //         }),
-                //     },
-                //     {
-                //         where: {
-                //             id: vaccine.id,
-                //         },
-                //     }
-                // );
                 await t.commit();
             } catch (error) {
                 t.rollback();

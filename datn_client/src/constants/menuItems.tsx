@@ -37,7 +37,7 @@ export const MenuItems: MenuItems[] = [
           icon: TbVaccineBottle,
      },
      {
-          title: "Danh Sách Tiêm Chủng",
+          title: " Tiêm Chủng",
           link: "/admin/booking",
           id: "vaccination",
           icon: PiListDashesFill,
